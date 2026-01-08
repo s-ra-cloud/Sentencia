@@ -10,7 +10,7 @@
   <nav class="nav">
     <div class="brand" data-route="home" role="button" tabindex="0" aria-label="Home">
       <div class="brand__text">
-        <div class="brand__name brand__name--full">Machina Research Network</div><div class="brand__name brand__name--short">MRN</div>
+        <div class="brand__name brand__name--full">Machina Research Network</div><div class="brand__name brand__name--short">MRN</div><div style="font-size:10px; opacity:0.3; margin-left:10px;" data-route="admin">adm</div>
       </div>
     </div>
 
@@ -34,6 +34,62 @@
     </div>
   </nav>
 
+  <section class="page" id="admin"> 
+    <div class="container"> 
+      <div id="adminAuth"> 
+        <h1 class="h1">Admin Access</h1> 
+        <div class="prose" style="max-width: 400px; margin: 20px auto; padding: 40px; text-align: center;"> 
+          <label class="control__label">Enter Passcode (1234)</label> 
+          <input type="password" id="adminPass" class="control__input" style="width: 100%; margin: 10px 0;"> 
+          <button class="btn" id="loginBtn" style="width: 100%;">Login</button> 
+        </div> 
+      </div> 
+      <div id="adminPanel" style="display: none;"> 
+        <h1 class="h1">Content Management</h1> 
+        <div class="nav__links" style="margin-bottom: 30px;"> 
+          <button class="nav__link is-active" data-admin-tab="projects">Outputs</button> 
+          <button class="nav__link" data-admin-tab="members">Members</button> 
+          <button class="nav__link" data-admin-tab="funding">Funding</button> 
+        </div> 
+        <div id="adminProjects" class="admin-tab-content"> 
+          <h2 class="h2">Add New Output</h2> 
+          <div class="prose"> 
+            <input type="text" id="projTitle" placeholder="Title" class="control__input" style="width:100%; margin-bottom:10px;"> 
+            <input type="text" id="projMeta" placeholder="Meta / Authors" class="control__input" style="width:100%; margin-bottom:10px;"> 
+            <input type="number" id="projYear" placeholder="Year" class="control__input" style="width:100%; margin-bottom:10px;"> 
+            <select id="projCat" class="control__input" style="width:100%; margin-bottom:10px;"> 
+              <option value="law">Computational Law</option> 
+              <option value="epi">Epistemic Engineering</option> 
+              <option value="psy">Computational Psychology</option> 
+            </select> 
+            <button class="btn" id="addProjBtn">Add Project</button> 
+          </div> 
+        </div> 
+        <div id="adminMembers" class="admin-tab-content" style="display:none;"> 
+          <h2 class="h2">Add New Member</h2> 
+          <div class="prose"> 
+            <input type="text" id="memName" placeholder="Name" class="control__input" style="width:100%; margin-bottom:10px;"> 
+            <input type="text" id="memRole" placeholder="Role (e.g. Engineer)" class="control__input" style="width:100%; margin-bottom:10px;"> 
+            <input type="text" id="memAffil" placeholder="Affiliation" class="control__input" style="width:100%; margin-bottom:10px;"> 
+            <button class="btn" id="addMemBtn">Add Member</button> 
+          </div> 
+        </div> 
+        <div id="adminFunding" class="admin-tab-content" style="display:none;"> 
+          <h2 class="h2">Add New Funding</h2> 
+          <div class="prose"> 
+            <input type="text" id="fundTitle" placeholder="Project Title" class="control__input" style="width:100%; margin-bottom:10px;"> 
+            <input type="text" id="fundOrg" placeholder="Organization" class="control__input" style="width:100%; margin-bottom:10px;"> 
+            <input type="text" id="fundAmount" placeholder="Amount (e.g. EUR 50,000)" class="control__input" style="width:100%; margin-bottom:10px;"> 
+            <input type="text" id="fundDates" placeholder="Dates" class="control__input" style="width:100%; margin-bottom:10px;"> 
+            <button class="btn" id="addFundBtn">Add Funding</button> 
+          </div> 
+        </div> 
+        <div style="margin-top: 40px; border-top: 1px solid var(--line); padding-top: 20px;"> 
+          <button class="btn" id="resetDataBtn" style="background: #ef4444; color: white;">Reset All Data</button> 
+        </div> 
+      </div> 
+    </div> 
+  </section>
   <section class="page is-active" id="home">
     <div class="hero">
       <video autoplay class="hero__video" loop muted playsinline>
