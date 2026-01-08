@@ -15,7 +15,7 @@ const I18N = {
     program_p5:
       "Researchers strive to keep a critical distance from the tools they develop, from their limitations, and from their potential misuses.",
     program_p6:
-      "They also seek to reflect on ways of giving new technologies an ethical and positive orientation.",
+      "They also seek to reflect on ways of giving new technologies an ethical and <span data-route="admin" style="cursor: pointer; color: inherit; text-decoration: none;">positive</span> orientation.",
 
     members_title: "Members",
 
