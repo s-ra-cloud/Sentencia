@@ -402,37 +402,3 @@ function renderDynamicContent() {
 }
 
 renderDynamicContent();
-
-// Ensure the easter egg button works
-document.addEventListener('click', (e) => {
-  if (e.target.closest('[data-route="admin"]')) {
-    const adminPage = document.getElementById('admin');
-    if (adminPage) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('is-active'));
-      adminPage.classList.add('is-active');
-      adminPage.style.display = 'block';
-      window.scrollTo(0, 0);
-    }
-  }
-});
-
-// Admin Easter Egg Routing
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest('[data-route="admin"]');
-  if (btn) {
-    e.preventDefault();
-    const adminSection = document.getElementById('admin');
-    if (adminSection) {
-      // Hide all pages
-      document.querySelectorAll('.page').forEach(p => {
-        p.classList.remove('is-active');
-        p.style.display = 'none';
-      });
-      // Show admin page
-      adminSection.classList.add('is-active');
-      adminSection.style.display = 'block';
-      window.scrollTo(0, 0);
-      console.log('Admin route activated');
-    }
-  }
-});
