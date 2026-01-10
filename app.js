@@ -174,10 +174,6 @@ function setRoute(route){
   const btn = document.querySelector(`.nav__link[data-route="${route}"]`);
   if (btn) btn.classList.add("is-active");
   window.scrollTo({ top: 0, behavior: "auto" });
-  if (route === "ipv") {
-    const ms = document.getElementById("metricSelect");
-    if (ms && typeof applyMetric === "function") applyMetric(ms.value);
-  }
 }
 
 function hookRoutes(){
@@ -194,33 +190,3 @@ initProjectCollapsers();
 applyTheme(currentTheme);
 applyLanguage(currentLang);
 setRoute("home");
-
-// IPV Logic (simplified snippet for brief turnaround)
-const DATA = {"adjusted_prison_rate": {}, "severity_index": {}, "sentence": {}};
-const CONFIG = {"adjusted_prison_rate": {"label": "IPV adjusted prison rate", "colors": ["#f2f2f2", "#d9d9d9", "#bdbdbd", "#969696", "#525252"], "thresholds": [1.6, 2.0, 2.4, 2.8], "format": "number2"}, "severity_index": {"label": "IPV punishment severity index", "colors": ["#f2f2f2", "#d9d9d9", "#bdbdbd", "#969696", "#525252"], "thresholds": [0.9, 1.05, 1.2, 1.35], "format": "number3"}, "sentence": {"label": "Average sentence length (months)", "colors": ["#f2f2f2", "#d9d9d9", "#bdbdbd", "#969696", "#525252"], "thresholds": [11, 13, 15, 18], "format": "months"}};
-const tooltip = document.getElementById("tooltip");
-const legend = document.getElementById("legend");
-const svg = document.querySelector("#mapHost svg");
-const metricSelect = document.getElementById("metricSelect");
-function bucket(v, thresholds){ if (v == null || Number.isNaN(v)) return null; if (v < thresholds[0]) return 0; if (v < thresholds[1]) return 1; if (v < thresholds[2]) return 2; if (v < thresholds[3]) return 3; return 4; }
-function fmt(metricKey, v){ if (v == null) return "No data"; const f = CONFIG[metricKey].format; if (f === "months") return v.toFixed(2) + " months"; if (f === "number3") return v.toFixed(3); if (f === "number2") return v.toFixed(2); return String(v); }
-function renderLegend(metricKey){ 
-  const c = CONFIG[metricKey];
-  legend.innerHTML = `<div class="legend__title">${c.label}</div><div class="legend__row"><span class="legend__bar" style="background:linear-gradient(to right, ${c.colors.join(",")})"></span></div>`; 
-}
-function applyMetric(metricKey){
-  if (!svg) return;
-  const c = CONFIG[metricKey];
-  renderLegend(metricKey);
-  svg.querySelectorAll('path[id^="FR-"]').forEach(p => {
-    p.style.fill = "#bdbdbd";
-    p.onmousemove = (e) => {
-      tooltip.style.display = "block";
-      tooltip.style.left = e.clientX + "px";
-      tooltip.style.top = e.clientY + "px";
-      tooltip.innerHTML = p.getAttribute("title") || p.id;
-    };
-    p.onmouseleave = () => tooltip.style.display = "none";
-  });
-}
-if (metricSelect) metricSelect.addEventListener("change", () => applyMetric(metricSelect.value));
