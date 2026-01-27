@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Machina Research Network</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --danger: #ef4444;
+      --success: #22c55e;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    .loginWrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .loginBox {
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 400px;
+    }
+    .loginBox h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .formGroup {
+      margin-bottom: 1rem;
+    }
+    .formGroup label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+    }
+    .formGroup input, .formGroup select, .formGroup textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+    .formGroup textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+    .btn-danger:hover {
+      opacity: 0.9;
+    }
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+    }
+    .btn-full {
+      width: 100%;
+    }
+    .error {
+      color: var(--danger);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+    .adminWrap {
+      display: none;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .adminHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .adminHeader h1 {
+      font-size: 1.5rem;
+    }
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .tab {
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .tab:hover {
+      border-color: var(--primary);
+    }
+    .tab.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .panel {
+      display: none;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .panel.active {
+      display: block;
+    }
+    .panel h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .itemList {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      background: var(--bg);
+    }
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .item-title {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .item-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .item-content {
+      display: none;
+    }
+    .item.expanded .item-content {
+      display: block;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .category {
+      margin-bottom: 2rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      background: var(--success);
+      color: white;
+      border-radius: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      z-index: 1000;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .backLink {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+    }
+    .backLink:hover {
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div class="loginWrap" id="loginWrap">
+    <div class="loginBox">
+      <h1>Admin Login</h1>
+      <form id="loginForm">
+        <div class="formGroup">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter admin password" required>
+        </div>
+        <div class="error" id="loginError"></div>
+        <button type="submit" class="btn btn-primary btn-full" style="margin-top: 1rem;">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="adminWrap" id="adminWrap">
+    <div class="adminHeader">
+      <div>
+        <h1>Content Management</h1>
+        <a href="/" class="backLink">Back to website</a>
+      </div>
+      <button class="btn btn-danger btn-sm" id="logoutBtn">Logout</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-panel="outputs">Outputs</button>
+      <button class="tab" data-panel="members">Members</button>
+      <button class="tab" data-panel="funding">Funding</button>
+      <button class="tab" data-panel="program">Research Program</button>
+    </div>
+
+    <div class="panel active" id="panel-outputs">
+      <h2>Manage Outputs</h2>
+      <div id="outputsContainer"></div>
+      <button class="btn btn-success" id="saveOutputs">Save Changes</button>
+    </div>
+
+    <div class="panel" id="panel-members">
+      <h2>Manage Members</h2>
+      <div class="itemList" id="membersContainer"></div>
+      <button class="btn btn-primary btn-sm" id="addMember">+ Add Member</button>
+      <div style="margin-top: 1rem;">
+        <button class="btn btn-success" id="saveMembers">Save Changes</button>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-funding">
+      <h2>Manage Funding</h2>
+      <div class="itemList" id="fundingContainer"></div>
+      <button class="btn btn-primary btn-sm" id="addGrant">+ Add Grant</button>
+      <div style="margin-top: 1rem;">
+        <button class="btn btn-success" id="saveFunding">Save Changes</button>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-program">
+      <h2>Research Program</h2>
+      <div id="programContainer"></div>
+      <button class="btn btn-success" id="saveProgram">Save Changes</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Saved successfully!</div>
+
+  <script>
+    let authToken = sessionStorage.getItem('adminToken');
+    let outputsData = null;
+    let membersData = null;
+    let fundingData = null;
+    let programData = null;
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    async function apiCall(method, endpoint, data = null) {
+      const opts = {
+        method,
+        headers: { 'Content-Type': 'application/json' }
+      };
+      if (authToken) opts.headers['Authorization'] = `Bearer ${authToken}`;
+      if (data) opts.body = JSON.stringify(data);
+      const res = await fetch(endpoint, opts);
+      return res.json();
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const password = document.getElementById('password').value;
+      const result = await apiCall('POST', '/api/login', { password });
+      if (result.success) {
+        authToken = password;
+        sessionStorage.setItem('adminToken', authToken);
+        showAdmin();
+      } else {
+        document.getElementById('loginError').textContent = 'Invalid password';
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      authToken = null;
+      sessionStorage.removeItem('adminToken');
+      document.getElementById('loginWrap').style.display = 'flex';
+      document.getElementById('adminWrap').style.display = 'none';
+    });
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+      });
+    });
+
+    async function showAdmin() {
+      document.getElementById('loginWrap').style.display = 'none';
+      document.getElementById('adminWrap').style.display = 'block';
+      await loadAllData();
+    }
+
+    async function loadAllData() {
+      outputsData = await apiCall('GET', '/api/outputs');
+      membersData = await apiCall('GET', '/api/members');
+      fundingData = await apiCall('GET', '/api/funding');
+      programData = await apiCall('GET', '/api/program');
+      renderOutputs();
+      renderMembers();
+      renderFunding();
+      renderProgram();
+    }
+
+    function renderOutputs() {
+      const container = document.getElementById('outputsContainer');
+      container.innerHTML = '';
+      outputsData.categories.forEach((cat, catIdx) => {
+        const catDiv = document.createElement('div');
+        catDiv.className = 'category';
+        catDiv.innerHTML = `
+          <div class="category-header">
+            <div>
+              <strong>${cat.titleEN}</strong>
+              <div style="font-size:0.875rem;color:var(--muted);">${cat.titleFR}</div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="addOutput(${catIdx})">+ Add Output</button>
+          </div>
+          <div class="itemList" id="cat-${catIdx}-outputs"></div>
+        `;
+        container.appendChild(catDiv);
+        const outputsList = document.getElementById(`cat-${catIdx}-outputs`);
+        cat.outputs.forEach((output, outIdx) => {
+          const item = document.createElement('div');
+          item.className = 'item';
+          item.innerHTML = `
+            <div class="item-header">
+              <span class="item-title">${output.title || output.titleEN || output.titleKey}</span>
+              <div class="item-actions">
+                <button class="btn btn-sm" onclick="toggleItem(this)">Edit</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteOutput(${catIdx}, ${outIdx})">Delete</button>
+              </div>
+            </div>
+            <div class="item-content">
+              <div class="row">
+                <div class="formGroup">
+                  <label>Title (static)</label>
+                  <input type="text" value="${output.title || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].title = this.value">
+                </div>
+                <div class="formGroup">
+                  <label>Title EN</label>
+                  <input type="text" value="${output.titleEN || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].titleEN = this.value">
+                </div>
+                <div class="formGroup">
+                  <label>Title FR</label>
+                  <input type="text" value="${output.titleFR || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].titleFR = this.value">
+                </div>
+              </div>
+              <div class="row">
+                <div class="formGroup">
+                  <label>Year</label>
+                  <input type="number" value="${output.year || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].year = parseInt(this.value)">
+                </div>
+                <div class="formGroup">
+                  <label>Meta (static)</label>
+                  <input type="text" value="${output.meta || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].meta = this.value">
+                </div>
+              </div>
+              <div class="row">
+                <div class="formGroup">
+                  <label>Meta EN</label>
+                  <input type="text" value="${output.metaEN || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].metaEN = this.value">
+                </div>
+                <div class="formGroup">
+                  <label>Meta FR</label>
+                  <input type="text" value="${output.metaFR || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].metaFR = this.value">
+                </div>
+              </div>
+              <div class="formGroup">
+                <label>PI</label>
+                <input type="text" value="${output.pi || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].pi = this.value">
+              </div>
+              <div class="formGroup">
+                <label>Actions (JSON)</label>
+                <textarea onchange="try{outputsData.categories[${catIdx}].outputs[${outIdx}].actions=JSON.parse(this.value)}catch(e){}">${JSON.stringify(output.actions || [], null, 2)}</textarea>
+              </div>
+            </div>
+          `;
+          outputsList.appendChild(item);
+        });
+      });
+    }
+
+    function addOutput(catIdx) {
+      const id = 'new_' + Date.now();
+      outputsData.categories[catIdx].outputs.push({
+        id,
+        year: new Date().getFullYear(),
+        title: 'New Output',
+        titleEN: '',
+        titleFR: '',
+        meta: '',
+        metaEN: '',
+        metaFR: '',
+        actions: []
+      });
+      renderOutputs();
+    }
+
+    function deleteOutput(catIdx, outIdx) {
+      if (confirm('Delete this output?')) {
+        outputsData.categories[catIdx].outputs.splice(outIdx, 1);
+        renderOutputs();
+      }
+    }
+
+    function renderMembers() {
+      const container = document.getElementById('membersContainer');
+      container.innerHTML = '';
+      membersData.members.forEach((member, idx) => {
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.innerHTML = `
+          <div class="item-header">
+            <span class="item-title">${member.name}</span>
+            <div class="item-actions">
+              <button class="btn btn-sm" onclick="toggleItem(this)">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteMember(${idx})">Delete</button>
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="row">
+              <div class="formGroup">
+                <label>Name</label>
+                <input type="text" value="${member.name}" onchange="membersData.members[${idx}].name = this.value; this.closest('.item').querySelector('.item-title').textContent = this.value;">
+              </div>
+              <div class="formGroup">
+                <label>LinkedIn URL</label>
+                <input type="text" value="${member.linkedin || ''}" onchange="membersData.members[${idx}].linkedin = this.value">
+              </div>
+            </div>
+            <div class="row">
+              <div class="formGroup">
+                <label>Tagline EN</label>
+                <input type="text" value="${member.taglineEN || ''}" onchange="membersData.members[${idx}].taglineEN = this.value">
+              </div>
+              <div class="formGroup">
+                <label>Tagline FR</label>
+                <input type="text" value="${member.taglineFR || ''}" onchange="membersData.members[${idx}].taglineFR = this.value">
+              </div>
+            </div>
+            <div class="row">
+              <div class="formGroup">
+                <label>Affiliation EN</label>
+                <input type="text" value="${member.affiliationEN || ''}" onchange="membersData.members[${idx}].affiliationEN = this.value">
+              </div>
+              <div class="formGroup">
+                <label>Affiliation FR</label>
+                <input type="text" value="${member.affiliationFR || ''}" onchange="membersData.members[${idx}].affiliationFR = this.value">
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function deleteMember(idx) {
+      if (confirm('Delete this member?')) {
+        membersData.members.splice(idx, 1);
+        renderMembers();
+      }
+    }
+
+    document.getElementById('addMember').addEventListener('click', () => {
+      membersData.members.push({
+        id: 'new_' + Date.now(),
+        name: 'New Member',
+        taglineKey: '',
+        taglineEN: '',
+        taglineFR: '',
+        affiliationKey: '',
+        affiliationEN: '',
+        affiliationFR: '',
+        linkedin: ''
+      });
+      renderMembers();
+    });
+
+    function renderFunding() {
+      const container = document.getElementById('fundingContainer');
+      container.innerHTML = '';
+      fundingData.grants.forEach((grant, idx) => {
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.innerHTML = `
+          <div class="item-header">
+            <span class="item-title">${grant.title}</span>
+            <div class="item-actions">
+              <button class="btn btn-sm" onclick="toggleItem(this)">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteGrant(${idx})">Delete</button>
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="row">
+              <div class="formGroup">
+                <label>Title</label>
+                <input type="text" value="${grant.title}" onchange="fundingData.grants[${idx}].title = this.value; this.closest('.item').querySelector('.item-title').textContent = this.value;">
+              </div>
+              <div class="formGroup">
+                <label>Title EN (if translatable)</label>
+                <input type="text" value="${grant.titleEN || ''}" onchange="fundingData.grants[${idx}].titleEN = this.value">
+              </div>
+              <div class="formGroup">
+                <label>Title FR (if translatable)</label>
+                <input type="text" value="${grant.titleFR || ''}" onchange="fundingData.grants[${idx}].titleFR = this.value">
+              </div>
+            </div>
+            <div class="row">
+              <div class="formGroup">
+                <label>Principal Investigator</label>
+                <input type="text" value="${grant.pi || ''}" onchange="fundingData.grants[${idx}].pi = this.value">
+              </div>
+              <div class="formGroup">
+                <label>Organization</label>
+                <input type="text" value="${grant.organization || ''}" onchange="fundingData.grants[${idx}].organization = this.value">
+              </div>
+            </div>
+            <div class="row">
+              <div class="formGroup">
+                <label>Dates</label>
+                <input type="text" value="${grant.dates || ''}" onchange="fundingData.grants[${idx}].dates = this.value">
+              </div>
+              <div class="formGroup">
+                <label>Type</label>
+                <select onchange="fundingData.grants[${idx}].type = this.value">
+                  <option value="grant" ${grant.type === 'grant' ? 'selected' : ''}>Grant</option>
+                  <option value="contract" ${grant.type === 'contract' ? 'selected' : ''}>Contract</option>
+                </select>
+              </div>
+              <div class="formGroup">
+                <label>Amount</label>
+                <input type="text" value="${grant.amount || ''}" onchange="fundingData.grants[${idx}].amount = this.value">
+              </div>
+            </div>
+            <div class="formGroup">
+              <label>Links (JSON array)</label>
+              <textarea onchange="try{fundingData.grants[${idx}].links=JSON.parse(this.value)}catch(e){}">${JSON.stringify(grant.links || [], null, 2)}</textarea>
+            </div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function deleteGrant(idx) {
+      if (confirm('Delete this grant?')) {
+        fundingData.grants.splice(idx, 1);
+        renderFunding();
+      }
+    }
+
+    document.getElementById('addGrant').addEventListener('click', () => {
+      fundingData.grants.push({
+        id: 'new_' + Date.now(),
+        title: 'New Grant',
+        titleKey: '',
+        titleEN: '',
+        titleFR: '',
+        pi: '',
+        organization: '',
+        dates: '',
+        type: 'grant',
+        amount: '',
+        links: []
+      });
+      renderFunding();
+    });
+
+    function renderProgram() {
+      const container = document.getElementById('programContainer');
+      const program = programData.program;
+      container.innerHTML = `
+        <div class="row">
+          <div class="formGroup">
+            <label>Title EN</label>
+            <input type="text" value="${program.titleEN || ''}" onchange="programData.program.titleEN = this.value">
+          </div>
+          <div class="formGroup">
+            <label>Title FR</label>
+            <input type="text" value="${program.titleFR || ''}" onchange="programData.program.titleFR = this.value">
+          </div>
+        </div>
+        <h3 style="margin: 1rem 0 0.5rem;">Paragraphs</h3>
+        <div id="paragraphsContainer"></div>
+        <button class="btn btn-primary btn-sm" onclick="addParagraph()" style="margin-top: 1rem;">+ Add Paragraph</button>
+      `;
+      const parasContainer = document.getElementById('paragraphsContainer');
+      program.paragraphs.forEach((para, idx) => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.style.marginBottom = '1rem';
+        div.innerHTML = `
+          <div class="item-header">
+            <span class="item-title">Paragraph ${idx + 1}</span>
+            <div class="item-actions">
+              <button class="btn btn-sm" onclick="toggleItem(this)">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteParagraph(${idx})">Delete</button>
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="formGroup">
+              <label>English</label>
+              <textarea onchange="programData.program.paragraphs[${idx}].en = this.value">${para.en || ''}</textarea>
+            </div>
+            <div class="formGroup">
+              <label>French</label>
+              <textarea onchange="programData.program.paragraphs[${idx}].fr = this.value">${para.fr || ''}</textarea>
+            </div>
+          </div>
+        `;
+        parasContainer.appendChild(div);
+      });
+    }
+
+    function addParagraph() {
+      programData.program.paragraphs.push({
+        key: 'program_p' + (programData.program.paragraphs.length + 1),
+        en: '',
+        fr: ''
+      });
+      renderProgram();
+    }
+
+    function deleteParagraph(idx) {
+      if (confirm('Delete this paragraph?')) {
+        programData.program.paragraphs.splice(idx, 1);
+        renderProgram();
+      }
+    }
+
+    function toggleItem(btn) {
+      btn.closest('.item').classList.toggle('expanded');
+      btn.textContent = btn.closest('.item').classList.contains('expanded') ? 'Close' : 'Edit';
+    }
+
+    document.getElementById('saveOutputs').addEventListener('click', async () => {
+      await apiCall('PUT', '/api/outputs', outputsData);
+      showToast('Outputs saved!');
+    });
+
+    document.getElementById('saveMembers').addEventListener('click', async () => {
+      await apiCall('PUT', '/api/members', membersData);
+      showToast('Members saved!');
+    });
+
+    document.getElementById('saveFunding').addEventListener('click', async () => {
+      await apiCall('PUT', '/api/funding', fundingData);
+      showToast('Funding saved!');
+    });
+
+    document.getElementById('saveProgram').addEventListener('click', async () => {
+      await apiCall('PUT', '/api/program', programData);
+      showToast('Program saved!');
+    });
+
+    if (authToken) {
+      showAdmin();
+    }
+  </script>
+</body>
+</html>

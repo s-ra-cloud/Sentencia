@@ -1,0 +1,125 @@
+{
+  "members": [
+    {
+      "id": "jiad",
+      "name": "Jiad Abdul",
+      "taglineKey": "member_jiad_tagline",
+      "taglineEN": "Engineer",
+      "taglineFR": "Ingénieur",
+      "affiliationKey": "member_jiad_affil",
+      "affiliationEN": "",
+      "affiliationFR": "",
+      "linkedin": "https://fr.linkedin.com/in/jiad-abdul"
+    },
+    {
+      "id": "sofiane",
+      "name": "Sofiane Baddag",
+      "taglineKey": "member_sofiane_tagline",
+      "taglineEN": "Engineer",
+      "taglineFR": "Ingénieur",
+      "affiliationKey": "member_sofiane_affil",
+      "affiliationEN": "",
+      "affiliationFR": "",
+      "linkedin": "https://fr.linkedin.com/in/sofiane-baddag-743158145"
+    },
+    {
+      "id": "belikov",
+      "name": "Alexander Belikov",
+      "taglineKey": "member_belikov_tagline",
+      "taglineEN": "Researcher",
+      "taglineFR": "Chercheur",
+      "affiliationKey": "member_belikov_affil",
+      "affiliationEN": "",
+      "affiliationFR": "",
+      "linkedin": "https://fr.linkedin.com/in/abelikov"
+    },
+    {
+      "id": "camille",
+      "name": "Camille Bertrand",
+      "taglineKey": "member_camille_tagline",
+      "taglineEN": "PhD Student",
+      "taglineFR": "Doctorante",
+      "affiliationKey": "member_camille_affil",
+      "affiliationEN": "",
+      "affiliationFR": "",
+      "linkedin": ""
+    },
+    {
+      "id": "laura",
+      "name": "Laura Duparc",
+      "taglineKey": "member_laura_tagline",
+      "taglineEN": "Researcher",
+      "taglineFR": "Chercheuse",
+      "affiliationKey": "member_laura_affil",
+      "affiliationEN": "",
+      "affiliationFR": "",
+      "linkedin": "https://fr.linkedin.com/in/laura-duparc-52504b215"
+    },
+    {
+      "id": "myriam",
+      "name": "Myriam Gibelin",
+      "taglineKey": "member_myriam_tagline",
+      "taglineEN": "PhD Student",
+      "taglineFR": "Doctorante",
+      "affiliationKey": "member_myriam_affil",
+      "affiliationEN": "",
+      "affiliationFR": "",
+      "linkedin": ""
+    },
+    {
+      "id": "eliot",
+      "name": "Eliot Hallak",
+      "taglineKey": "member_eliot_tagline",
+      "taglineEN": "Engineer",
+      "taglineFR": "Ingénieur",
+      "affiliationKey": "member_eliot_affil",
+      "affiliationEN": "",
+      "affiliationFR": "",
+      "linkedin": "https://fr.linkedin.com/in/eliothallak"
+    },
+    {
+      "id": "lisa",
+      "name": "Lisa Juppeaux",
+      "taglineKey": "member_lisa_tagline",
+      "taglineEN": "Legal Scholar",
+      "taglineFR": "Juriste",
+      "affiliationKey": "member_lisa_affil",
+      "affiliationEN": "",
+      "affiliationFR": "",
+      "linkedin": "https://fr.linkedin.com/in/lisa-juppeaux"
+    },
+    {
+      "id": "ami",
+      "name": "Ami Nagai",
+      "taglineKey": "member_ami_tagline",
+      "taglineEN": "PhD Student",
+      "taglineFR": "Doctorante",
+      "affiliationKey": "member_ami_affil",
+      "affiliationEN": "",
+      "affiliationFR": "",
+      "linkedin": "https://www.linkedin.com/in/ami-nagai-4b82a9290/"
+    },
+    {
+      "id": "eric",
+      "name": "Eric Parisot",
+      "taglineKey": "member_eric_tagline",
+      "taglineEN": "Engineer",
+      "taglineFR": "Ingénieur",
+      "affiliationKey": "member_eric_affil",
+      "affiliationEN": "",
+      "affiliationFR": "",
+      "linkedin": "https://fr.linkedin.com/in/eric-parisot"
+    },
+    {
+      "id": "sacha",
+      "name": "Sacha Raoult",
+      "taglineKey": "member_sacha_tagline",
+      "taglineEN": "Lecturer",
+      "taglineFR": "Maître de conférences",
+      "affiliationKey": "member_sacha_affil",
+      "affiliationEN": "",
+      "affiliationFR": "",
+      "linkedin": "https://fr.linkedin.com/in/sacha-raoult"
+    }
+  ]
+}

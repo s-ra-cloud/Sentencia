@@ -1,0 +1,128 @@
+{
+  "categories": [
+    {
+      "id": "law",
+      "titleKey": "cat_law_title",
+      "titleEN": "Computational Law Research Team",
+      "titleFR": "Équipe de recherche en droit computationnel",
+      "outputs": [
+        {
+          "id": "ipv",
+          "year": 2025,
+          "titleKey": "ipv_card_title",
+          "titleEN": "French sentencing project",
+          "titleFR": "Projet de condamnations en France",
+          "metaKey": "ipv_card_meta",
+          "metaEN": "Interactive departmental map · three metrics",
+          "metaFR": "Carte départementale interactive · trois indicateurs",
+          "actions": [{"type": "route", "route": "ipv", "labelKey": "action_data"}]
+        },
+        {
+          "id": "kg2025",
+          "year": 2025,
+          "title": "Knowledge Graphs Construction from Criminal Court Appeals",
+          "meta": "Alexander V. Belikov, Sacha Raoult · arXiv",
+          "actions": [{"type": "link", "url": "https://arxiv.org/abs/2501.14579", "labelKey": "action_text"}]
+        },
+        {
+          "id": "sent2024",
+          "year": 2024,
+          "title": "Sentencing : une revue de la recherche appliquée et pistes pour la recherche fondamentale",
+          "metaKey": "pub1_meta",
+          "metaEN": "Journal Article · Nouveaux Problèmes Actuels de Sciences Criminelles · 2024 · Lisa Juppeaux, Sacha Raoult",
+          "metaFR": "Article de revue · Nouveaux Problèmes Actuels de Sciences Criminelles · 2024 · Lisa Juppeaux, Sacha Raoult",
+          "actions": [{"type": "link", "url": "https://www.mediafire.com/file/5zxjkg6ov565126/Vol-XXXI-L-Juppeaux-et-S-Raoult_%25281%2529_stamped_%25281%2529.pdf/file", "labelKey": "action_text"}]
+        },
+        {
+          "id": "ml2022",
+          "year": 2022,
+          "title": "L'apprentissage automatique dans l'analyse des données de la jurimétrie",
+          "metaKey": "pub2_meta",
+          "metaEN": "Journal Article · Jurimétrie · 2022 · Sacha Raoult",
+          "metaFR": "Article de revue · Jurimétrie · 2022 · Sacha Raoult",
+          "actions": [
+            {"type": "link", "url": "https://www.mediafire.com/file/c1kbfxk8cq8ne2b/03_Jurime%25CC%2581trie_1_-_S._Raoult.pdf/file", "labelKey": "action_text"},
+            {"type": "link", "url": "https://www.youtube.com/watch?v=XFIrgddhAGg", "labelKey": "action_video"}
+          ]
+        },
+        {
+          "id": "myriam2023",
+          "year": 2023,
+          "titleKey": "myriam_jurimetrie_title",
+          "titleEN": "The influence of methodological choices on the jurimetric assessment of punitiveness",
+          "titleFR": "L'influence du choix des méthodes sur l'appréciation jurimétrique de la punitivité",
+          "meta": "Myriam Gibelin · Jurimétrie 2023",
+          "actions": [{"type": "link", "url": "https://www.youtube.com/watch?v=styuKZRAS5Q", "labelKey": "action_video"}]
+        },
+        {
+          "id": "laura2024",
+          "year": 2024,
+          "titleKey": "laura_jurimetrie_title",
+          "titleEN": "What is the role of small-N analyses in jurimetrics?",
+          "titleFR": "Quelle place pour les analyses de petits N dans la jurimétrie ?",
+          "meta": "Laura Duparc · Jurimétrie 2024",
+          "actions": [{"type": "link", "url": "https://www.youtube.com/watch?v=jn_kNpzSQns", "labelKey": "action_video"}]
+        }
+      ]
+    },
+    {
+      "id": "epi",
+      "titleKey": "cat_epi_title",
+      "titleEN": "Epistemic Engineering Team",
+      "titleFR": "Équipe d'ingénierie épistémique",
+      "outputs": [
+        {
+          "id": "eep",
+          "year": 2024,
+          "titleKey": "eep_card_title",
+          "titleEN": "Epistemic Engineering Platform",
+          "titleFR": "Plateforme d'ingénierie épistémique",
+          "pi": "Principal Investigator: S. Raoult (IUF, amU)",
+          "metaKey": "eep_card_meta",
+          "metaEN": "Documentation · Platform",
+          "metaFR": "Documentation · Plateforme",
+          "actions": [{"type": "link", "url": "https://fos-network.gitbook.io/eep/what-is-the-eep", "labelKey": "action_text"}]
+        }
+      ]
+    },
+    {
+      "id": "psy",
+      "titleKey": "cat_psy_title",
+      "titleEN": "Computational Psychology Research Team",
+      "titleFR": "Équipe de recherche en psychologie computationnelle",
+      "outputs": [
+        {
+          "id": "whatif",
+          "year": 2021,
+          "title": "What If - Simulate uncertainty in decisions",
+          "metaKey": "whatif_meta",
+          "metaEN": "Sacha Raoult, Jiad Abdul · 2021",
+          "metaFR": "Sacha Raoult, Jiad Abdul · 2021",
+          "actions": [{"type": "link", "url": "https://github.com/venividivici117/what-if", "labelKey": "action_code"}]
+        },
+        {
+          "id": "emprise",
+          "year": 2022,
+          "titleKey": "emprise_title",
+          "titleEN": "Influence, manipulation and dependence in the semantic space of criminology",
+          "titleFR": "Emprise, manipulation et dépendance dans l'espace sémantique de la criminologie",
+          "metaKey": "emprise_meta",
+          "metaEN": "Journal article · Revue de sciences criminelles et de droit pénal comparé · 2022 · Sacha Raoult, Laura Duparc",
+          "metaFR": "Article de revue · Revue de sciences criminelles et de droit pénal comparé · 2022 · Sacha Raoult, Laura Duparc",
+          "actions": [{"type": "link", "url": "https://shs.hal.science/halshs-03527201", "labelKey": "action_text"}]
+        },
+        {
+          "id": "crime",
+          "year": 2020,
+          "titleKey": "crime_pour_soi_title",
+          "titleEN": "Crime for oneself and crime against oneself",
+          "titleFR": "Crime pour soi et crime contre soi",
+          "metaKey": "crime_pour_soi_meta",
+          "metaEN": "Journal article · Revue de sciences criminelles et de droit pénal comparé · 2020 · Sacha Raoult",
+          "metaFR": "Article de revue · Revue de sciences criminelles et de droit pénal comparé · 2020 · Sacha Raoult",
+          "actions": [{"type": "link", "url": "https://droit.cairn.info/revue-de-science-criminelle-et-de-droit-penal-compare-2020-3-page-787?lang=fr", "labelKey": "action_text"}]
+        }
+      ]
+    }
+  ]
+}

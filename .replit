@@ -16,13 +16,13 @@ args = "Preview Server"
 name = "Preview Server"
 author = "agent"
 
+[workflows.workflow.metadata]
+outputType = "webview"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "node server.js"
 waitForPort = 5000
-
-[workflows.workflow.metadata]
-outputType = "webview"
 
 [[ports]]
 localPort = 5000
@@ -30,3 +30,11 @@ externalPort = 80
 
 [agent]
 expertMode = true
+
+[nix]
+channel = "stable-25_05"
+
+[userenv]
+
+[userenv.shared]
+ADMIN_PASSWORD = "Trismegiste"

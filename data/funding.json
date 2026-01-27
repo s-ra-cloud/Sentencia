@@ -1,0 +1,100 @@
+{
+  "grants": [
+    {
+      "id": "fair",
+      "title": "F.AI.R Justice",
+      "titleKey": "",
+      "pi": "Principal Investigator: F. Jobard (CNRS)",
+      "organization": "CYU Initiative",
+      "dates": "2025-2026",
+      "type": "grant",
+      "amount": "EUR 50,000",
+      "links": [
+        {"label": "Reference", "url": "https://www.cyu.fr/actualites/fair-justice-big-data-megadonnees"}
+      ]
+    },
+    {
+      "id": "iuf",
+      "title": "Criminal defense open data",
+      "titleKey": "",
+      "pi": "Principal Investigator: S. Raoult (IUF, amU)",
+      "organization": "IUF",
+      "dates": "2023-2027",
+      "type": "grant",
+      "amount": "EUR 75,000",
+      "links": [
+        {"label": "Reference", "url": "https://www.iufrance.fr/les-membres-de-liuf/membre/2506-sacha-raoult.html"}
+      ]
+    },
+    {
+      "id": "ias_eep",
+      "title": "IAS Epistemic Engineering Platform",
+      "titleKey": "grant_title_ias_eep",
+      "titleEN": "IAS Epistemic Engineering Platform",
+      "titleFR": "Plateforme d'ingénierie épistémique IAS",
+      "pi": "Principal Investigator: R. Liogier (amU, UM6P)",
+      "organization": "Université Mohammed VI Polytechnique (Ben Guerir, MA)",
+      "dates": "2024-2027",
+      "type": "contract",
+      "amount": "EUR 630,000",
+      "links": [
+        {"label": "FUNDREF", "url": "https://dx.doi.org/10.13039/100016566"}
+      ]
+    },
+    {
+      "id": "pca",
+      "title": "Police Custody Assistant",
+      "titleKey": "grant_title_pca",
+      "titleEN": "Police Custody Assistant",
+      "titleFR": "Assistant de garde à vue",
+      "pi": "Principal Investigator: S. Raoult (IUF, amU)",
+      "organization": "SATT Sud Est (Marseille, FR)",
+      "dates": "2024-2025",
+      "type": "contract",
+      "amount": "EUR 50,000",
+      "links": []
+    },
+    {
+      "id": "semantica",
+      "title": "SEMANTICA",
+      "titleKey": "grant_title_semantica",
+      "titleEN": "SEMANTICA",
+      "titleFR": "SEMANTICA",
+      "pi": "Principal Investigator: S. Raoult (IUF, amU)",
+      "organization": "SATT Sud Est (Marseille, FR)",
+      "dates": "2022",
+      "type": "contract",
+      "amount": "EUR 26,000",
+      "links": []
+    },
+    {
+      "id": "kt",
+      "title": "Knowledge Tree",
+      "titleKey": "grant_title_kt",
+      "titleEN": "Knowledge Tree",
+      "titleFR": "Arbre de connaissances",
+      "pi": "Principal Investigator: James Evans (University of Chicago)",
+      "organization": "Stefanovich Institue for the Formation of Knowledge (Chicago, US)",
+      "dates": "2021-2022",
+      "type": "grant",
+      "amount": "USD 30,000",
+      "links": []
+    },
+    {
+      "id": "amidex",
+      "title": "Epistemic Engineering Platform",
+      "titleKey": "eep_card_title",
+      "titleEN": "Epistemic Engineering Platform",
+      "titleFR": "Plateforme d'ingénierie épistémique",
+      "pi": "Principal Investigator: S. Raoult (IUF, amU)",
+      "organization": "Fondation Aix-Marseille Universite AM*IDEX (Marseille, FR)",
+      "dates": "2020-2023",
+      "type": "grant",
+      "amount": "EUR 323,000",
+      "links": [
+        {"label": "Homepage", "url": "https://www.univ-amu.fr/en/public/actualites/labelling-amidex-support-peers-project-open-and-collaborative-scientific-editing"},
+        {"label": "FUNDREF", "url": "https://dx.doi.org/10.13039/100007587"}
+      ]
+    }
+  ]
+}

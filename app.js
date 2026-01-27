@@ -5,47 +5,20 @@ const I18N = {
     nav_members: "Members",
     nav_funding: "Funding",
     projects_title: "Outputs",
-    cat_law_title: "Computational Law Research Team",
-    cat_epi_title: "Epistemic Engineering Team",
-    cat_psy_title: "Computational Psychology Research Team",
-    ipv_card_title: "French sentencing project",
-    ipv_card_meta: "Interactive departmental map · three metrics",
-    eep_card_title: "Epistemic Engineering Platform",
-    eep_card_meta: "Documentation · Platform",
-    myriam_jurimetrie_title: "The influence of methodological choices on the jurimetric assessment of punitiveness",
-    laura_jurimetrie_title: "What is the role of small-N analyses in jurimetrics?",
+    projects_show_more: "Show more",
+    projects_show_less: "Show less",
     action_data: "data",
     action_text: "text",
     action_video: "video",
     action_code: "code",
-    program_title: "Research programme",
-    program_p1: "Machina Research Network is a research network that brings together lecturers, researchers, engineers, legal scholars, as well as students from several universities. It was established in 2019 under its original name, Structures et Théorie, and renamed in 2025.",
-    program_p2: "The network conducts interdisciplinary research across all areas of legal studies, the humanities, and, more broadly, the social sciences, most often adopting a computational approach. This means that it draws on methods or logics derived from computer science in order to advance research in these disciplines or to bring them into dialogue with one another.",
-    program_p3: "The network’s research programme consists in continuously seeking to push methodological boundaries and to pursue conceptual innovation in these fields, both through the production of scholarly work and through the development of software, whether licensed software, notably in partnership with the SATT, or open-source software.",
-    program_p4: "The programme systematically maintains a reflexive and epistemological dimension.",
-    program_p5: "Researchers strive to keep a critical distance from the tools they develop, from their limitations, and from their potential misuses.",
-    program_p6: "They also seek to reflect on ways of giving new technologies an ethical and positive orientation.",
     members_title: "Members",
     funding_title: "Funding",
     funding_lede: "Research conducted within the Machina Research Network is supported by a combination of competitive grants and research contracts.",
     grant_type_grant: "Grant",
     grant_type_contract: "Contract",
-    grant_title_pca: "Police Custody Assistant",
-    grant_title_semantica: "SEMANTICA",
-    grant_title_kt: "Knowledge Tree",
-    grant_title_ias_eep: "IAS Epistemic Engineering Platform",
-    grant_title_iuf: "Sacha Raoult, IUF Senior Member 2023-2028",
-    member_sacha_tagline: "Lecturer",
-    member_jiad_tagline: "Engineer",
-    member_lisa_tagline: "Legal Scholar",
-    member_sofiane_tagline: "Engineer",
-    member_eliot_tagline: "Engineer",
-    member_eric_tagline: "Engineer",
-    member_belikov_tagline: "Researcher",
-    member_myriam_tagline: "PhD Student",
-    member_camille_tagline: "PhD Student",
-    member_laura_tagline: "Researcher",
-    member_ami_tagline: "PhD Student"
+    hero_title: "MACHINA RESEARCH NETWORK",
+    hero_subtitle: "Computational Interdisciplinary Research",
+    hero_cta: "View Outputs"
   },
   fr: {
     nav_program: "Programme de recherche",
@@ -53,51 +26,220 @@ const I18N = {
     nav_members: "Membres",
     nav_funding: "Financement",
     projects_title: "Outputs",
-    cat_law_title: "Équipe de recherche en droit computationnel",
-    cat_epi_title: "Équipe d'ingénierie épistémique",
-    cat_psy_title: "Équipe de recherche en psychologie computationnelle",
-    ipv_card_title: "Projet de condamnations en France",
-    ipv_card_meta: "Carte départementale interactive · trois indicateurs",
-    eep_card_title: "Plateforme d'ingénierie épistémique",
-    eep_card_meta: "Documentation · Plateforme",
-    myriam_jurimetrie_title: "L’influence du choix des méthodes sur l’appréciation jurimétrique de la punitivité",
-    laura_jurimetrie_title: "Quelle place pour les analyses de petits N dans la jurimétrie ?",
+    projects_show_more: "Voir plus",
+    projects_show_less: "Voir moins",
     action_data: "données",
     action_text: "texte",
     action_video: "vidéo",
     action_code: "code",
-    program_title: "Programme de recherche",
-    program_p1: "Machina Research Network est un réseau de recherche qui regroupe des enseignants, des chercheurs, des ingénieurs, des juristes ainsi que des étudiants issus de plusieurs universités. Il a été formé en 2019 sous son premier nom, Structures et Théorie, puis rebaptisé en 2025.",
-    program_p2: "Le réseau mène des recherches interdisciplinaires dans l’ensemble des domaines des sciences juridiques, des humanités et, plus largement, des sciences humaines, en adoptant une approche computationnelle. Cela signifie qu’il mobilise des méthodes ou des logiques issues de l’informatique afin de faire progresser les recherches dans ces disciplines ou de les mettre en dialogue.",
-    program_p3: "Le programme de recherche du réseau consiste à chercher en permanence à repousser les frontières méthodologiques et à innover sur le plan conceptuel dans ces domaines, à la fois par la production de travaux scientifiques et par le développement de logiciels, qu’il s’agisse de logiciels sous licence, notamment en partenariat avec la SATT, ou de logiciels open source.",
-    program_p4: "Notre programme conserve systématiquement une dimension réflexive et épistémologique.",
-    program_p5: "Les chercheurs s’efforcent de maintenir une distance critique à l’égard des outils développés, de leurs limites et de leurs usages potentiellement abusifs.",
-    program_p6: "Ils cherchent également à réfléchir aux moyens de donner aux nouvelles technologies une orientation éthique et positive.",
     members_title: "Membres",
     funding_title: "Financement",
     funding_lede: "Les recherches menées au sein du Machina Research Network sont financées par un ensemble de subventions et de contrats de recherche.",
     grant_type_grant: "Subvention",
     grant_type_contract: "Contrat",
-    grant_title_pca: "Assistant de garde à vue",
-    grant_title_semantica: "SEMANTICA",
-    grant_title_kt: "Arbre de connaissances",
-    grant_title_ias_eep: "Plateforme d'ingénierie épistémique IAS",
-    grant_title_iuf: "Sacha Raoult, Membre Senior IUF 2023-2028",
-    member_sacha_tagline: "Maître de conférences",
-    member_jiad_tagline: "Ingénieur",
-    member_lisa_tagline: "Juriste",
-    member_sofiane_tagline: "Ingénieur",
-    member_eliot_tagline: "Ingénieur",
-    member_eric_tagline: "Ingénieur",
-    member_belikov_tagline: "Chercheur",
-    member_myriam_tagline: "Doctorante",
-    member_camille_tagline: "Doctorante",
-    member_laura_tagline: "Chercheuse",
-    member_ami_tagline: "Doctorante"
+    hero_title: "MACHINA RESEARCH NETWORK",
+    hero_subtitle: "Recherche Interdisciplinaire Computationnelle",
+    hero_cta: "Voir les Outputs"
   }
 };
 
 let currentLang = localStorage.getItem("lang") || "en";
+let dynamicData = { outputs: null, members: null, funding: null, program: null };
+
+async function loadDynamicData() {
+  try {
+    const [outputs, members, funding, program] = await Promise.all([
+      fetch('/api/outputs').then(r => r.json()),
+      fetch('/api/members').then(r => r.json()),
+      fetch('/api/funding').then(r => r.json()),
+      fetch('/api/program').then(r => r.json())
+    ]);
+    dynamicData = { outputs, members, funding, program };
+    
+    if (program && program.program) {
+      program.program.paragraphs.forEach(p => {
+        I18N.en[p.key] = p.en;
+        I18N.fr[p.key] = p.fr;
+      });
+      I18N.en.program_title = program.program.titleEN;
+      I18N.fr.program_title = program.program.titleFR;
+    }
+    
+    if (outputs && outputs.categories) {
+      outputs.categories.forEach(cat => {
+        if (cat.titleKey) {
+          I18N.en[cat.titleKey] = cat.titleEN;
+          I18N.fr[cat.titleKey] = cat.titleFR;
+        }
+        cat.outputs.forEach(o => {
+          if (o.titleKey) {
+            I18N.en[o.titleKey] = o.titleEN;
+            I18N.fr[o.titleKey] = o.titleFR;
+          }
+          if (o.metaKey) {
+            I18N.en[o.metaKey] = o.metaEN;
+            I18N.fr[o.metaKey] = o.metaFR;
+          }
+        });
+      });
+    }
+    
+    if (members && members.members) {
+      members.members.forEach(m => {
+        if (m.taglineKey) {
+          I18N.en[m.taglineKey] = m.taglineEN;
+          I18N.fr[m.taglineKey] = m.taglineFR;
+        }
+        if (m.affiliationKey) {
+          I18N.en[m.affiliationKey] = m.affiliationEN;
+          I18N.fr[m.affiliationKey] = m.affiliationFR;
+        }
+      });
+    }
+    
+    if (funding && funding.grants) {
+      funding.grants.forEach(g => {
+        if (g.titleKey) {
+          I18N.en[g.titleKey] = g.titleEN || g.title;
+          I18N.fr[g.titleKey] = g.titleFR || g.title;
+        }
+      });
+    }
+    
+    renderDynamicContent();
+  } catch (e) {
+    console.log('Using static content');
+  }
+}
+
+function renderDynamicContent() {
+  renderMembers();
+  renderFunding();
+  renderProgram();
+  renderOutputs();
+  applyLanguage(currentLang);
+  initProjectCollapsers();
+  hookRoutes();
+}
+
+function renderMembers() {
+  if (!dynamicData.members) return;
+  const container = document.querySelector('#members .cardGrid');
+  if (!container) return;
+  
+  const sorted = [...dynamicData.members.members].sort((a, b) => {
+    const aLast = a.name.split(' ').pop().toLowerCase();
+    const bLast = b.name.split(' ').pop().toLowerCase();
+    return aLast.localeCompare(bLast);
+  });
+  
+  container.innerHTML = sorted.map(m => {
+    const isLink = m.linkedin && m.linkedin !== '' && m.linkedin !== '#';
+    const tag = isLink ? 'a' : 'div';
+    const href = isLink ? `href="${m.linkedin}" rel="noreferrer" target="_blank"` : '';
+    return `
+      <${tag} class="card memberCard memberCard--simple" ${href} aria-label="${m.name}">
+        <div class="memberCard__name">${m.name}</div>
+        <div class="memberCard__tagline" data-i18n="${m.taglineKey}"></div>
+        <div class="memberCard__affiliation" data-i18n="${m.affiliationKey}"></div>
+      </${tag}>
+    `;
+  }).join('');
+}
+
+function renderFunding() {
+  if (!dynamicData.funding) return;
+  const container = document.querySelector('#funding .grantList');
+  if (!container) return;
+  
+  container.innerHTML = dynamicData.funding.grants.map(g => {
+    const titleAttr = g.titleKey ? `data-i18n="${g.titleKey}"` : '';
+    const typeKey = g.type === 'grant' ? 'grant_type_grant' : 'grant_type_contract';
+    const links = (g.links || []).map(l => 
+      `<a class="grantLink" href="${l.url}" target="_blank" rel="noreferrer">${l.label}</a>`
+    ).join('');
+    
+    return `
+      <div class="grantRow">
+        <div class="grantMain">
+          <div class="grantTitle" ${titleAttr}>${g.title}</div>
+          <div class="grantOrg">${g.pi}</div>
+          <div class="grantOrg">${g.organization}</div>
+          ${links ? `<div class="grantLinks">${links}</div>` : ''}
+        </div>
+        <div class="grantMeta">
+          <div class="grantDates">${g.dates}</div>
+          <div class="grantType" data-i18n="${typeKey}">${g.type === 'grant' ? 'Grant' : 'Contract'}</div>
+        </div>
+        <div class="grantAmount">
+          <div class="grantMoney">${g.amount}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderProgram() {
+  if (!dynamicData.program) return;
+  const prose = document.querySelector('#program .prose');
+  if (!prose) return;
+  
+  prose.innerHTML = dynamicData.program.program.paragraphs.map(p => 
+    `<p data-i18n="${p.key}">${p.en}</p>`
+  ).join('');
+}
+
+function renderOutputs() {
+  if (!dynamicData.outputs) return;
+  const projectsSection = document.getElementById('projects');
+  if (!projectsSection) return;
+  
+  const container = projectsSection.querySelector('.container');
+  if (!container) return;
+  
+  const h1 = container.querySelector('h1');
+  const existingCats = container.querySelectorAll('.projCat');
+  existingCats.forEach(c => c.remove());
+  
+  dynamicData.outputs.categories.forEach(cat => {
+    const catDiv = document.createElement('div');
+    catDiv.className = 'projCat';
+    
+    const outputs = [...cat.outputs].sort((a, b) => (b.year || 0) - (a.year || 0));
+    const cardsHtml = outputs.map(o => {
+      const titleAttr = o.titleKey ? `data-i18n="${o.titleKey}"` : '';
+      const metaAttr = o.metaKey ? `data-i18n="${o.metaKey}"` : '';
+      const title = o.title || o.titleEN || '';
+      const meta = o.meta || o.metaEN || '';
+      
+      const actions = (o.actions || []).map(a => {
+        if (a.type === 'route') {
+          return `<button class="actionBtn" data-route="${a.route}" type="button" data-i18n="${a.labelKey}">data</button>`;
+        } else {
+          return `<a class="actionBtn" href="${a.url}" rel="noreferrer" target="_blank" data-i18n="${a.labelKey}">link</a>`;
+        }
+      }).join('');
+      
+      return `
+        <div class="card" data-year="${o.year || 0}">
+          <div class="card__title" ${titleAttr}>${title}</div>
+          ${o.pi ? `<div class="grantOrg">${o.pi}</div>` : ''}
+          <div class="card__meta" ${metaAttr}>${meta}</div>
+          <div class="cardActions" aria-label="Actions">${actions}</div>
+        </div>
+      `;
+    }).join('');
+    
+    catDiv.innerHTML = `
+      <h2 class="catTitle" data-i18n="${cat.titleKey}">${cat.titleEN}</h2>
+      <div class="cardGrid" data-collapsible="true" data-limit="3">
+        ${cardsHtml}
+      </div>
+    `;
+    
+    container.appendChild(catDiv);
+  });
+}
 
 function applyLanguage(lang){
   currentLang = lang;
@@ -178,7 +320,9 @@ function setRoute(route){
 
 function hookRoutes(){
   document.querySelectorAll("[data-route]").forEach(el => {
-    el.addEventListener("click", () => setRoute(el.getAttribute("data-route")));
+    el.removeEventListener("click", el._routeHandler);
+    el._routeHandler = () => setRoute(el.getAttribute("data-route"));
+    el.addEventListener("click", el._routeHandler);
     el.addEventListener("keypress", (e) => {
       if (e.key === "Enter" || e.key === " ") setRoute(el.getAttribute("data-route"));
     });
@@ -190,3 +334,4 @@ initProjectCollapsers();
 applyTheme(currentTheme);
 applyLanguage(currentLang);
 setRoute("home");
+loadDynamicData();

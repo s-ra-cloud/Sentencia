@@ -892,3 +892,31 @@ body{
 ::-webkit-scrollbar-thumb:hover{
   background: var(--muted);
 }
+
+.footer{
+  border-top: 1px solid var(--line);
+  padding: 1rem 2rem;
+  background: var(--panelTint);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.footer__content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.footer__admin{
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.75rem;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+.footer__admin:hover{
+  opacity: 1;
+  color: var(--accent);
+}
