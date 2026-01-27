@@ -40,5 +40,5 @@ channel = "stable-25_05"
 ADMIN_PASSWORD = "Trismegiste"
 
 [deployment]
-run = ["sh", "-c", "node server.js"]
-deploymentTarget = "cloudrun"
+run = ["node", "server.js"]
+deploymentTarget = "autoscale"
