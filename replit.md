@@ -1,0 +1,67 @@
+# Machina Research Network
+
+## Overview
+
+Machina Research Network is a bilingual (English/French) academic research network website showcasing computational interdisciplinary research. The site presents research outputs, team members, funding sources, and program information for a network of lecturers, researchers, engineers, and legal scholars from multiple universities.
+
+The application is a single-page application (SPA) with client-side routing, theme switching (light/dark mode), and internationalization support. It includes an admin interface for content management.
+
+## User Preferences
+
+Preferred communication style: Simple, everyday language.
+
+## System Architecture
+
+### Frontend Architecture
+- **Vanilla JavaScript SPA**: No framework dependencies - uses plain HTML, CSS, and JavaScript
+- **Client-side routing**: Hash-based or data-attribute routing via `data-route` attributes on navigation elements
+- **Internationalization (i18n)**: Built-in translation system supporting English and French via `I18N` object in `app.js`
+- **Theme system**: Light/dark mode toggle with CSS custom properties (CSS variables) for theming
+- **Static assets**: Hero video (`hero.mp4`), stylesheets, and scripts served directly
+
+### Backend Architecture
+- **Express.js server** (v5.x): Minimal Node.js server handling static file serving and REST API
+- **File-based data storage**: JSON files in `/data` directory for content persistence
+- **Simple authentication**: Password-based admin authentication using Bearer tokens
+- **API endpoints**:
+  - `POST /api/login` - Admin authentication
+  - `GET/PUT /api/outputs` - Research outputs CRUD
+  - Similar patterns expected for members, funding, and program data
+
+### Data Storage
+- **JSON file storage**: Content stored in `/data` directory
+  - `outputs.json` - Research publications and projects
+  - `members.json` - Team member profiles
+  - `funding.json` - Grants and contracts
+  - `program.json` - Research program description
+- **Bilingual content structure**: Each data item contains both English and French versions using `titleEN`/`titleFR` pattern or translation keys
+
+### Authentication
+- **Simple password-based auth**: Single admin password stored in `ADMIN_PASSWORD` environment variable
+- **Bearer token pattern**: Password sent as Bearer token in Authorization header for protected routes
+- **No session management**: Stateless authentication
+
+### Admin Interface
+- **Admin page**: `/admin.html` - Password-protected content management interface
+- **Features**:
+  - Login with password (default: "Trismegiste")
+  - Manage Outputs (organized by category: Law, Epistemic, Psychology)
+  - Manage Members (name, tagline, affiliation, LinkedIn)
+  - Manage Funding (grants and contracts with amounts, dates, links)
+  - Manage Research Program (bilingual paragraphs)
+- **Access**: Small "Admin" link in footer of main website
+
+## External Dependencies
+
+### NPM Packages
+- **express** (v5.2.1): Web server framework for API and static file serving
+
+### External Services
+- **Google Fonts**: Inter font family loaded via CSS import
+
+### Environment Variables
+- `ADMIN_PASSWORD`: Admin authentication password (defaults to 'Trismegiste' if not set)
+
+### Static Assets Required
+- `hero.mp4`: Hero section background video
+- Member photos referenced in members data (expected in static directory)
