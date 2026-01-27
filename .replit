@@ -38,3 +38,7 @@ channel = "stable-25_05"
 
 [userenv.shared]
 ADMIN_PASSWORD = "Trismegiste"
+
+[deployment]
+run = ["sh", "-c", "node server.js"]
+deploymentTarget = "cloudrun"
