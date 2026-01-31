@@ -646,11 +646,12 @@ body{
 }
 
 .memberCard__role{
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 500;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  opacity: 0.7;
 }
 
 .memberCard__bio{
