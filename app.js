@@ -331,7 +331,6 @@ function hookRoutes(){
 }
 
 hookRoutes();
-initProjectCollapsers();
 applyTheme(currentTheme);
 applyLanguage(currentLang);
 setRoute("home");
