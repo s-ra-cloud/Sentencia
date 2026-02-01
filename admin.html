@@ -441,6 +441,14 @@
                 </div>
               </div>
               <div class="formGroup">
+                <label>Description EN</label>
+                <textarea rows="3" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].descEN = this.value">${output.descEN || ''}</textarea>
+              </div>
+              <div class="formGroup">
+                <label>Description FR</label>
+                <textarea rows="3" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].descFR = this.value">${output.descFR || ''}</textarea>
+              </div>
+              <div class="formGroup">
                 <label>PI</label>
                 <input type="text" value="${output.pi || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].pi = this.value">
               </div>
@@ -463,6 +471,8 @@
         title: 'New Output',
         titleEN: '',
         titleFR: '',
+        descEN: '',
+        descFR: '',
         meta: '',
         metaEN: '',
         metaFR: '',
