@@ -210,9 +210,9 @@ function renderOutputs() {
       const titleAttr = o.titleKey ? `data-i18n="${o.titleKey}"` : '';
       const descAttr = o.descKey ? `data-i18n="${o.descKey}"` : '';
       const metaAttr = o.metaKey ? `data-i18n="${o.metaKey}"` : '';
-      const title = o.title || o.titleEN || '';
-      const desc = o.desc || o.descEN || '';
-      const meta = o.meta || o.metaEN || '';
+      const title = o.title || (currentLang === 'fr' ? (o.titleFR || o.titleEN) : o.titleEN) || '';
+      const desc = o.desc || (currentLang === 'fr' ? (o.descFR || o.descEN) : o.descEN) || '';
+      const meta = o.meta || (currentLang === 'fr' ? (o.metaFR || o.metaEN) : o.metaEN) || '';
       
       const actions = (o.actions || []).map(a => {
         if (a.type === 'route') {
@@ -258,6 +258,8 @@ function applyLanguage(lang){
   document.querySelectorAll(".langBtn").forEach(b => b.classList.remove("is-active"));
   const active = document.querySelector(`.langBtn[data-lang="${lang}"]`);
   if (active) active.classList.add("is-active");
+  renderOutputs();
+  initProjectCollapsers();
 }
 
 function initProjectCollapsers(){
