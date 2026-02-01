@@ -118,7 +118,6 @@ function renderDynamicContent() {
   renderProgram();
   renderOutputs();
   applyLanguage(currentLang);
-  initProjectCollapsers();
   hookRoutes();
 }
 
@@ -197,13 +196,33 @@ function renderOutputs() {
   const container = projectsSection.querySelector('.container');
   if (!container) return;
   
-  const h1 = container.querySelector('h1');
-  const existingCats = container.querySelectorAll('.projCat');
-  existingCats.forEach(c => c.remove());
+  const existingTabs = container.querySelector('.teamTabs');
+  const existingContent = container.querySelector('.teamTabContent');
+  if (existingTabs) existingTabs.remove();
+  if (existingContent) existingContent.remove();
   
-  dynamicData.outputs.categories.forEach(cat => {
-    const catDiv = document.createElement('div');
-    catDiv.className = 'projCat';
+  const categories = dynamicData.outputs.categories;
+  const activeTab = container.dataset.activeTab || categories[0]?.id || '';
+  
+  const tabsHtml = categories.map(cat => {
+    const label = currentLang === 'fr' ? (cat.titleFR || cat.titleEN) : cat.titleEN;
+    const isActive = cat.id === activeTab;
+    return `<button class="teamTab${isActive ? ' is-active' : ''}" data-tab="${cat.id}" type="button">${label}</button>`;
+  }).join('');
+  
+  const tabsContainer = document.createElement('div');
+  tabsContainer.className = 'teamTabs';
+  tabsContainer.innerHTML = tabsHtml;
+  container.appendChild(tabsContainer);
+  
+  const contentContainer = document.createElement('div');
+  contentContainer.className = 'teamTabContent';
+  
+  categories.forEach(cat => {
+    const isActive = cat.id === activeTab;
+    const panelDiv = document.createElement('div');
+    panelDiv.className = `teamPanel${isActive ? ' is-active' : ''}`;
+    panelDiv.dataset.panel = cat.id;
     
     const outputs = [...cat.outputs].sort((a, b) => (b.year || 0) - (a.year || 0));
     const barsHtml = outputs.map(o => {
@@ -235,14 +254,22 @@ function renderOutputs() {
       `;
     }).join('');
     
-    catDiv.innerHTML = `
-      <h2 class="catTitle" data-i18n="${cat.titleKey}">${cat.titleEN}</h2>
-      <div class="outputList" data-collapsible="true" data-limit="3">
-        ${barsHtml}
-      </div>
-    `;
-    
-    container.appendChild(catDiv);
+    panelDiv.innerHTML = `<div class="outputList">${barsHtml}</div>`;
+    contentContainer.appendChild(panelDiv);
+  });
+  
+  container.appendChild(contentContainer);
+  
+  tabsContainer.addEventListener('click', (e) => {
+    const tab = e.target.closest('.teamTab');
+    if (!tab) return;
+    const tabId = tab.dataset.tab;
+    container.dataset.activeTab = tabId;
+    tabsContainer.querySelectorAll('.teamTab').forEach(t => t.classList.remove('is-active'));
+    tab.classList.add('is-active');
+    contentContainer.querySelectorAll('.teamPanel').forEach(p => p.classList.remove('is-active'));
+    const panel = contentContainer.querySelector(`.teamPanel[data-panel="${tabId}"]`);
+    if (panel) panel.classList.add('is-active');
   });
 }
 
@@ -259,39 +286,6 @@ function applyLanguage(lang){
   const active = document.querySelector(`.langBtn[data-lang="${lang}"]`);
   if (active) active.classList.add("is-active");
   renderOutputs();
-  initProjectCollapsers();
-}
-
-function initProjectCollapsers(){
-  document.querySelectorAll('.projCat').forEach(cat => {
-    const grid = cat.querySelector('.cardGrid[data-collapsible="true"]') || cat.querySelector('.outputList[data-collapsible="true"]');
-    if (!grid) return;
-    const limit = Math.max(1, parseInt(grid.getAttribute('data-limit') || '3', 10));
-    const cards = Array.from(grid.querySelectorAll('.card, .outputBar'));
-    if (cards.length === 0) return;
-    cards.sort((a, b) => (parseInt(b.getAttribute('data-year') || '0', 10) - parseInt(a.getAttribute('data-year') || '0', 10))).forEach(card => grid.appendChild(card));
-    if (cards.length <= limit) return;
-    if (cat.querySelector('.projMoreBtn')) return;
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'projMoreBtn';
-    btn.setAttribute('aria-expanded', 'false');
-    btn.innerHTML = `<span class="projMoreBtn__icon" aria-hidden="true">▸</span><span class="projMoreBtn__label" data-i18n="projects_show_more">Show more</span>`;
-    grid.after(btn);
-    const setExpanded = (expanded) => {
-      btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      btn.classList.toggle('is-expanded', expanded);
-      btn.querySelector('.projMoreBtn__label')?.setAttribute('data-i18n', expanded ? 'projects_show_less' : 'projects_show_more');
-      const updatedCards = Array.from(grid.querySelectorAll('.card'));
-      updatedCards.forEach((card, idx) => { card.classList.toggle('is-hidden', !expanded && idx >= limit); });
-      applyLanguage(currentLang);
-    };
-    setExpanded(false);
-    btn.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      setExpanded(!expanded);
-    });
-  });
 }
 
 document.querySelectorAll(".langBtn").forEach(btn => {
