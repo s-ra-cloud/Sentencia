@@ -206,10 +206,12 @@ function renderOutputs() {
     catDiv.className = 'projCat';
     
     const outputs = [...cat.outputs].sort((a, b) => (b.year || 0) - (a.year || 0));
-    const cardsHtml = outputs.map(o => {
+    const barsHtml = outputs.map(o => {
       const titleAttr = o.titleKey ? `data-i18n="${o.titleKey}"` : '';
+      const descAttr = o.descKey ? `data-i18n="${o.descKey}"` : '';
       const metaAttr = o.metaKey ? `data-i18n="${o.metaKey}"` : '';
       const title = o.title || o.titleEN || '';
+      const desc = o.desc || o.descEN || '';
       const meta = o.meta || o.metaEN || '';
       
       const actions = (o.actions || []).map(a => {
@@ -221,19 +223,22 @@ function renderOutputs() {
       }).join('');
       
       return `
-        <div class="card" data-year="${o.year || 0}">
-          <div class="card__title" ${titleAttr}>${title}</div>
-          ${o.pi ? `<div class="grantOrg">${o.pi}</div>` : ''}
-          <div class="card__meta" ${metaAttr}>${meta}</div>
-          <div class="cardActions" aria-label="Actions">${actions}</div>
+        <div class="outputBar" data-year="${o.year || 0}">
+          <div class="outputBar__year">${o.year || ''}</div>
+          <div class="outputBar__content">
+            <div class="outputBar__title" ${titleAttr}>${title}</div>
+            ${desc ? `<div class="outputBar__desc" ${descAttr}>${desc}</div>` : ''}
+            <div class="outputBar__meta" ${metaAttr}>${meta}</div>
+          </div>
+          <div class="outputBar__actions" aria-label="Actions">${actions}</div>
         </div>
       `;
     }).join('');
     
     catDiv.innerHTML = `
       <h2 class="catTitle" data-i18n="${cat.titleKey}">${cat.titleEN}</h2>
-      <div class="cardGrid" data-collapsible="true" data-limit="3">
-        ${cardsHtml}
+      <div class="outputList" data-collapsible="true" data-limit="3">
+        ${barsHtml}
       </div>
     `;
     
@@ -257,10 +262,10 @@ function applyLanguage(lang){
 
 function initProjectCollapsers(){
   document.querySelectorAll('.projCat').forEach(cat => {
-    const grid = cat.querySelector('.cardGrid[data-collapsible="true"]');
+    const grid = cat.querySelector('.cardGrid[data-collapsible="true"]') || cat.querySelector('.outputList[data-collapsible="true"]');
     if (!grid) return;
     const limit = Math.max(1, parseInt(grid.getAttribute('data-limit') || '3', 10));
-    const cards = Array.from(grid.querySelectorAll('.card'));
+    const cards = Array.from(grid.querySelectorAll('.card, .outputBar'));
     if (cards.length === 0) return;
     cards.sort((a, b) => (parseInt(b.getAttribute('data-year') || '0', 10) - parseInt(a.getAttribute('data-year') || '0', 10))).forEach(card => grid.appendChild(card));
     if (cards.length <= limit) return;

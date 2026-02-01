@@ -284,7 +284,99 @@ body{
   gap: 16px;
 }
 
-.card.is-hidden{ display: none; }
+.card.is-hidden, .outputBar.is-hidden{ display: none; }
+
+.outputList{
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.outputBar{
+  display: grid;
+  grid-template-columns: 70px 1fr auto;
+  gap: 24px;
+  align-items: start;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--card-border);
+  transition: background 0.2s ease;
+}
+
+.outputBar:first-child{
+  border-top: 1px solid var(--card-border);
+}
+
+.outputBar:hover{
+  background: var(--panelTint);
+  margin: 0 -16px;
+  padding: 24px 16px;
+  border-radius: 12px;
+  border-color: transparent;
+}
+
+.outputBar:hover + .outputBar{
+  border-top-color: transparent;
+}
+
+.outputBar__year{
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  padding-top: 2px;
+}
+
+.outputBar__content{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.outputBar__title{
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.outputBar__desc{
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.outputBar__meta{
+  font-size: 13px;
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.outputBar__actions{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 2px;
+}
+
+.outputBar__actions .actionBtn{
+  padding: 6px 12px;
+  font-size: 11px;
+}
+
+@media (max-width: 700px){
+  .outputBar{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .outputBar__year{
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .outputBar__actions{
+    padding-top: 8px;
+  }
+}
 
 .projMoreBtn{
   margin-top: 16px;
