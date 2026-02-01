@@ -1,4 +1,5 @@
 const express = require('express');
+const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 
@@ -7,19 +8,58 @@ const PORT = 5000;
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Trismegiste';
 
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
+});
+
 app.use(express.json());
 app.use(express.static('.'));
 
-function readData(filename) {
+async function initializeDatabase() {
+  const client = await pool.connect();
   try {
-    return JSON.parse(fs.readFileSync(path.join(__dirname, 'data', filename), 'utf8'));
-  } catch (e) {
-    return null;
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS content (
+        key TEXT PRIMARY KEY,
+        data JSONB NOT NULL,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+    
+    const keys = ['outputs', 'members', 'funding', 'program'];
+    for (const key of keys) {
+      const result = await client.query('SELECT key FROM content WHERE key = $1', [key]);
+      if (result.rows.length === 0) {
+        const filePath = path.join(__dirname, 'data', `${key}.json`);
+        if (fs.existsSync(filePath)) {
+          const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+          await client.query(
+            'INSERT INTO content (key, data) VALUES ($1, $2)',
+            [key, JSON.stringify(data)]
+          );
+          console.log(`Initialized ${key} from JSON file`);
+        }
+      }
+    }
+  } finally {
+    client.release();
   }
 }
 
-function writeData(filename, data) {
-  fs.writeFileSync(path.join(__dirname, 'data', filename), JSON.stringify(data, null, 2));
+async function getData(key) {
+  const result = await pool.query('SELECT data FROM content WHERE key = $1', [key]);
+  if (result.rows.length > 0) {
+    return result.rows[0].data;
+  }
+  return null;
+}
+
+async function setData(key, data) {
+  await pool.query(
+    `INSERT INTO content (key, data, updated_at) VALUES ($1, $2, CURRENT_TIMESTAMP)
+     ON CONFLICT (key) DO UPDATE SET data = $2, updated_at = CURRENT_TIMESTAMP`,
+    [key, JSON.stringify(data)]
+  );
 }
 
 function checkAuth(req, res, next) {
@@ -39,42 +79,79 @@ app.post('/api/login', (req, res) => {
   }
 });
 
-app.get('/api/outputs', (req, res) => {
-  res.json(readData('outputs.json'));
+app.get('/api/outputs', async (req, res) => {
+  try {
+    res.json(await getData('outputs'));
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.put('/api/outputs', checkAuth, (req, res) => {
-  writeData('outputs.json', req.body);
-  res.json({ success: true });
+app.put('/api/outputs', checkAuth, async (req, res) => {
+  try {
+    await setData('outputs', req.body);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.get('/api/members', (req, res) => {
-  res.json(readData('members.json'));
+app.get('/api/members', async (req, res) => {
+  try {
+    res.json(await getData('members'));
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.put('/api/members', checkAuth, (req, res) => {
-  writeData('members.json', req.body);
-  res.json({ success: true });
+app.put('/api/members', checkAuth, async (req, res) => {
+  try {
+    await setData('members', req.body);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.get('/api/funding', (req, res) => {
-  res.json(readData('funding.json'));
+app.get('/api/funding', async (req, res) => {
+  try {
+    res.json(await getData('funding'));
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.put('/api/funding', checkAuth, (req, res) => {
-  writeData('funding.json', req.body);
-  res.json({ success: true });
+app.put('/api/funding', checkAuth, async (req, res) => {
+  try {
+    await setData('funding', req.body);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.get('/api/program', (req, res) => {
-  res.json(readData('program.json'));
+app.get('/api/program', async (req, res) => {
+  try {
+    res.json(await getData('program'));
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.put('/api/program', checkAuth, (req, res) => {
-  writeData('program.json', req.body);
-  res.json({ success: true });
+app.put('/api/program', checkAuth, async (req, res) => {
+  try {
+    await setData('program', req.body);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on http://0.0.0.0:${PORT}`);
+initializeDatabase().then(() => {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on http://0.0.0.0:${PORT}`);
+  });
+}).catch(err => {
+  console.error('Failed to initialize database:', err);
+  process.exit(1);
 });
