@@ -29,12 +29,13 @@ Preferred communication style: Simple, everyday language.
   - Similar patterns expected for members, funding, and program data
 
 ### Data Storage
-- **JSON file storage**: Content stored in `/data` directory
-  - `outputs.json` - Research publications and projects
-  - `members.json` - Team member profiles
-  - `funding.json` - Grants and contracts
-  - `program.json` - Research program description
+- **PostgreSQL database**: Content stored in `content` table with JSONB data column
+  - `outputs` - Research publications and projects
+  - `members` - Team member profiles
+  - `funding` - Grants and contracts
+  - `program` - Research program description
 - **Bilingual content structure**: Each data item contains both English and French versions using `titleEN`/`titleFR` pattern or translation keys
+- **Initial data**: JSON files in `/data` directory are used for initial database seeding only
 
 ### Authentication
 - **Simple password-based auth**: Single admin password stored in `ADMIN_PASSWORD` environment variable
