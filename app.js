@@ -318,7 +318,7 @@ function calculateFundingProgress(grants) {
       consumedFunding += amount;
     } else if (currentYear >= startYear && currentYear <= endYear) {
       const totalYears = endYear - startYear + 1;
-      const elapsedYears = currentYear - startYear + 1;
+      const elapsedYears = currentYear - startYear;
       const yearlyAmount = amount / totalYears;
       consumedFunding += yearlyAmount * elapsedYears;
     }
