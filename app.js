@@ -387,6 +387,8 @@ function renderOutputs() {
       };
       const typeInfo = typeIcons[o.type] || { icon: '?', color: '#64748b' };
       
+      const piDisplay = o.pi || '';
+      
       return `
         <div class="outputBar" data-year="${o.year || 0}">
           <div class="outputBar__year">
@@ -395,6 +397,7 @@ function renderOutputs() {
           </div>
           <div class="outputBar__content">
             <div class="outputBar__title" ${titleAttr}>${title}</div>
+            ${piDisplay ? `<div class="outputBar__pi">${piDisplay}</div>` : ''}
             ${desc ? `<div class="outputBar__desc" ${descAttr}>${desc}</div>` : ''}
             <div class="outputBar__meta" ${metaAttr}>${meta}</div>
           </div>
