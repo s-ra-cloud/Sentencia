@@ -397,7 +397,7 @@ function renderOutputs() {
           </div>
           <div class="outputBar__content">
             <div class="outputBar__title" ${titleAttr}>${title}</div>
-            ${piDisplay ? `<div class="outputBar__pi">${piDisplay}</div>` : ''}
+            ${piDisplay ? `<div class="outputBar__pi" style="color: ${typeInfo.color}">${piDisplay}</div>` : ''}
             ${desc ? `<div class="outputBar__desc" ${descAttr}>${desc}</div>` : ''}
             <div class="outputBar__meta" ${metaAttr}>${meta}</div>
           </div>
