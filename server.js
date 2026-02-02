@@ -58,7 +58,7 @@ async function initializeDatabase() {
       )
     `);
     
-    const keys = ['outputs', 'members', 'funding', 'program'];
+    const keys = ['outputs', 'members', 'funding', 'program', 'partners'];
     for (const key of keys) {
       const result = await client.query('SELECT key FROM content WHERE key = $1', [key]);
       if (result.rows.length === 0) {
@@ -162,6 +162,24 @@ app.put('/api/funding', checkAuth, async (req, res) => {
   }
 });
 
+app.get('/api/partners', async (req, res) => {
+  try {
+    const data = await getData('partners');
+    res.json(data || { partners: [] });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.put('/api/partners', checkAuth, async (req, res) => {
+  try {
+    await setData('partners', req.body);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.get('/api/program', async (req, res) => {
   try {
     res.json(await getData('program'));
@@ -181,7 +199,7 @@ app.put('/api/program', checkAuth, async (req, res) => {
 
 app.get('/api/export', checkAuth, async (req, res) => {
   try {
-    const keys = ['outputs', 'members', 'funding', 'program'];
+    const keys = ['outputs', 'members', 'funding', 'program', 'partners'];
     const exportData = {};
     for (const key of keys) {
       exportData[key] = await getData(key);
@@ -195,11 +213,12 @@ app.get('/api/export', checkAuth, async (req, res) => {
 
 app.post('/api/import', checkAuth, async (req, res) => {
   try {
-    const { outputs, members, funding, program } = req.body;
+    const { outputs, members, funding, program, partners } = req.body;
     if (outputs) await setData('outputs', outputs);
     if (members) await setData('members', members);
     if (funding) await setData('funding', funding);
     if (program) await setData('program', program);
+    if (partners) await setData('partners', partners);
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
