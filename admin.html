@@ -431,7 +431,20 @@
               <strong>${cat.titleEN}</strong>
               <div style="font-size:0.875rem;color:var(--muted);">${cat.titleFR}</div>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="addOutput(${catIdx})">+ Add Output</button>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-sm" onclick="toggleTeamSettings(${catIdx})">Team Settings</button>
+              <button class="btn btn-primary btn-sm" onclick="addOutput(${catIdx})">+ Add Output</button>
+            </div>
+          </div>
+          <div class="team-settings" id="team-settings-${catIdx}" style="display:none;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:16px;margin-bottom:16px;">
+            <div class="formGroup">
+              <label>Team Description EN</label>
+              <textarea rows="3" onchange="outputsData.categories[${catIdx}].descriptionEN = this.value">${cat.descriptionEN || ''}</textarea>
+            </div>
+            <div class="formGroup">
+              <label>Team Description FR</label>
+              <textarea rows="3" onchange="outputsData.categories[${catIdx}].descriptionFR = this.value">${cat.descriptionFR || ''}</textarea>
+            </div>
           </div>
           <div class="itemList" id="cat-${catIdx}-outputs"></div>
         `;
@@ -549,6 +562,11 @@
         outputsData.categories[catIdx].outputs.splice(outIdx, 1);
         renderOutputs();
       }
+    }
+
+    function toggleTeamSettings(catIdx) {
+      const el = document.getElementById(`team-settings-${catIdx}`);
+      el.style.display = el.style.display === 'none' ? 'block' : 'none';
     }
 
     async function uploadFileForOutput(catIdx, outIdx, input) {
