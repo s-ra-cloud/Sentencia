@@ -802,7 +802,7 @@ body{
 }
 .memberOutput{
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   padding: 12px 16px;
   background: var(--card-bg);
@@ -821,16 +821,29 @@ body{
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 .memberOutput__year{
   font-size: 13px;
   font-weight: 600;
   color: var(--muted);
   width: 40px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.memberOutput__info{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 .memberOutput__title{
   font-size: 14px;
   font-weight: 500;
+}
+.memberOutput__pi{
+  font-size: 12px;
+  color: var(--muted);
 }
 .memberDetail__noOutputs{
   font-size: 14px;

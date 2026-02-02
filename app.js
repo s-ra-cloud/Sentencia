@@ -195,10 +195,14 @@ function renderMemberDetail(member, section) {
           book: { icon: '[]', color: '#f59e0b' }
         };
         const typeInfo = typeIcons[o.type] || { icon: '?', color: '#64748b' };
+        const pi = o.pi || '';
         return `<div class="memberOutput">
-          <span class="memberOutput__type" style="background:${typeInfo.color}">${typeInfo.icon}</span>
           <span class="memberOutput__year">${o.year || ''}</span>
-          <span class="memberOutput__title">${title}</span>
+          <span class="memberOutput__type" style="background:${typeInfo.color}">${typeInfo.icon}</span>
+          <div class="memberOutput__info">
+            <span class="memberOutput__title">${title}</span>
+            ${pi ? `<span class="memberOutput__pi">PI: ${pi}</span>` : ''}
+          </div>
         </div>`;
       }).join('')
     : `<p class="memberDetail__noOutputs">${currentLang === 'fr' ? 'Aucun output associé.' : 'No associated outputs.'}</p>`;
