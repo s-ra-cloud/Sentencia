@@ -119,6 +119,14 @@ app.get('/api/outputs', async (req, res) => {
   }
 });
 
+app.get('/api/team_descriptions', async (req, res) => {
+  try {
+    res.json(await getData('team_descriptions'));
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.put('/api/outputs', checkAuth, async (req, res) => {
   try {
     await setData('outputs', req.body);

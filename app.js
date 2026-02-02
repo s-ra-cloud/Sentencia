@@ -54,18 +54,19 @@ const I18N = {
 };
 
 let currentLang = localStorage.getItem("lang") || "en";
-let dynamicData = { outputs: null, members: null, funding: null, program: null, partners: null };
+let dynamicData = { outputs: null, members: null, funding: null, program: null, partners: null, teamDescriptions: null };
 
 async function loadDynamicData() {
   try {
-    const [outputs, members, funding, program, partners] = await Promise.all([
+    const [outputs, members, funding, program, partners, teamDescriptions] = await Promise.all([
       fetch('/api/outputs').then(r => r.json()),
       fetch('/api/members').then(r => r.json()),
       fetch('/api/funding').then(r => r.json()),
       fetch('/api/program').then(r => r.json()),
-      fetch('/api/partners').then(r => r.json())
+      fetch('/api/partners').then(r => r.json()),
+      fetch('/api/team_descriptions').then(r => r.json()).catch(() => ({}))
     ]);
-    dynamicData = { outputs, members, funding, program, partners };
+    dynamicData = { outputs, members, funding, program, partners, teamDescriptions };
     
     if (program && program.program) {
       program.program.paragraphs.forEach(p => {
@@ -495,7 +496,8 @@ function renderOutputs() {
     
     const outputs = [...cat.outputs].sort((a, b) => (b.year || 0) - (a.year || 0));
     
-    const teamDesc = currentLang === 'fr' ? (cat.descriptionFR || cat.descriptionEN || '') : (cat.descriptionEN || '');
+    const teamDescData = dynamicData.teamDescriptions && dynamicData.teamDescriptions[cat.id];
+    const teamDesc = teamDescData ? (currentLang === 'fr' ? teamDescData.fr : teamDescData.en) : '';
     
     const piCounts = {};
     outputs.forEach(o => {
