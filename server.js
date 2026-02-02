@@ -90,6 +90,9 @@ async function setData(key, data) {
      ON CONFLICT (key) DO UPDATE SET data = $2, updated_at = CURRENT_TIMESTAMP`,
     [key, JSON.stringify(data)]
   );
+  const filePath = path.join(__dirname, 'data', `${key}.json`);
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+  console.log(`Saved ${key} to JSON file`);
 }
 
 function checkAuth(req, res, next) {
