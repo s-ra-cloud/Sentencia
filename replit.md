@@ -32,6 +32,7 @@ Preferred communication style: Simple, everyday language.
 - **PostgreSQL database**: Content stored in `content` table with JSONB data column
   - `outputs` - Research publications and projects
   - `members` - Team member profiles
+  - `partners` - External partners and collaborating organizations
   - `funding` - Grants and contracts
   - `program` - Research program description
 - **Bilingual content structure**: Each data item contains both English and French versions using `titleEN`/`titleFR` pattern or translation keys
@@ -48,6 +49,7 @@ Preferred communication style: Simple, everyday language.
   - Login with password (default: "Trismegiste")
   - Manage Outputs (organized by team: Law, Epistemic, Psychology, Mythology, Philosophy, Varia)
   - Manage Members (name, tagline, affiliation, LinkedIn, bio EN/FR)
+  - Manage Partners (name, website, logo, scope/type EN/FR, description EN/FR)
   - Manage Funding (grants and contracts with amounts, dates, links)
   - Manage Research Program (bilingual paragraphs)
   - Export/Import database (backup and restore all content as JSON)
