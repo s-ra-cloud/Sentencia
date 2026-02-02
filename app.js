@@ -121,10 +121,16 @@ function renderDynamicContent() {
   hookRoutes();
 }
 
+let selectedMemberId = null;
+
 function renderMembers() {
   if (!dynamicData.members) return;
-  const container = document.querySelector('#members .cardGrid');
+  const section = document.getElementById('members');
+  const container = section.querySelector('.cardGrid');
   if (!container) return;
+  
+  let existingDetail = section.querySelector('.memberDetail');
+  if (existingDetail) existingDetail.remove();
   
   const sorted = [...dynamicData.members.members].sort((a, b) => {
     const aLast = a.name.split(' ').pop().toLowerCase();
@@ -132,18 +138,113 @@ function renderMembers() {
     return aLast.localeCompare(bLast);
   });
   
+  if (selectedMemberId) {
+    const member = dynamicData.members.members.find(m => m.id === selectedMemberId);
+    if (member) {
+      container.style.display = 'none';
+      renderMemberDetail(member, section);
+      return;
+    }
+  }
+  
+  container.style.display = '';
   container.innerHTML = sorted.map(m => {
-    const isLink = m.linkedin && m.linkedin !== '' && m.linkedin !== '#';
-    const tag = isLink ? 'a' : 'div';
-    const href = isLink ? `href="${m.linkedin}" rel="noreferrer" target="_blank"` : '';
+    const hasLinkedin = m.linkedin && m.linkedin !== '' && m.linkedin !== '#';
+    const linkedinBtn = hasLinkedin 
+      ? `<a class="memberCard__linkedin" href="${m.linkedin}" rel="noreferrer" target="_blank" onclick="event.stopPropagation()" title="LinkedIn">in</a>` 
+      : '';
     return `
-      <${tag} class="card memberCard memberCard--simple" ${href} aria-label="${m.name}">
+      <div class="card memberCard memberCard--simple" data-member-id="${m.id}" role="button" tabindex="0">
+        ${linkedinBtn}
         <div class="memberCard__name">${m.name}</div>
         <div class="memberCard__tagline" data-i18n="${m.taglineKey}"></div>
         <div class="memberCard__affiliation" data-i18n="${m.affiliationKey}"></div>
-      </${tag}>
+      </div>
     `;
   }).join('');
+  
+  container.querySelectorAll('.memberCard').forEach(card => {
+    card.addEventListener('click', () => {
+      selectedMemberId = card.dataset.memberId;
+      renderMembers();
+      applyTranslations();
+    });
+  });
+}
+
+function renderMemberDetail(member, section) {
+  const bio = currentLang === 'fr' ? (member.bioFR || member.bioEN || '') : (member.bioEN || '');
+  const tagline = currentLang === 'fr' ? (member.taglineFR || member.taglineEN) : member.taglineEN;
+  const affiliation = currentLang === 'fr' ? (member.affiliationFR || member.affiliationEN) : member.affiliationEN;
+  const hasLinkedin = member.linkedin && member.linkedin !== '' && member.linkedin !== '#';
+  const linkedinLink = hasLinkedin 
+    ? `<a class="memberDetail__linkedin" href="${member.linkedin}" rel="noreferrer" target="_blank">LinkedIn</a>` 
+    : '';
+  
+  const memberOutputs = getMemberOutputs(member.name);
+  const backLabel = currentLang === 'fr' ? 'Retour aux membres' : 'Back to all members';
+  
+  const outputsHtml = memberOutputs.length > 0 
+    ? memberOutputs.map(o => {
+        const title = o.title || (currentLang === 'fr' ? (o.titleFR || o.titleEN) : o.titleEN) || '';
+        const typeIcons = {
+          software: { icon: '{}', color: '#3b82f6' },
+          paper: { icon: 'Aa', color: '#22c55e' },
+          video: { icon: '|>', color: '#ef4444' },
+          podcast: { icon: '))', color: '#a855f7' },
+          book: { icon: '[]', color: '#f59e0b' }
+        };
+        const typeInfo = typeIcons[o.type] || { icon: '?', color: '#64748b' };
+        return `<div class="memberOutput">
+          <span class="memberOutput__type" style="background:${typeInfo.color}">${typeInfo.icon}</span>
+          <span class="memberOutput__year">${o.year || ''}</span>
+          <span class="memberOutput__title">${title}</span>
+        </div>`;
+      }).join('')
+    : `<p class="memberDetail__noOutputs">${currentLang === 'fr' ? 'Aucun output associé.' : 'No associated outputs.'}</p>`;
+  
+  const detailDiv = document.createElement('div');
+  detailDiv.className = 'memberDetail';
+  detailDiv.innerHTML = `
+    <button class="btn memberDetail__back" type="button">${backLabel}</button>
+    <div class="memberDetail__header">
+      <div>
+        <h2 class="memberDetail__name">${member.name}</h2>
+        <div class="memberDetail__role">${tagline} · ${affiliation}</div>
+      </div>
+      ${linkedinLink}
+    </div>
+    <p class="memberDetail__bio">${bio}</p>
+    <h3 class="memberDetail__outputsTitle">${currentLang === 'fr' ? 'Contributions' : 'Contributions'}</h3>
+    <div class="memberDetail__outputs">${outputsHtml}</div>
+  `;
+  
+  section.querySelector('.container').appendChild(detailDiv);
+  
+  detailDiv.querySelector('.memberDetail__back').addEventListener('click', () => {
+    selectedMemberId = null;
+    renderMembers();
+    applyTranslations();
+  });
+}
+
+function getMemberOutputs(memberName) {
+  if (!dynamicData.outputs) return [];
+  const outputs = [];
+  const nameParts = memberName.toLowerCase().split(' ');
+  const lastName = nameParts[nameParts.length - 1];
+  const firstName = nameParts[0];
+  
+  dynamicData.outputs.categories.forEach(cat => {
+    cat.outputs.forEach(o => {
+      const searchFields = [o.pi, o.meta, o.metaEN, o.metaFR].filter(Boolean).join(' ').toLowerCase();
+      if (searchFields.includes(lastName) || searchFields.includes(firstName)) {
+        outputs.push(o);
+      }
+    });
+  });
+  
+  return outputs.sort((a, b) => (b.year || 0) - (a.year || 0));
 }
 
 function renderFunding() {
