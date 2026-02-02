@@ -289,10 +289,98 @@ function renderPartners() {
   }).join('');
 }
 
+function calculateFundingProgress(grants) {
+  const currentYear = new Date().getFullYear();
+  let totalFunding = 0;
+  let consumedFunding = 0;
+  
+  grants.forEach(g => {
+    const amountMatch = g.amount.match(/([\d,]+)/);
+    if (!amountMatch) return;
+    const amount = parseFloat(amountMatch[1].replace(/,/g, ''));
+    totalFunding += amount;
+    
+    const dates = g.dates || '';
+    let startYear, endYear;
+    
+    if (dates.includes('-')) {
+      const parts = dates.split('-');
+      startYear = parseInt(parts[0]);
+      endYear = parseInt(parts[1]);
+    } else {
+      startYear = parseInt(dates);
+      endYear = startYear;
+    }
+    
+    if (isNaN(startYear)) return;
+    
+    if (currentYear > endYear) {
+      consumedFunding += amount;
+    } else if (currentYear >= startYear && currentYear <= endYear) {
+      const totalYears = endYear - startYear + 1;
+      const elapsedYears = currentYear - startYear + 1;
+      const yearlyAmount = amount / totalYears;
+      consumedFunding += yearlyAmount * elapsedYears;
+    }
+  });
+  
+  return {
+    total: totalFunding,
+    consumed: consumedFunding,
+    remaining: totalFunding - consumedFunding
+  };
+}
+
+function formatCurrency(amount) {
+  return new Intl.NumberFormat('en-US', { 
+    style: 'decimal',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(Math.round(amount));
+}
+
+function renderFundingProgress() {
+  if (!dynamicData.funding) return;
+  const container = document.getElementById('fundingProgress');
+  if (!container) return;
+  
+  const progress = calculateFundingProgress(dynamicData.funding.grants);
+  const consumedPercent = progress.total > 0 ? (progress.consumed / progress.total) * 100 : 0;
+  
+  const titleLabel = currentLang === 'fr' ? 'Progression du financement' : 'Funding Progress';
+  const totalLabel = currentLang === 'fr' ? 'Total sécurisé' : 'Total Secured';
+  const consumedLabel = currentLang === 'fr' ? 'Consommé' : 'Consumed';
+  const remainingLabel = currentLang === 'fr' ? 'Restant' : 'Remaining';
+  
+  container.innerHTML = `
+    <div class="fundingProgress__header">
+      <div class="fundingProgress__title">${titleLabel}</div>
+      <div class="fundingProgress__total">€${formatCurrency(progress.total)} ${totalLabel}</div>
+    </div>
+    <div class="fundingProgress__bar">
+      <div class="fundingProgress__consumed" style="width: ${consumedPercent}%"></div>
+    </div>
+    <div class="fundingProgress__legend">
+      <div class="fundingProgress__legendItem">
+        <span class="fundingProgress__legendDot fundingProgress__legendDot--consumed"></span>
+        <span class="fundingProgress__legendValue">€${formatCurrency(progress.consumed)}</span>
+        <span class="fundingProgress__legendLabel">${consumedLabel} (${Math.round(consumedPercent)}%)</span>
+      </div>
+      <div class="fundingProgress__legendItem">
+        <span class="fundingProgress__legendDot fundingProgress__legendDot--remaining"></span>
+        <span class="fundingProgress__legendValue">€${formatCurrency(progress.remaining)}</span>
+        <span class="fundingProgress__legendLabel">${remainingLabel} (${Math.round(100 - consumedPercent)}%)</span>
+      </div>
+    </div>
+  `;
+}
+
 function renderFunding() {
   if (!dynamicData.funding) return;
   const container = document.querySelector('#funding .grantList');
   if (!container) return;
+  
+  renderFundingProgress();
   
   container.innerHTML = dynamicData.funding.grants.map(g => {
     const titleAttr = g.titleKey ? `data-i18n="${g.titleKey}"` : '';

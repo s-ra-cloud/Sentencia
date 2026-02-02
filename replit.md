@@ -43,6 +43,14 @@ Preferred communication style: Simple, everyday language.
 - **Bearer token pattern**: Password sent as Bearer token in Authorization header for protected routes
 - **No session management**: Stateless authentication
 
+### Funding Progress Bar
+- **Visual progress indicator** showing funding status
+- **Consumption logic**:
+  - If funding period is completed (end year < current year): Fully consumed
+  - If funding period is ongoing: Amount divided by number of years, elapsed years counted as consumed
+  - Future funding periods: Not consumed
+- **Display**: Total secured, consumed amount with percentage, remaining amount with percentage
+
 ### Admin Interface
 - **Admin page**: `/admin.html` - Password-protected content management interface
 - **Features**:
