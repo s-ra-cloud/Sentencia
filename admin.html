@@ -859,7 +859,7 @@
     }
 
     document.getElementById('addGrant').addEventListener('click', () => {
-      fundingData.grants.push({
+      fundingData.grants.unshift({
         id: 'new_' + Date.now(),
         title: 'New Grant',
         titleKey: '',
