@@ -585,9 +585,10 @@ function renderOutputs() {
       `;
     }).join('');
     
-    const coreMembersLabel = currentLang === 'fr' ? 'Membres principaux' : 'Core Members';
-    const contributorsLabel = currentLang === 'fr' ? 'Contributeurs' : 'Contributors';
+    const teamMembersLabel = currentLang === 'fr' ? 'Membres de l\'équipe' : 'Team Members';
     const outputsLabel = currentLang === 'fr' ? 'Productions' : 'Outputs';
+    
+    const allTeamMembers = [...coreMembers, ...contributors];
     
     const renderMemberBadge = (m) => {
       if (m.member) {
@@ -596,18 +597,14 @@ function renderOutputs() {
       return `<span class="teamMemberBadge">${m.name} <span class="teamMemberBadge__count">(${m.count})</span></span>`;
     };
     
-    const coreMembersHtml = coreMembers.length > 0 ? 
-      `<div class="teamMembers"><h4>${coreMembersLabel}</h4><div class="teamMembersList">${coreMembers.map(renderMemberBadge).join('')}</div></div>` : '';
-    
-    const contributorsHtml = contributors.length > 0 ? 
-      `<div class="teamMembers teamMembers--contributors"><h4>${contributorsLabel}</h4><div class="teamMembersList">${contributors.map(renderMemberBadge).join('')}</div></div>` : '';
+    const teamMembersHtml = allTeamMembers.length > 0 ? 
+      `<div class="teamMembers"><h4>${teamMembersLabel}</h4><div class="teamMembersList">${allTeamMembers.map(renderMemberBadge).join('')}</div></div>` : '';
     
     const descHtml = teamDesc ? `<div class="teamDescription">${teamDesc}</div>` : '';
     
     panelDiv.innerHTML = `
       ${descHtml}
-      ${coreMembersHtml}
-      ${contributorsHtml}
+      ${teamMembersHtml}
       <div class="teamOutputsSection">
         <h4>${outputsLabel}</h4>
         <div class="outputList">${barsHtml}</div>
