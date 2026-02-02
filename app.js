@@ -241,9 +241,21 @@ function renderOutputs() {
         }
       }).join('');
       
+      const typeIcons = {
+        software: { icon: '{}', color: '#3b82f6' },
+        paper: { icon: 'Aa', color: '#22c55e' },
+        video: { icon: '|>', color: '#ef4444' },
+        podcast: { icon: '))', color: '#a855f7' },
+        book: { icon: '[]', color: '#f59e0b' }
+      };
+      const typeInfo = typeIcons[o.type] || { icon: '?', color: '#64748b' };
+      
       return `
         <div class="outputBar" data-year="${o.year || 0}">
-          <div class="outputBar__year">${o.year || ''}</div>
+          <div class="outputBar__year">
+            ${o.year || ''}
+            <span class="outputBar__type" style="background: ${typeInfo.color}" title="${o.type || 'unknown'}">${typeInfo.icon}</span>
+          </div>
           <div class="outputBar__content">
             <div class="outputBar__title" ${titleAttr}>${title}</div>
             ${desc ? `<div class="outputBar__desc" ${descAttr}>${desc}</div>` : ''}

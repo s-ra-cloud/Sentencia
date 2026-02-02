@@ -469,6 +469,16 @@
                   <input type="number" value="${output.year || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].year = parseInt(this.value)">
                 </div>
                 <div class="formGroup">
+                  <label>Type</label>
+                  <select onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].type = this.value">
+                    <option value="software" ${output.type === 'software' ? 'selected' : ''}>Software</option>
+                    <option value="paper" ${output.type === 'paper' ? 'selected' : ''}>Paper</option>
+                    <option value="video" ${output.type === 'video' ? 'selected' : ''}>Video</option>
+                    <option value="podcast" ${output.type === 'podcast' ? 'selected' : ''}>Podcast</option>
+                    <option value="book" ${output.type === 'book' ? 'selected' : ''}>Book</option>
+                  </select>
+                </div>
+                <div class="formGroup">
                   <label>Meta (static)</label>
                   <input type="text" value="${output.meta || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].meta = this.value">
                 </div>
@@ -510,6 +520,7 @@
       const id = 'new_' + Date.now();
       outputsData.categories[catIdx].outputs.push({
         id,
+        type: 'software',
         year: new Date().getFullYear(),
         title: 'New Output',
         titleEN: '',
