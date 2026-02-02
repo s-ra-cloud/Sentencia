@@ -54,17 +54,18 @@ const I18N = {
 };
 
 let currentLang = localStorage.getItem("lang") || "en";
-let dynamicData = { outputs: null, members: null, funding: null, program: null };
+let dynamicData = { outputs: null, members: null, funding: null, program: null, partners: null };
 
 async function loadDynamicData() {
   try {
-    const [outputs, members, funding, program] = await Promise.all([
+    const [outputs, members, funding, program, partners] = await Promise.all([
       fetch('/api/outputs').then(r => r.json()),
       fetch('/api/members').then(r => r.json()),
       fetch('/api/funding').then(r => r.json()),
-      fetch('/api/program').then(r => r.json())
+      fetch('/api/program').then(r => r.json()),
+      fetch('/api/partners').then(r => r.json())
     ]);
-    dynamicData = { outputs, members, funding, program };
+    dynamicData = { outputs, members, funding, program, partners };
     
     if (program && program.program) {
       program.program.paragraphs.forEach(p => {
@@ -124,6 +125,7 @@ async function loadDynamicData() {
 
 function renderDynamicContent() {
   renderMembers();
+  renderPartners();
   renderFunding();
   renderProgram();
   renderOutputs();
@@ -255,6 +257,36 @@ function getMemberOutputs(memberName) {
   });
   
   return outputs.sort((a, b) => (b.year || 0) - (a.year || 0));
+}
+
+function renderPartners() {
+  const container = document.querySelector('#members .partnersGrid');
+  if (!container) return;
+  
+  const partners = dynamicData.partners?.partners || [];
+  
+  if (partners.length === 0) {
+    container.innerHTML = `<p class="muted">${currentLang === 'fr' ? 'Aucun partenaire pour le moment.' : 'No partners yet.'}</p>`;
+    return;
+  }
+  
+  container.innerHTML = partners.map(p => {
+    const name = p.name || '';
+    const description = currentLang === 'fr' ? (p.descriptionFR || p.descriptionEN || '') : (p.descriptionEN || '');
+    const scope = currentLang === 'fr' ? (p.scopeFR || p.scopeEN || '') : (p.scopeEN || '');
+    const logo = p.logo ? `<img class="partnerCard__logo" src="${p.logo}" alt="${name}">` : '';
+    const link = p.website ? `<a class="partnerCard__link" href="${p.website}" target="_blank" rel="noreferrer">${currentLang === 'fr' ? 'Visiter le site' : 'Visit website'} →</a>` : '';
+    
+    return `
+      <div class="partnerCard">
+        ${logo}
+        <div class="partnerCard__name">${name}</div>
+        ${scope ? `<div class="partnerCard__scope">${scope}</div>` : ''}
+        ${description ? `<div class="partnerCard__description">${description}</div>` : ''}
+        ${link}
+      </div>
+    `;
+  }).join('');
 }
 
 function renderFunding() {

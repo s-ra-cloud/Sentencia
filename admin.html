@@ -273,6 +273,7 @@
     <div class="tabs">
       <button class="tab active" data-panel="outputs">Outputs</button>
       <button class="tab" data-panel="members">Members</button>
+      <button class="tab" data-panel="partners">Partners</button>
       <button class="tab" data-panel="funding">Funding</button>
       <button class="tab" data-panel="program">Research Program</button>
     </div>
@@ -289,6 +290,16 @@
       <button class="btn btn-primary btn-sm" id="addMember">+ Add Member</button>
       <div style="margin-top: 1rem;">
         <button class="btn btn-success" id="saveMembers">Save Changes</button>
+      </div>
+    </div>
+
+    <div class="panel" id="panel-partners">
+      <h2>Manage Partners & Collaborators</h2>
+      <p class="text-muted">Add external partners, institutions, and collaborating organizations.</p>
+      <div class="itemList" id="partnersContainer"></div>
+      <button class="btn btn-primary btn-sm" id="addPartner">+ Add Partner</button>
+      <div style="margin-top: 1rem;">
+        <button class="btn btn-success" id="savePartners">Save Changes</button>
       </div>
     </div>
 
@@ -314,6 +325,7 @@
     let authToken = sessionStorage.getItem('adminToken');
     let outputsData = null;
     let membersData = null;
+    let partnersData = null;
     let fundingData = null;
     let programData = null;
 
@@ -411,10 +423,12 @@
     async function loadAllData() {
       outputsData = await apiCall('GET', '/api/outputs');
       membersData = await apiCall('GET', '/api/members');
+      partnersData = await apiCall('GET', '/api/partners');
       fundingData = await apiCall('GET', '/api/funding');
       programData = await apiCall('GET', '/api/program');
       renderOutputs();
       renderMembers();
+      renderPartners();
       renderFunding();
       renderProgram();
     }
@@ -685,6 +699,90 @@
         bioFR: ''
       });
       renderMembers();
+    });
+
+    function renderPartners() {
+      if (!partnersData || !partnersData.partners) {
+        partnersData = { partners: [] };
+      }
+      const container = document.getElementById('partnersContainer');
+      container.innerHTML = '';
+      partnersData.partners.forEach((partner, idx) => {
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.innerHTML = `
+          <div class="item-header">
+            <span class="item-title">${partner.name}</span>
+            <div class="item-actions">
+              <button class="btn btn-sm" onclick="toggleItem(this)">Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="deletePartner(${idx})">Delete</button>
+            </div>
+          </div>
+          <div class="item-content">
+            <div class="row">
+              <div class="formGroup">
+                <label>Name</label>
+                <input type="text" value="${partner.name}" onchange="partnersData.partners[${idx}].name = this.value; this.closest('.item').querySelector('.item-title').textContent = this.value;">
+              </div>
+              <div class="formGroup">
+                <label>Website URL</label>
+                <input type="text" value="${partner.website || ''}" onchange="partnersData.partners[${idx}].website = this.value">
+              </div>
+            </div>
+            <div class="row">
+              <div class="formGroup">
+                <label>Logo URL</label>
+                <input type="text" value="${partner.logo || ''}" onchange="partnersData.partners[${idx}].logo = this.value">
+              </div>
+            </div>
+            <div class="row">
+              <div class="formGroup">
+                <label>Scope/Type EN (e.g., "Research Partner")</label>
+                <input type="text" value="${partner.scopeEN || ''}" onchange="partnersData.partners[${idx}].scopeEN = this.value">
+              </div>
+              <div class="formGroup">
+                <label>Scope/Type FR</label>
+                <input type="text" value="${partner.scopeFR || ''}" onchange="partnersData.partners[${idx}].scopeFR = this.value">
+              </div>
+            </div>
+            <div class="formGroup">
+              <label>Description EN</label>
+              <textarea rows="2" onchange="partnersData.partners[${idx}].descriptionEN = this.value">${partner.descriptionEN || ''}</textarea>
+            </div>
+            <div class="formGroup">
+              <label>Description FR</label>
+              <textarea rows="2" onchange="partnersData.partners[${idx}].descriptionFR = this.value">${partner.descriptionFR || ''}</textarea>
+            </div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function deletePartner(idx) {
+      if (confirm('Delete this partner?')) {
+        partnersData.partners.splice(idx, 1);
+        renderPartners();
+      }
+    }
+
+    document.getElementById('addPartner').addEventListener('click', () => {
+      partnersData.partners.push({
+        id: 'new_' + Date.now(),
+        name: 'New Partner',
+        website: '',
+        logo: '',
+        scopeEN: '',
+        scopeFR: '',
+        descriptionEN: '',
+        descriptionFR: ''
+      });
+      renderPartners();
+    });
+
+    document.getElementById('savePartners').addEventListener('click', async () => {
+      await apiCall('PUT', '/api/partners', partnersData);
+      showToast('Partners saved!');
     });
 
     function renderFunding() {
