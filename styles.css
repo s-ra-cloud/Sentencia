@@ -739,17 +739,18 @@ body{
   padding: 20px 0;
 }
 .memberDetail__back{
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  padding: 8px 16px;
+  background: var(--fg);
+  color: var(--bg);
+  border: none;
+  padding: 10px 18px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 500;
   margin-bottom: 24px;
 }
 .memberDetail__back:hover{
-  background: var(--invert-bg);
-  color: var(--invert-fg);
+  opacity: 0.85;
 }
 .memberDetail__header{
   display: flex;
