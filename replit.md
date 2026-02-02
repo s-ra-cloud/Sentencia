@@ -46,11 +46,15 @@ Preferred communication style: Simple, everyday language.
 - **Admin page**: `/admin.html` - Password-protected content management interface
 - **Features**:
   - Login with password (default: "Trismegiste")
-  - Manage Outputs (organized by category: Law, Epistemic, Psychology)
+  - Manage Outputs (organized by team: Law, Epistemic, Psychology, Mythology, Philosophy)
   - Manage Members (name, tagline, affiliation, LinkedIn)
   - Manage Funding (grants and contracts with amounts, dates, links)
   - Manage Research Program (bilingual paragraphs)
+  - Export/Import database (backup and restore all content as JSON)
 - **Access**: Small "Admin" link in footer of main website
+- **API endpoints for backup**:
+  - `GET /api/export` - Export all database content as JSON (auth required)
+  - `POST /api/import` - Import JSON backup to restore content (auth required)
 
 ## External Dependencies
 

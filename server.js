@@ -147,6 +147,33 @@ app.put('/api/program', checkAuth, async (req, res) => {
   }
 });
 
+app.get('/api/export', checkAuth, async (req, res) => {
+  try {
+    const keys = ['outputs', 'members', 'funding', 'program'];
+    const exportData = {};
+    for (const key of keys) {
+      exportData[key] = await getData(key);
+    }
+    exportData.exportedAt = new Date().toISOString();
+    res.json(exportData);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.post('/api/import', checkAuth, async (req, res) => {
+  try {
+    const { outputs, members, funding, program } = req.body;
+    if (outputs) await setData('outputs', outputs);
+    if (members) await setData('members', members);
+    if (funding) await setData('funding', funding);
+    if (program) await setData('program', program);
+    res.json({ success: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 initializeDatabase().then(() => {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://0.0.0.0:${PORT}`);

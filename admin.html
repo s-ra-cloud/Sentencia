@@ -262,7 +262,12 @@
         <h1>Content Management</h1>
         <a href="/" class="backLink">Back to website</a>
       </div>
-      <button class="btn btn-danger btn-sm" id="logoutBtn">Logout</button>
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="btn btn-primary btn-sm" id="exportBtn">Export DB</button>
+        <button class="btn btn-primary btn-sm" id="importBtn">Import DB</button>
+        <input type="file" id="importFile" accept=".json" style="display: none;">
+        <button class="btn btn-danger btn-sm" id="logoutBtn">Logout</button>
+      </div>
     </div>
 
     <div class="tabs">
@@ -348,6 +353,44 @@
       sessionStorage.removeItem('adminToken');
       document.getElementById('loginWrap').style.display = 'flex';
       document.getElementById('adminWrap').style.display = 'none';
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', async () => {
+      try {
+        const data = await apiCall('GET', '/api/export');
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `machina-backup-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        alert('Export failed: ' + e.message);
+      }
+    });
+
+    document.getElementById('importBtn').addEventListener('click', () => {
+      document.getElementById('importFile').click();
+    });
+
+    document.getElementById('importFile').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
+        if (confirm('This will replace all current data. Continue?')) {
+          await apiCall('POST', '/api/import', data);
+          alert('Import successful!');
+          await loadAllData();
+        }
+      } catch (err) {
+        alert('Import failed: ' + err.message);
+      }
+      e.target.value = '';
     });
 
     document.querySelectorAll('.tab').forEach(tab => {
