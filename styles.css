@@ -357,6 +357,73 @@ body{
   display: block;
 }
 
+.teamDescription{
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--fg);
+}
+
+.teamMembers{
+  margin-bottom: 20px;
+}
+.teamMembers h4{
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.teamMembers--contributors h4{
+  font-size: 13px;
+}
+.teamMembersList{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.teamMemberBadge{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.teamMemberBadge--linked{
+  cursor: pointer;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.teamMemberBadge--linked:hover{
+  background: var(--accent);
+  color: #fff;
+}
+.teamMemberBadge__count{
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+.teamOutputsSection{
+  margin-top: 24px;
+}
+.teamOutputsSection h4{
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .outputList{
   margin-top: 0;
   display: flex;

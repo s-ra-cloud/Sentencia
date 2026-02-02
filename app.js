@@ -355,6 +355,8 @@ function renderOutputs() {
   const contentContainer = document.createElement('div');
   contentContainer.className = 'teamTabContent';
   
+  const allMembers = dynamicData.members?.members || [];
+  
   categories.forEach(cat => {
     const isActive = cat.id === activeTab;
     const panelDiv = document.createElement('div');
@@ -362,6 +364,48 @@ function renderOutputs() {
     panelDiv.dataset.panel = cat.id;
     
     const outputs = [...cat.outputs].sort((a, b) => (b.year || 0) - (a.year || 0));
+    
+    const teamDesc = currentLang === 'fr' ? (cat.descriptionFR || cat.descriptionEN || '') : (cat.descriptionEN || '');
+    
+    const piCounts = {};
+    outputs.forEach(o => {
+      if (o.pi) {
+        const names = o.pi.split(/,|&/).map(n => n.trim()).filter(n => n);
+        names.forEach(name => {
+          const cleanName = name.replace(/\s*\([^)]*\)\s*/g, '').trim();
+          if (cleanName) {
+            piCounts[cleanName] = (piCounts[cleanName] || 0) + 1;
+          }
+        });
+      }
+    });
+    
+    const sortedPIs = Object.entries(piCounts).sort((a, b) => b[1] - a[1]);
+    const coreThreshold = Math.max(2, Math.floor(outputs.length * 0.2));
+    
+    const coreMembers = [];
+    const contributors = [];
+    
+    sortedPIs.forEach(([name, count]) => {
+      const matchedMember = allMembers.find(m => {
+        const nameParts = name.toLowerCase().split(' ');
+        const memberParts = m.name.toLowerCase().split(' ');
+        return nameParts.some(p => memberParts.includes(p));
+      });
+      
+      const memberInfo = {
+        name,
+        count,
+        member: matchedMember
+      };
+      
+      if (count >= coreThreshold) {
+        coreMembers.push(memberInfo);
+      } else {
+        contributors.push(memberInfo);
+      }
+    });
+    
     const barsHtml = outputs.map(o => {
       const titleAttr = o.titleKey ? `data-i18n="${o.titleKey}"` : '';
       const descAttr = o.descKey ? `data-i18n="${o.descKey}"` : '';
@@ -411,7 +455,34 @@ function renderOutputs() {
       `;
     }).join('');
     
-    panelDiv.innerHTML = `<div class="outputList">${barsHtml}</div>`;
+    const coreMembersLabel = currentLang === 'fr' ? 'Membres principaux' : 'Core Members';
+    const contributorsLabel = currentLang === 'fr' ? 'Contributeurs' : 'Contributors';
+    const outputsLabel = currentLang === 'fr' ? 'Productions' : 'Outputs';
+    
+    const renderMemberBadge = (m) => {
+      if (m.member) {
+        return `<span class="teamMemberBadge teamMemberBadge--linked" data-member-id="${m.member.id}">${m.name} <span class="teamMemberBadge__count">(${m.count})</span></span>`;
+      }
+      return `<span class="teamMemberBadge">${m.name} <span class="teamMemberBadge__count">(${m.count})</span></span>`;
+    };
+    
+    const coreMembersHtml = coreMembers.length > 0 ? 
+      `<div class="teamMembers"><h4>${coreMembersLabel}</h4><div class="teamMembersList">${coreMembers.map(renderMemberBadge).join('')}</div></div>` : '';
+    
+    const contributorsHtml = contributors.length > 0 ? 
+      `<div class="teamMembers teamMembers--contributors"><h4>${contributorsLabel}</h4><div class="teamMembersList">${contributors.map(renderMemberBadge).join('')}</div></div>` : '';
+    
+    const descHtml = teamDesc ? `<div class="teamDescription">${teamDesc}</div>` : '';
+    
+    panelDiv.innerHTML = `
+      ${descHtml}
+      ${coreMembersHtml}
+      ${contributorsHtml}
+      <div class="teamOutputsSection">
+        <h4>${outputsLabel}</h4>
+        <div class="outputList">${barsHtml}</div>
+      </div>
+    `;
     contentContainer.appendChild(panelDiv);
   });
   
