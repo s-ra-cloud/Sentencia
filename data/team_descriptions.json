@@ -1,0 +1,26 @@
+{
+  "law": {
+    "en": "The Computational Law team pioneers the application of data science and machine learning to legal studies. Our research maps sentencing patterns across French jurisdictions, constructs knowledge graphs from court decisions, and develops practical tools for legal professionals. We combine quantitative jurimetrics with software development to reveal systemic patterns in criminal justice and support defense practitioners.",
+    "fr": "L'équipe Droit Computationnel est pionnière dans l'application de la science des données et de l'apprentissage automatique aux études juridiques. Nos recherches cartographient les pratiques de condamnation à travers les juridictions françaises, construisent des graphes de connaissances à partir des décisions de justice et développent des outils pratiques pour les professionnels du droit. Nous combinons la jurimétrie quantitative avec le développement logiciel pour révéler les tendances systémiques de la justice pénale et soutenir les praticiens de la défense."
+  },
+  "epi": {
+    "en": "The Epistemic Engineering team builds platforms and tools that transform how knowledge is structured, shared, and produced in academic research. From collaborative knowledge mapping to career development assistants and specialized writing tools, we create software that helps researchers organize their work, build networks, and communicate ideas more effectively.",
+    "fr": "L'équipe Ingénierie Épistémique construit des plateformes et des outils qui transforment la façon dont la connaissance est structurée, partagée et produite dans la recherche académique. De la cartographie collaborative des connaissances aux assistants de développement de carrière et aux outils d'écriture spécialisés, nous créons des logiciels qui aident les chercheurs à organiser leur travail, à construire des réseaux et à communiquer leurs idées plus efficacement."
+  },
+  "psy": {
+    "en": "The Computational Psychology team investigates decision-making, cognitive biases, and the psychology of criminal behavior through computational methods. Our research uses semantic analysis to explore concepts like influence and manipulation in criminological literature, develops simulation tools for studying uncertainty in decisions, and examines the theoretical boundaries of self-directed criminality.",
+    "fr": "L'équipe Psychologie Computationnelle étudie la prise de décision, les biais cognitifs et la psychologie du comportement criminel à travers des méthodes computationnelles. Nos recherches utilisent l'analyse sémantique pour explorer des concepts tels que l'emprise et la manipulation dans la littérature criminologique, développent des outils de simulation pour étudier l'incertitude dans les décisions et examinent les frontières théoriques de la criminalité auto-dirigée."
+  },
+  "myth": {
+    "en": "The Computational Mythology team applies network analysis and artificial intelligence to the study of mythological narratives and unconscious symbolism. We map interconnections between characters, themes, and archetypal elements across cultural traditions, and develop applications that explore Jungian frameworks through modern computational approaches.",
+    "fr": "L'équipe Mythologie Computationnelle applique l'analyse de réseau et l'intelligence artificielle à l'étude des récits mythologiques et du symbolisme inconscient. Nous cartographions les interconnexions entre les personnages, les thèmes et les éléments archétypaux à travers les traditions culturelles, et développons des applications qui explorent les cadres jungiens à travers des approches computationnelles modernes."
+  },
+  "philo": {
+    "en": "The Computational Philosophy team creates digital tools that make philosophical texts and ethical frameworks more accessible and explorable. Our projects include AI personas based on major philosophers' ethical writings, interlinked libraries that map conceptual connections across philosophical history, and interactive versions of foundational works like Wittgenstein's Tractatus.",
+    "fr": "L'équipe Philosophie Computationnelle crée des outils numériques qui rendent les textes philosophiques et les cadres éthiques plus accessibles et explorables. Nos projets comprennent des personas IA basés sur les écrits éthiques des grands philosophes, des bibliothèques interconnectées qui cartographient les connexions conceptuelles à travers l'histoire de la philosophie, et des versions interactives d'œuvres fondamentales comme le Tractatus de Wittgenstein."
+  },
+  "varia": {
+    "en": "The Varia team houses cross-disciplinary projects that don't fit neatly into other categories. These works represent our network's experimental and boundary-crossing research, bringing computational methods to unexpected domains and fostering innovation at the intersection of diverse fields.",
+    "fr": "L'équipe Varia regroupe les projets transdisciplinaires qui ne s'inscrivent pas facilement dans les autres catégories. Ces travaux représentent la recherche expérimentale et transversale de notre réseau, apportant des méthodes computationnelles à des domaines inattendus et favorisant l'innovation à l'intersection de divers champs."
+  }
+}

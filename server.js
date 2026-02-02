@@ -58,7 +58,7 @@ async function initializeDatabase() {
       )
     `);
     
-    const keys = ['outputs', 'members', 'funding', 'program', 'partners'];
+    const keys = ['outputs', 'members', 'funding', 'program', 'partners', 'team_descriptions'];
     for (const key of keys) {
       const result = await client.query('SELECT key FROM content WHERE key = $1', [key]);
       if (result.rows.length === 0) {
@@ -207,7 +207,7 @@ app.put('/api/program', checkAuth, async (req, res) => {
 
 app.get('/api/export', checkAuth, async (req, res) => {
   try {
-    const keys = ['outputs', 'members', 'funding', 'program', 'partners'];
+    const keys = ['outputs', 'members', 'funding', 'program', 'partners', 'team_descriptions'];
     const exportData = {};
     for (const key of keys) {
       exportData[key] = await getData(key);
@@ -221,12 +221,13 @@ app.get('/api/export', checkAuth, async (req, res) => {
 
 app.post('/api/import', checkAuth, async (req, res) => {
   try {
-    const { outputs, members, funding, program, partners } = req.body;
+    const { outputs, members, funding, program, partners, team_descriptions } = req.body;
     if (outputs) await setData('outputs', outputs);
     if (members) await setData('members', members);
     if (funding) await setData('funding', funding);
     if (program) await setData('program', program);
     if (partners) await setData('partners', partners);
+    if (team_descriptions) await setData('team_descriptions', team_descriptions);
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
