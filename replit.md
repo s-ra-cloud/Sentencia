@@ -46,15 +46,25 @@ Preferred communication style: Simple, everyday language.
 - **Admin page**: `/admin.html` - Password-protected content management interface
 - **Features**:
   - Login with password (default: "Trismegiste")
-  - Manage Outputs (organized by team: Law, Epistemic, Psychology, Mythology, Philosophy)
-  - Manage Members (name, tagline, affiliation, LinkedIn)
+  - Manage Outputs (organized by team: Law, Epistemic, Psychology, Mythology, Philosophy, Varia)
+  - Manage Members (name, tagline, affiliation, LinkedIn, bio EN/FR)
   - Manage Funding (grants and contracts with amounts, dates, links)
   - Manage Research Program (bilingual paragraphs)
   - Export/Import database (backup and restore all content as JSON)
+  - File uploads for outputs (PDFs, videos, etc.) - stored locally for direct download
 - **Access**: Small "Admin" link in footer of main website
-- **API endpoints for backup**:
+- **API endpoints**:
   - `GET /api/export` - Export all database content as JSON (auth required)
   - `POST /api/import` - Import JSON backup to restore content (auth required)
+  - `POST /api/upload` - Upload file for outputs (auth required, max 50MB)
+  - `GET /api/files` - List uploaded files (auth required)
+  - `DELETE /api/files/:filename` - Delete uploaded file (auth required)
+
+### File Storage
+- **Uploads directory**: `/uploads` - Stores uploaded files (PDFs, videos, etc.)
+- **File types allowed**: .pdf, .doc, .docx, .mp4, .mp3, .zip, .png, .jpg, .jpeg, .gif
+- **Max file size**: 50MB
+- **Access**: Files served at `/uploads/<filename>` with download headers
 
 ## External Dependencies
 
