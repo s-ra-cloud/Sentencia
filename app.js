@@ -180,7 +180,7 @@ function renderMembers() {
     card.addEventListener('click', () => {
       selectedMemberId = card.dataset.memberId;
       renderMembers();
-      applyTranslations();
+      applyLanguage(currentLang);
     });
   });
 }
@@ -237,7 +237,7 @@ function renderMemberDetail(member, section) {
   detailDiv.querySelector('.memberDetail__back').addEventListener('click', () => {
     selectedMemberId = null;
     renderMembers();
-    applyTranslations();
+    applyLanguage(currentLang);
   });
 }
 
