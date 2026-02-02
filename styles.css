@@ -317,6 +317,34 @@ body{
   border-color: var(--fg);
 }
 
+.outputsSummary{
+  margin-bottom: 24px;
+}
+.outputsSummary p{
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.summaryItem{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.summaryIcon{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  font-family: monospace;
+  vertical-align: middle;
+}
+
 .teamTabContent{
   margin-top: 16px;
 }
