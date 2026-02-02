@@ -587,6 +587,14 @@
                 <input type="text" value="${member.affiliationFR || ''}" onchange="membersData.members[${idx}].affiliationFR = this.value">
               </div>
             </div>
+            <div class="formGroup">
+              <label>Bio EN</label>
+              <textarea rows="2" onchange="membersData.members[${idx}].bioEN = this.value">${member.bioEN || ''}</textarea>
+            </div>
+            <div class="formGroup">
+              <label>Bio FR</label>
+              <textarea rows="2" onchange="membersData.members[${idx}].bioFR = this.value">${member.bioFR || ''}</textarea>
+            </div>
           </div>
         `;
         container.appendChild(item);
@@ -610,7 +618,9 @@
         affiliationKey: '',
         affiliationEN: '',
         affiliationFR: '',
-        linkedin: ''
+        linkedin: '',
+        bioEN: '',
+        bioFR: ''
       });
       renderMembers();
     });
