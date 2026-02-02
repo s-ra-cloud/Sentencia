@@ -2,9 +2,41 @@ const express = require('express');
 const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
+const multer = require('multer');
 
 const app = express();
 const PORT = 5000;
+
+const UPLOADS_DIR = path.join(__dirname, 'uploads');
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, UPLOADS_DIR);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const ext = path.extname(file.originalname);
+    const baseName = path.basename(file.originalname, ext).replace(/[^a-zA-Z0-9-_]/g, '_');
+    cb(null, `${baseName}-${uniqueSuffix}${ext}`);
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 50 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ['.pdf', '.doc', '.docx', '.mp4', '.mp3', '.zip', '.png', '.jpg', '.jpeg', '.gif'];
+    const ext = path.extname(file.originalname).toLowerCase();
+    if (allowedTypes.includes(ext)) {
+      cb(null, true);
+    } else {
+      cb(new Error('File type not allowed'));
+    }
+  }
+});
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Trismegiste';
 
@@ -173,6 +205,61 @@ app.post('/api/import', checkAuth, async (req, res) => {
     res.status(500).json({ error: e.message });
   }
 });
+
+app.post('/api/upload', checkAuth, upload.single('file'), (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+    const fileUrl = `/uploads/${req.file.filename}`;
+    res.json({ 
+      success: true, 
+      filename: req.file.filename,
+      originalName: req.file.originalname,
+      url: fileUrl,
+      size: req.file.size
+    });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/files', checkAuth, (req, res) => {
+  try {
+    const files = fs.readdirSync(UPLOADS_DIR).map(filename => {
+      const stats = fs.statSync(path.join(UPLOADS_DIR, filename));
+      return {
+        filename,
+        url: `/uploads/${filename}`,
+        size: stats.size,
+        uploadedAt: stats.mtime
+      };
+    });
+    res.json({ files });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/files/:filename', checkAuth, (req, res) => {
+  try {
+    const filePath = path.join(UPLOADS_DIR, req.params.filename);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ error: 'File not found' });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.use('/uploads', express.static(UPLOADS_DIR, {
+  setHeaders: (res, filePath) => {
+    res.setHeader('Content-Disposition', `attachment; filename="${path.basename(filePath)}"`);
+  }
+}));
 
 initializeDatabase().then(() => {
   app.listen(PORT, '0.0.0.0', () => {
