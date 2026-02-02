@@ -370,13 +370,18 @@ function renderOutputs() {
       const desc = o.desc || (currentLang === 'fr' ? (o.descFR || o.descEN) : o.descEN) || '';
       const meta = o.meta || (currentLang === 'fr' ? (o.metaFR || o.metaEN) : o.metaEN) || '';
       
-      const actions = (o.actions || []).map(a => {
+      const fileBtn = o.fileUrl ? 
+        `<a class="actionBtn actionBtn--download" href="${o.fileUrl}" download="${o.fileName || 'download'}">${currentLang === 'fr' ? 'Télécharger' : 'Download'}</a>` : '';
+      
+      const externalActions = (o.actions || []).map(a => {
         if (a.type === 'route') {
           return `<button class="actionBtn" data-route="${a.route}" type="button" data-i18n="${a.labelKey}">data</button>`;
         } else {
           return `<a class="actionBtn" href="${a.url}" rel="noreferrer" target="_blank" data-i18n="${a.labelKey}">link</a>`;
         }
       }).join('');
+      
+      const actions = fileBtn + externalActions;
       
       const typeIcons = {
         software: { icon: '{}', color: '#3b82f6' },

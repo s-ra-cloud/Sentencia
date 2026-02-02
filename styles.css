@@ -584,6 +584,15 @@ body{
   outline-offset: 2px;
 }
 
+.actionBtn--download{
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.actionBtn--download:hover{
+  opacity: 0.9;
+}
+
 .projCat{ margin-top: 20px; }
 
 .themeToggle{
