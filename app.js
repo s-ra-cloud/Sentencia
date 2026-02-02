@@ -18,7 +18,10 @@ const I18N = {
     grant_type_contract: "Contract",
     hero_title: "MACHINA RESEARCH NETWORK",
     hero_subtitle: "Computational Interdisciplinary Research",
-    hero_cta: "View Outputs"
+    hero_cta: "View Outputs",
+    contact_title: "Get in Touch",
+    contact_subtitle: "Interested in collaborating or learning more about our research?",
+    contact_btn: "Contact Us"
   },
   fr: {
     nav_program: "Programme de recherche",
@@ -39,7 +42,10 @@ const I18N = {
     grant_type_contract: "Contrat",
     hero_title: "MACHINA RESEARCH NETWORK",
     hero_subtitle: "Recherche Interdisciplinaire Computationnelle",
-    hero_cta: "Voir les Outputs"
+    hero_cta: "Voir les Outputs",
+    contact_title: "Nous Contacter",
+    contact_subtitle: "Intéressé par une collaboration ou pour en savoir plus sur nos recherches ?",
+    contact_btn: "Contactez-nous"
   }
 };
 

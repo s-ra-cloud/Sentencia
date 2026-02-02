@@ -1283,6 +1283,53 @@ body{
   background: var(--muted);
 }
 
+.contactCta{
+  padding: 60px 0;
+  background: linear-gradient(135deg, var(--accent) 0%, #6366f1 100%);
+  color: #fff;
+}
+.contactCta__inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.contactCta__text h2{
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.contactCta__text p{
+  font-size: 16px;
+  opacity: 0.9;
+}
+.contactCta__btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  background: #fff;
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+.contactCta__btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 600px){
+  .contactCta__inner{
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
 .footer{
   border-top: 1px solid var(--line);
   padding: 1rem 2rem;
