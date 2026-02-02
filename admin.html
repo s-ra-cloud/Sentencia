@@ -506,7 +506,16 @@
                 <input type="text" value="${output.pi || ''}" onchange="outputsData.categories[${catIdx}].outputs[${outIdx}].pi = this.value">
               </div>
               <div class="formGroup">
-                <label>Actions (JSON)</label>
+                <label>Attached File</label>
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                  <input type="file" id="file-${catIdx}-${outIdx}" accept=".pdf,.doc,.docx,.mp4,.mp3,.zip,.png,.jpg,.jpeg,.gif" onchange="uploadFileForOutput(${catIdx}, ${outIdx}, this)">
+                  ${output.fileUrl ? `<a href="${output.fileUrl}" target="_blank" style="color:var(--accent);">View File</a>
+                  <button class="btn btn-sm btn-danger" onclick="removeFileFromOutput(${catIdx}, ${outIdx})">Remove</button>` : ''}
+                </div>
+                ${output.fileUrl ? `<div style="font-size:0.8rem;color:var(--muted);">Current: ${output.fileUrl}</div>` : '<div style="font-size:0.8rem;color:var(--muted);">No file attached</div>'}
+              </div>
+              <div class="formGroup">
+                <label>External Links (JSON)</label>
                 <textarea onchange="try{outputsData.categories[${catIdx}].outputs[${outIdx}].actions=JSON.parse(this.value)}catch(e){}">${JSON.stringify(output.actions || [], null, 2)}</textarea>
               </div>
             </div>
@@ -538,6 +547,41 @@
     function deleteOutput(catIdx, outIdx) {
       if (confirm('Delete this output?')) {
         outputsData.categories[catIdx].outputs.splice(outIdx, 1);
+        renderOutputs();
+      }
+    }
+
+    async function uploadFileForOutput(catIdx, outIdx, input) {
+      if (!input.files || input.files.length === 0) return;
+      
+      const file = input.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      try {
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + token },
+          body: formData
+        });
+        const data = await res.json();
+        if (data.success) {
+          outputsData.categories[catIdx].outputs[outIdx].fileUrl = data.url;
+          outputsData.categories[catIdx].outputs[outIdx].fileName = data.originalName;
+          renderOutputs();
+          alert('File uploaded successfully!');
+        } else {
+          alert('Upload failed: ' + data.error);
+        }
+      } catch (e) {
+        alert('Upload error: ' + e.message);
+      }
+    }
+
+    function removeFileFromOutput(catIdx, outIdx) {
+      if (confirm('Remove attached file from this output?')) {
+        delete outputsData.categories[catIdx].outputs[outIdx].fileUrl;
+        delete outputsData.categories[catIdx].outputs[outIdx].fileName;
         renderOutputs();
       }
     }
