@@ -16,8 +16,8 @@
           "metaFR": "Outil ML interactif · Arbres de décision · Analyse CSV",
           "actions": [
             {
-              "type": "route",
-              "route": "sentencing-tree.html",
+              "type": "link",
+              "url": "/sentencing-tree.html",
               "labelKey": "action_view"
             }
           ]
