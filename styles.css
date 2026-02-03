@@ -1232,6 +1232,31 @@ body{
   color: var(--muted);
 }
 
+.fundingProgress__perOutput{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--muted);
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.fundingProgress__perOutputLabel{
+  color: var(--muted);
+}
+
+.fundingProgress__perOutputValue{
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.fundingProgress__perOutputCount{
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 .grantList{
   margin-top: 20px;
   display: flex;

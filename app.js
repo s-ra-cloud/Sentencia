@@ -348,10 +348,16 @@ function renderFundingProgress() {
   const progress = calculateFundingProgress(dynamicData.funding.grants);
   const consumedPercent = progress.total > 0 ? (progress.consumed / progress.total) * 100 : 0;
   
+  const totalOutputs = dynamicData.outputs ? 
+    dynamicData.outputs.categories.reduce((sum, cat) => sum + (cat.outputs ? cat.outputs.length : 0), 0) : 0;
+  const fundingPerOutput = totalOutputs > 0 ? Math.round(progress.consumed / totalOutputs) : 0;
+  
   const titleLabel = currentLang === 'fr' ? 'Progression du financement' : 'Funding Progress';
   const totalLabel = currentLang === 'fr' ? 'Total sécurisé' : 'Total Secured';
   const consumedLabel = currentLang === 'fr' ? 'Consommé' : 'Consumed';
   const remainingLabel = currentLang === 'fr' ? 'Restant' : 'Remaining';
+  const perOutputLabel = currentLang === 'fr' ? 'Financement par production' : 'Funding per output';
+  const outputsCountLabel = currentLang === 'fr' ? 'productions' : 'outputs';
   
   container.innerHTML = `
     <div class="fundingProgress__header">
@@ -372,6 +378,11 @@ function renderFundingProgress() {
         <span class="fundingProgress__legendValue">€${formatCurrency(progress.remaining)}</span>
         <span class="fundingProgress__legendLabel">${remainingLabel} (${Math.round(100 - consumedPercent)}%)</span>
       </div>
+    </div>
+    <div class="fundingProgress__perOutput">
+      <span class="fundingProgress__perOutputLabel">${perOutputLabel}:</span>
+      <span class="fundingProgress__perOutputValue">€${formatCurrency(fundingPerOutput)}</span>
+      <span class="fundingProgress__perOutputCount">(${totalOutputs} ${outputsCountLabel})</span>
     </div>
   `;
 }
