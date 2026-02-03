@@ -80,9 +80,23 @@ Preferred communication style: Simple, everyday language.
 
 ### NPM Packages
 - **express** (v5.2.1): Web server framework for API and static file serving
+- **http-proxy-middleware**: Proxies requests to Python FastAPI app
+
+### Python Packages (for Sentencing Tree App)
+- **fastapi**, **uvicorn**: Web framework and server
+- **pandas**, **numpy**: Data processing
+- **scikit-learn**, **xgboost**, **lightgbm**: Machine learning
+- **matplotlib**: Visualization
 
 ### External Services
 - **Google Fonts**: Inter font family loaded via CSS import
+
+### Sentencing Tree App
+- **Location**: `/sentencing-tree/` directory
+- **Description page**: `/sentencing-tree.html` - Explains the tool and links to the app
+- **App URL**: `/sentencing-tree-app/` - Proxied to Python FastAPI backend on port 8000
+- **Workflow**: Runs `python -m uvicorn main:app --host 0.0.0.0 --port 8000`
+- **Features**: Upload CSV data, generate decision trees, multiple ML frameworks
 
 ### Environment Variables
 - `ADMIN_PASSWORD`: Admin authentication password (defaults to 'Trismegiste' if not set)
