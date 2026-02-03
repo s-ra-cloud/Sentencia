@@ -605,9 +605,9 @@ function renderOutputs() {
     
     const renderMemberBadge = (m) => {
       if (m.member) {
-        return `<span class="teamMemberBadge teamMemberBadge--linked" data-member-id="${m.member.id}">${m.name} <span class="teamMemberBadge__count">(${m.count})</span></span>`;
+        return `<span class="teamMemberBadge teamMemberBadge--linked" data-member-id="${m.member.id}">${m.name}</span>`;
       }
-      return `<span class="teamMemberBadge">${m.name} <span class="teamMemberBadge__count">(${m.count})</span></span>`;
+      return `<span class="teamMemberBadge">${m.name}</span>`;
     };
     
     const teamMembersHtml = allTeamMembers.length > 0 ? 

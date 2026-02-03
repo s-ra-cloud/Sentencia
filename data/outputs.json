@@ -5,22 +5,22 @@
       "outputs": [
         {
           "id": "sentencing-tree",
+          "pi": "Sacha Raoult",
           "type": "software",
           "year": 2025,
-          "pi": "Sacha Raoult",
-          "titleEN": "Sentencing Choice Tree",
-          "titleFR": "Arbre de choix de condamnation",
           "descEN": "An interactive machine learning tool for analyzing sentencing data. Upload CSV datasets and generate decision tree visualizations that reveal patterns in sentencing decisions using scikit-learn, XGBoost, or LightGBM.",
           "descFR": "Un outil interactif d apprentissage automatique pour analyser les données de condamnation. Téléchargez des jeux de données CSV et générez des visualisations d arbres de décision révélant les schémas dans les décisions de condamnation.",
           "metaEN": "Interactive ML tool · Decision trees · CSV analysis",
           "metaFR": "Outil ML interactif · Arbres de décision · Analyse CSV",
           "actions": [
             {
-              "type": "link",
               "url": "/sentencing-tree.html",
+              "type": "link",
               "labelKey": "action_view"
             }
-          ]
+          ],
+          "titleEN": "Sentencing Choice Tree",
+          "titleFR": "Arbre de choix de condamnation"
         },
         {
           "id": "ipv",
@@ -40,7 +40,8 @@
           "metaKey": "ipv_card_meta",
           "titleEN": "The Geography of Sentencing in France",
           "titleFR": "La Géographie du Contentieux Pénal en France",
-          "titleKey": "ipv_card_title"
+          "titleKey": "ipv_card_title",
+          "pi": "Laura Duparc, Sacha Raoult"
         },
         {
           "id": "kg2025",
@@ -155,21 +156,22 @@
           "id": "eep",
           "pi": "",
           "type": "software",
-          "year": 2024,
-          "descEN": "A collaborative platform for structuring and visualizing knowledge production in academic research, enabling teams to map epistemic processes.",
-          "descFR": "Une plateforme collaborative pour structurer et visualiser la production de connaissances dans la recherche académique, permettant aux équipes de cartographier les processus épistémiques.",
+          "year": 2025,
+          "title": "Future of Science Network",
+          "descEN": "A Hub for Innovation in Academic Publishing.",
+          "descFR": "Une plateforme collaborative pour l'innovation dans la publication académique.",
           "metaEN": "Documentation · Platform",
           "metaFR": "Documentation · Plateforme",
           "actions": [
             {
-              "url": "https://fos-network.gitbook.io/eep/what-is-the-eep",
+              "url": "https://fosn.1337.ma/home",
               "type": "link",
               "labelKey": "action_text"
             }
           ],
           "metaKey": "eep_card_meta",
-          "titleEN": "Epistemic Engineering Platform",
-          "titleFR": "Plateforme d ingénierie épistémique",
+          "titleEN": "",
+          "titleFR": "",
           "titleKey": "eep_card_title"
         },
         {
@@ -205,6 +207,27 @@
           "metaEN": "Word Processor for Academic Dissertations",
           "metaFR": "Editeur de texte pour mémoires et thèse",
           "actions": [],
+          "titleEN": "",
+          "titleFR": ""
+        },
+        {
+          "id": "new_1770113091963",
+          "pi": "James Evans, Laura Duparc, Eric Parisot",
+          "meta": "",
+          "type": "software",
+          "year": 2026,
+          "title": "Knowledge Tree",
+          "descEN": "Academic Genealogy of Mentorships.",
+          "descFR": "Généalogie de mentorat académique.",
+          "metaEN": "Platform",
+          "metaFR": "Plateforme",
+          "actions": [
+            {
+              "url": "https://fosn.1337.ma/home",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
           "titleEN": "",
           "titleFR": ""
         }
@@ -353,9 +376,15 @@
           "descFR": "Une bibliothèque interconnectée de textes philosophiques, créant un réseau navigable de connexions conceptuelles à travers l histoire de la philosophie.",
           "metaEN": "Interlinked Philosophical Library",
           "metaFR": "Bibliothèque philosophique interconnectée ",
-          "actions": [],
+          "actions": [
+            {
+              "url": "https://legacy-um6p.1337.ma/projects/library",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
           "metaKey": "legacy_meta",
-          "titleEN": "LEGACY",
+          "titleEN": "LEGACY Library",
           "titleFR": "LEGACY",
           "titleKey": "legacy_title"
         },
@@ -373,6 +402,27 @@
           "actions": [],
           "titleEN": "",
           "titleFR": ""
+        },
+        {
+          "id": "new_1770113230108",
+          "pi": "Laura Duparc",
+          "meta": "",
+          "type": "software",
+          "year": 2021,
+          "title": "",
+          "descEN": "A map of influence in major philosophical works.",
+          "descFR": "Une carte des influences dans les grands textes philosophiques.",
+          "metaEN": "",
+          "metaFR": "",
+          "actions": [
+            {
+              "url": "https://legacy-um6p.1337.ma/projects/great-conversation",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "titleEN": "The Great Conversation",
+          "titleFR": "La Grande Conversation"
         }
       ],
       "titleEN": "Computational Philosophy Research Team",

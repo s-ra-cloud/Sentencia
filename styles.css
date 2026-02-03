@@ -476,12 +476,12 @@ body{
 }
 .teamMemberBadge--linked{
   cursor: pointer;
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--muted);
+  color: var(--fg);
 }
 .teamMemberBadge--linked:hover{
-  background: var(--accent);
-  color: #fff;
+  background: var(--fg);
+  color: var(--bg);
 }
 .teamMemberBadge__count{
   font-size: 11px;
