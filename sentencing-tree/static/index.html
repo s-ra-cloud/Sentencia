@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sentencing Choice Tree</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --panel: #111827;
+        --panel-2: #0b1222;
+        --text: #e5e7eb;
+        --muted: #94a3b8;
+        --accent: #f59e0b;
+        --accent-2: #22c55e;
+        --danger: #ef4444;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", "SF Pro Text", system-ui, sans-serif;
+        background: radial-gradient(1200px 800px at 10% 10%, #1e293b 0%, var(--bg) 55%);
+        color: var(--text);
+      }
+
+      header {
+        padding: 28px 20px 14px;
+        text-align: center;
+      }
+
+      header h1 {
+        margin: 0 0 6px;
+        font-size: 28px;
+        letter-spacing: 0.3px;
+      }
+
+      header p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 18px;
+        padding: 14px 20px 28px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .panel {
+        background: linear-gradient(180deg, var(--panel), var(--panel-2));
+        border: 1px solid #1f2937;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      }
+
+      label {
+        display: block;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--muted);
+        margin: 12px 0 6px;
+      }
+
+      input[type="file"],
+      select,
+      input[type="number"],
+      input[type="text"] {
+        width: 100%;
+        background: #0b1120;
+        border: 1px solid #1f2937;
+        color: var(--text);
+        padding: 8px 10px;
+        border-radius: 8px;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 14px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: none;
+        background: var(--accent);
+        color: #111827;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .muted { color: var(--muted); }
+      .error { color: var(--danger); }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .chip {
+        background: #0b1120;
+        border: 1px solid #1f2937;
+        padding: 6px 8px;
+        border-radius: 16px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+      }
+
+      .metric {
+        background: #0b1120;
+        border: 1px solid #1f2937;
+        padding: 10px;
+        border-radius: 10px;
+      }
+
+      img {
+        max-width: 100%;
+        border-radius: 8px;
+        border: 1px solid #1f2937;
+        margin-top: 12px;
+      }
+
+      @media (max-width: 900px) {
+        main { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Sentencing Descriptive Choice Tree</h1>
+      <p>Upload a CSV, pick your target, remove variables, and watch the tree update.</p>
+    </header>
+
+    <main>
+      <section class="panel" id="controls">
+        <label>CSV File</label>
+        <input type="file" id="csvFile" accept=".csv" />
+
+        <label>Target Column</label>
+        <select id="target"></select>
+
+        <label>Task</label>
+        <select id="task">
+          <option value="auto">Auto-detect</option>
+          <option value="classification">Classification (0/1)</option>
+          <option value="regression">Regression (continuous)</option>
+        </select>
+
+        <label>Explanatory Variables</label>
+        <div id="featureList" class="chips"></div>
+
+        <label>Package</label>
+        <select id="package">
+          <option value="scikit-learn">scikit-learn</option>
+          <option value="xgboost">xgboost</option>
+          <option value="lightgbm">lightgbm</option>
+        </select>
+
+        <label>Max Depth</label>
+        <input type="number" id="maxDepth" min="1" max="12" value="4" />
+
+        <label>Min Samples Leaf</label>
+        <input type="number" id="minSamplesLeaf" min="1" max="50" value="5" />
+
+        <label>Test Size</label>
+        <input type="number" id="testSize" min="0.1" max="0.5" step="0.05" value="0.2" />
+
+        <label>Random State</label>
+        <input type="number" id="randomState" min="0" max="9999" value="42" />
+
+        <button id="runBtn" disabled>Run Model</button>
+        <p id="status" class="muted"></p>
+        <p id="error" class="error"></p>
+      </section>
+
+      <section class="panel" id="results">
+        <h3>Model Output</h3>
+        <div id="summary" class="muted">Load a CSV to get started.</div>
+        <div id="metrics" class="metrics"></div>
+        <div id="cmatrix"></div>
+        <img id="treeImg" alt="Decision tree" />
+      </section>
+    </main>
+
+    <script>
+      const csvFile = document.getElementById("csvFile");
+      const target = document.getElementById("target");
+      const featureList = document.getElementById("featureList");
+      const runBtn = document.getElementById("runBtn");
+      const statusEl = document.getElementById("status");
+      const errorEl = document.getElementById("error");
+      const summaryEl = document.getElementById("summary");
+      const metricsEl = document.getElementById("metrics");
+      const cmatrixEl = document.getElementById("cmatrix");
+      const treeImg = document.getElementById("treeImg");
+
+      let columns = [];
+      let selectedFeatures = new Set();
+
+      function resetUI() {
+        target.innerHTML = "";
+        featureList.innerHTML = "";
+        summaryEl.textContent = "Load a CSV to get started.";
+        metricsEl.innerHTML = "";
+        cmatrixEl.innerHTML = "";
+        treeImg.src = "";
+        errorEl.textContent = "";
+        statusEl.textContent = "";
+        runBtn.disabled = true;
+      }
+
+      function parseCSVColumns(text) {
+        const firstLine = text.split(/\r?\n/)[0];
+        return firstLine.split(",").map((c) => c.trim()).filter(Boolean);
+      }
+
+      function renderFeatures() {
+        featureList.innerHTML = "";
+        columns.forEach((col) => {
+          if (col === target.value) return;
+          const chip = document.createElement("label");
+          chip.className = "chip";
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = selectedFeatures.has(col);
+          checkbox.addEventListener("change", () => {
+            if (checkbox.checked) {
+              selectedFeatures.add(col);
+            } else {
+              selectedFeatures.delete(col);
+            }
+          });
+          const span = document.createElement("span");
+          span.textContent = col;
+          chip.appendChild(checkbox);
+          chip.appendChild(span);
+          featureList.appendChild(chip);
+        });
+      }
+
+      csvFile.addEventListener("change", async (event) => {
+        resetUI();
+        const file = event.target.files[0];
+        if (!file) return;
+        const text = await file.text();
+        columns = parseCSVColumns(text);
+        if (!columns.length) {
+          errorEl.textContent = "No columns detected.";
+          return;
+        }
+        columns.forEach((col) => {
+          const option = document.createElement("option");
+          option.value = col;
+          option.textContent = col;
+          target.appendChild(option);
+        });
+        target.value = columns[0];
+        selectedFeatures = new Set(columns.filter((c) => c !== target.value));
+        renderFeatures();
+        runBtn.disabled = false;
+      });
+
+      target.addEventListener("change", () => {
+        selectedFeatures = new Set(columns.filter((c) => c !== target.value));
+        renderFeatures();
+      });
+
+      runBtn.addEventListener("click", async () => {
+        errorEl.textContent = "";
+        statusEl.textContent = "Training model...";
+        summaryEl.textContent = "";
+        metricsEl.innerHTML = "";
+        cmatrixEl.innerHTML = "";
+        treeImg.src = "";
+
+        const file = csvFile.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("target", target.value);
+        formData.append("features", Array.from(selectedFeatures).join(","));
+        formData.append("task", document.getElementById("task").value);
+        formData.append("package", document.getElementById("package").value);
+        formData.append("max_depth", document.getElementById("maxDepth").value);
+        formData.append("min_samples_leaf", document.getElementById("minSamplesLeaf").value);
+        formData.append("test_size", document.getElementById("testSize").value);
+        formData.append("random_state", document.getElementById("randomState").value);
+
+        try {
+          const res = await fetch("/train", { method: "POST", body: formData });
+          const data = await res.json();
+          if (!res.ok) {
+            throw new Error(data.error || "Failed to train model.");
+          }
+
+          summaryEl.textContent = `Package: ${data.package} | Task: ${data.task}`;
+
+          if (data.task === "classification") {
+            const acc = document.createElement("div");
+            acc.className = "metric";
+            acc.textContent = `Accuracy: ${data.metrics.accuracy.toFixed(3)}`;
+            metricsEl.appendChild(acc);
+
+            const cm = data.metrics.confusion_matrix;
+            const table = document.createElement("table");
+            table.style.width = "100%";
+            table.style.borderCollapse = "collapse";
+            cm.forEach((row) => {
+              const tr = document.createElement("tr");
+              row.forEach((cell) => {
+                const td = document.createElement("td");
+                td.textContent = cell;
+                td.style.border = "1px solid #1f2937";
+                td.style.padding = "6px";
+                tr.appendChild(td);
+              });
+              table.appendChild(tr);
+            });
+            cmatrixEl.innerHTML = "<h4>Confusion Matrix</h4>";
+            cmatrixEl.appendChild(table);
+          } else {
+            ["mae", "rmse", "r2"].forEach((key) => {
+              const m = document.createElement("div");
+              m.className = "metric";
+              m.textContent = `${key.toUpperCase()}: ${data.metrics[key].toFixed(3)}`;
+              metricsEl.appendChild(m);
+            });
+          }
+
+          treeImg.src = `data:image/png;base64,${data.tree_png_b64}`;
+          statusEl.textContent = "Done.";
+        } catch (err) {
+          errorEl.textContent = err.message;
+          statusEl.textContent = "";
+        }
+      });
+    </script>
+  </body>
+</html>

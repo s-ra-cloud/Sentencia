@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentencing Choice Tree - Machina Research Network</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #1a1a2e;
+      --text-secondary: #64748b;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --border: #e2e8f0;
+      --panel: #f8fafc;
+    }
+    
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --text: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --accent: #3b82f6;
+      --accent-hover: #60a5fa;
+      --border: #334155;
+      --panel: #1e293b;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    
+    .navbar a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .navbar a:hover {
+      color: var(--accent);
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+    
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+    
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .author {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .description {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .description h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    
+    .description p {
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    
+    .description ul {
+      color: var(--text-secondary);
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .description li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .feature {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .feature h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .launch-section {
+      text-align: center;
+      padding: 3rem;
+      background: linear-gradient(135deg, var(--panel), var(--bg));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+    
+    .launch-section h2 {
+      margin-bottom: 1rem;
+    }
+    
+    .launch-section p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+    
+    .launch-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: background 0.2s;
+    }
+    
+    .launch-btn:hover {
+      background: var(--accent-hover);
+    }
+    
+    .tech-stack {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    
+    .tech-stack h3 {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+    
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .badge {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/">Machina Research Network</a>
+    <a href="/#outputs">Back to Outputs</a>
+  </nav>
+  
+  <div class="container">
+    <a href="/#outputs" class="back-link">&larr; Back to Research Outputs</a>
+    
+    <h1>Sentencing Choice Tree</h1>
+    <p class="author">By Sacha Raoult</p>
+    
+    <div class="description">
+      <h2>About This Tool</h2>
+      <p>
+        The Sentencing Choice Tree is an interactive machine learning tool designed for analyzing sentencing data. 
+        It allows researchers and legal professionals to upload CSV datasets and generate decision tree visualizations 
+        that reveal patterns in sentencing decisions.
+      </p>
+      <p>
+        This tool supports multiple machine learning frameworks and provides detailed performance metrics, 
+        making it valuable for both exploratory analysis and rigorous research.
+      </p>
+    </div>
+    
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <h3>CSV Data Upload</h3>
+        <p>Simply upload your sentencing data in CSV format and select your target variable.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🌳</div>
+        <h3>Decision Tree Visualization</h3>
+        <p>Generate clear, interpretable decision trees that show how variables influence outcomes.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔧</div>
+        <h3>Multiple ML Frameworks</h3>
+        <p>Choose between scikit-learn, XGBoost, or LightGBM for tree generation.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📈</div>
+        <h3>Performance Metrics</h3>
+        <p>Get accuracy scores, confusion matrices, MAE, RMSE, and R² metrics.</p>
+      </div>
+    </div>
+    
+    <div class="launch-section">
+      <h2>Ready to Analyze Your Data?</h2>
+      <p>Launch the Sentencing Choice Tree application to start exploring your sentencing data.</p>
+      <a href="/sentencing-tree-app/" class="launch-btn">Launch Application</a>
+    </div>
+    
+    <div class="tech-stack">
+      <h3>Built With</h3>
+      <div class="tech-badges">
+        <span class="badge">Python</span>
+        <span class="badge">FastAPI</span>
+        <span class="badge">scikit-learn</span>
+        <span class="badge">XGBoost</span>
+        <span class="badge">LightGBM</span>
+        <span class="badge">Pandas</span>
+        <span class="badge">Matplotlib</span>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+    <p>&copy; 2026 Machina Research Network. All rights reserved.</p>
+  </footer>
+  
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.setAttribute('data-theme', 'dark');
+    }
+  </script>
+</body>
+</html>

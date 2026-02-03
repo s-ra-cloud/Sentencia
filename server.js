@@ -3,6 +3,7 @@ const { Pool } = require('pg');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 const PORT = 5000;
@@ -45,6 +46,13 @@ const pool = new Pool({
 });
 
 app.use(express.json());
+
+app.use('/sentencing-tree-app', createProxyMiddleware({
+  target: 'http://localhost:8000',
+  changeOrigin: true,
+  pathRewrite: { '^/sentencing-tree-app': '' }
+}));
+
 app.use(express.static('.'));
 
 async function initializeDatabase() {
