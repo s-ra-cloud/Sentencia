@@ -1,10 +1,14 @@
 import base64
 import io
+import json
+import os
+from collections import defaultdict
+from datetime import datetime
 from typing import List, Optional
 
 import numpy as np
 import pandas as pd
-from fastapi import FastAPI, File, Form, UploadFile
+from fastapi import FastAPI, File, Form, UploadFile, Request, Header
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from matplotlib import pyplot as plt
@@ -30,6 +34,58 @@ except Exception:
 
 app = FastAPI(title="Sentencing Choice Tree")
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+RATE_LIMIT = 10
+RATE_DATA_FILE = os.path.join(os.path.dirname(__file__), "rate_data.json")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "Trismegiste")
+ALLOWED_IPS = os.environ.get("ALLOWED_IPS", "").split(",")
+
+def load_rate_data():
+    if os.path.exists(RATE_DATA_FILE):
+        try:
+            with open(RATE_DATA_FILE, "r") as f:
+                data = json.load(f)
+                return {
+                    "counts": defaultdict(int, data.get("counts", {})),
+                    "blocked": set(data.get("blocked", [])),
+                }
+        except Exception:
+            pass
+    return {"counts": defaultdict(int), "blocked": set()}
+
+def save_rate_data(data):
+    with open(RATE_DATA_FILE, "w") as f:
+        json.dump({
+            "counts": dict(data["counts"]),
+            "blocked": list(data["blocked"]),
+        }, f)
+
+rate_data = load_rate_data()
+
+def get_client_ip(request: Request) -> str:
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+def is_ip_allowed(ip: str) -> bool:
+    return ip in ALLOWED_IPS or ip in ["127.0.0.1", "localhost"]
+
+def check_rate_limit(ip: str) -> tuple:
+    if is_ip_allowed(ip):
+        return True, None
+    if ip in rate_data["blocked"]:
+        return False, "Your IP has been blocked due to excessive usage. Contact the administrator to unblock."
+    if rate_data["counts"][ip] >= RATE_LIMIT:
+        rate_data["blocked"].add(ip)
+        save_rate_data(rate_data)
+        return False, f"Rate limit exceeded ({RATE_LIMIT} analyses). Your IP has been blocked."
+    return True, None
+
+def increment_ip_count(ip: str):
+    if not is_ip_allowed(ip):
+        rate_data["counts"][ip] += 1
+        save_rate_data(rate_data)
 
 
 def _detect_task(y: pd.Series) -> str:
@@ -163,6 +219,7 @@ def index():
 
 @app.post("/train")
 async def train(
+    request: Request,
     file: UploadFile = File(...),
     target: str = Form(...),
     features: str = Form(...),
@@ -173,6 +230,11 @@ async def train(
     test_size: float = Form(0.2),
     random_state: int = Form(42),
 ):
+    client_ip = get_client_ip(request)
+    allowed, error_msg = check_rate_limit(client_ip)
+    if not allowed:
+        return JSONResponse(status_code=429, content={"error": error_msg})
+    
     content = await file.read()
     try:
         df = pd.read_csv(io.BytesIO(content))
@@ -243,6 +305,8 @@ async def train(
     except Exception as exc:
         return JSONResponse(status_code=400, content={"error": str(exc)})
 
+    increment_ip_count(client_ip)
+    
     return {
         "package": package,
         "task": task,
@@ -250,3 +314,39 @@ async def train(
         "metrics": metrics,
         "tree_png_b64": tree_png_b64,
     }
+
+
+@app.get("/admin/rate-stats")
+def get_rate_stats(authorization: str = Header(None)):
+    if not authorization or authorization.replace("Bearer ", "") != ADMIN_PASSWORD:
+        return JSONResponse(status_code=401, content={"error": "Unauthorized"})
+    return {
+        "counts": dict(rate_data["counts"]),
+        "blocked": list(rate_data["blocked"]),
+        "rate_limit": RATE_LIMIT,
+    }
+
+
+@app.post("/admin/unblock-ip")
+def unblock_ip(request_data: dict, authorization: str = Header(None)):
+    if not authorization or authorization.replace("Bearer ", "") != ADMIN_PASSWORD:
+        return JSONResponse(status_code=401, content={"error": "Unauthorized"})
+    ip = request_data.get("ip")
+    if ip in rate_data["blocked"]:
+        rate_data["blocked"].remove(ip)
+        rate_data["counts"][ip] = 0
+        save_rate_data(rate_data)
+        return {"success": True, "message": f"IP {ip} unblocked"}
+    return {"success": False, "message": f"IP {ip} was not blocked"}
+
+
+@app.post("/admin/reset-ip")
+def reset_ip(request_data: dict, authorization: str = Header(None)):
+    if not authorization or authorization.replace("Bearer ", "") != ADMIN_PASSWORD:
+        return JSONResponse(status_code=401, content={"error": "Unauthorized"})
+    ip = request_data.get("ip")
+    if ip in rate_data["counts"]:
+        rate_data["counts"][ip] = 0
+        save_rate_data(rate_data)
+        return {"success": True, "message": f"IP {ip} count reset"}
+    return {"success": False, "message": f"IP {ip} not found"}

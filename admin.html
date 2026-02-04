@@ -276,6 +276,7 @@
       <button class="tab" data-panel="partners">Partners</button>
       <button class="tab" data-panel="funding">Funding</button>
       <button class="tab" data-panel="program">Research Program</button>
+      <button class="tab" data-panel="ratelimits">Rate Limits</button>
     </div>
 
     <div class="panel active" id="panel-outputs">
@@ -316,6 +317,22 @@
       <h2>Research Program</h2>
       <div id="programContainer"></div>
       <button class="btn btn-success" id="saveProgram">Save Changes</button>
+    </div>
+
+    <div class="panel" id="panel-ratelimits">
+      <h2>Sentencing Tree Rate Limits</h2>
+      <p style="color: var(--muted); margin-bottom: 1rem;">IPs are blocked after 10 analyses. Your allowed IPs are not rate limited.</p>
+      <button class="btn btn-primary" id="refreshRateLimits" style="margin-bottom: 1rem;">Refresh Stats</button>
+      
+      <h3>Blocked IPs</h3>
+      <div id="blockedIpsContainer" style="margin-bottom: 1.5rem;">
+        <p style="color: var(--muted);">No blocked IPs</p>
+      </div>
+      
+      <h3>IP Usage Counts</h3>
+      <div id="ipCountsContainer">
+        <p style="color: var(--muted);">No data available</p>
+      </div>
     </div>
   </div>
 
@@ -960,6 +977,84 @@
     document.getElementById('saveProgram').addEventListener('click', async () => {
       await apiCall('PUT', '/api/program', programData);
       showToast('Program saved!');
+    });
+
+    async function loadRateLimits() {
+      try {
+        const res = await fetch('/sentencing-tree-app/admin/rate-stats', {
+          headers: { 'Authorization': 'Bearer ' + authToken }
+        });
+        if (!res.ok) throw new Error('Failed to load');
+        const data = await res.json();
+        
+        const blockedContainer = document.getElementById('blockedIpsContainer');
+        if (data.blocked && data.blocked.length > 0) {
+          blockedContainer.innerHTML = data.blocked.map(ip => `
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; padding: 0.5rem; background: var(--card-bg); border-radius: 6px;">
+              <span style="flex: 1; font-family: monospace;">${ip}</span>
+              <button class="btn btn-sm btn-success" onclick="unblockIp('${ip}')">Unblock</button>
+            </div>
+          `).join('');
+        } else {
+          blockedContainer.innerHTML = '<p style="color: var(--muted);">No blocked IPs</p>';
+        }
+        
+        const countsContainer = document.getElementById('ipCountsContainer');
+        const counts = Object.entries(data.counts || {}).sort((a, b) => b[1] - a[1]);
+        if (counts.length > 0) {
+          countsContainer.innerHTML = counts.map(([ip, count]) => `
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; padding: 0.5rem; background: var(--card-bg); border-radius: 6px;">
+              <span style="flex: 1; font-family: monospace;">${ip}</span>
+              <span style="color: ${count >= data.rate_limit ? 'var(--danger)' : 'var(--muted)'};">${count}/${data.rate_limit}</span>
+              <button class="btn btn-sm btn-primary" onclick="resetIp('${ip}')">Reset</button>
+            </div>
+          `).join('');
+        } else {
+          countsContainer.innerHTML = '<p style="color: var(--muted);">No usage data</p>';
+        }
+      } catch (e) {
+        console.error('Error loading rate limits:', e);
+      }
+    }
+    
+    window.unblockIp = async function(ip) {
+      try {
+        const res = await fetch('/sentencing-tree-app/admin/unblock-ip', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+          body: JSON.stringify({ ip })
+        });
+        const data = await res.json();
+        showToast(data.message);
+        loadRateLimits();
+      } catch (e) {
+        alert('Error: ' + e.message);
+      }
+    };
+    
+    window.resetIp = async function(ip) {
+      try {
+        const res = await fetch('/sentencing-tree-app/admin/reset-ip', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + authToken },
+          body: JSON.stringify({ ip })
+        });
+        const data = await res.json();
+        showToast(data.message);
+        loadRateLimits();
+      } catch (e) {
+        alert('Error: ' + e.message);
+      }
+    };
+    
+    document.getElementById('refreshRateLimits').addEventListener('click', loadRateLimits);
+    
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        if (tab.dataset.panel === 'ratelimits') {
+          loadRateLimits();
+        }
+      });
     });
 
     if (authToken) {
