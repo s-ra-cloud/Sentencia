@@ -233,7 +233,8 @@ async def train(
     else:
         preds = model.predict(x_test)
         mae = mean_absolute_error(y_test, preds)
-        rmse = mean_squared_error(y_test, preds, squared=False)
+        mse = mean_squared_error(y_test, preds)
+        rmse = np.sqrt(mse)
         r2 = r2_score(y_test, preds)
         metrics = {"mae": float(mae), "rmse": float(rmse), "r2": float(r2)}
 
