@@ -24,6 +24,7 @@
         },
         {
           "id": "ipv",
+          "pi": "Laura Duparc, Sacha Raoult",
           "type": "software",
           "year": 2025,
           "descEN": "An interactive visualization mapping sentencing patterns across French departments. Explore three key metrics revealing regional disparities in criminal justice outcomes.",
@@ -40,8 +41,7 @@
           "metaKey": "ipv_card_meta",
           "titleEN": "The Geography of Sentencing in France",
           "titleFR": "La Géographie du Contentieux Pénal en France",
-          "titleKey": "ipv_card_title",
-          "pi": "Laura Duparc, Sacha Raoult"
+          "titleKey": "ipv_card_title"
         },
         {
           "id": "kg2025",
@@ -473,6 +473,42 @@
           ],
           "titleEN": "The Prophetic Power of Science Fiction : A Case Study",
           "titleFR": "Starmania : un prophétie apocalyptique"
+        },
+        {
+          "id": "new_1770136148115",
+          "pi": "Sacha Raoult",
+          "meta": "",
+          "type": "video",
+          "year": null,
+          "title": "",
+          "descEN": "A series of lectures on ethical symbolism in fairy tales and modern films, based in particular on the work of Carl Jung.",
+          "descFR": "Une série de conférences sur la symbolique éthique dans les contes de fées et les films modernes, s'appuyant notamment sur les travaux de Carl Jung.",
+          "metaEN": "Video lecture series (French)",
+          "metaFR": "Série de conférences",
+          "actions": [
+            {
+              "url": "https://www.youtube.com/watch?v=yHwMA68fBeA&list=PLKGYdim21NP2Fp2x1M1OXZ34M33WFZCxV",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "titleEN": "Symbols of Good and Evil",
+          "titleFR": "Le symbolisme du Bien et du Mal"
+        },
+        {
+          "id": "new_1770150761127",
+          "type": "paper",
+          "year": 2025,
+          "title": "",
+          "titleEN": "Can a society plan for the future based solely on negative historical models? ",
+          "titleFR": "Une société peut-elle se projeter dans l’avenir en se fondant exclusivement sur des modèles historiques négatifs ",
+          "descEN": "",
+          "descFR": "",
+          "meta": "France Forum ",
+          "metaEN": "",
+          "metaFR": "",
+          "actions": [],
+          "pi": "Sacha Raoult"
         }
       ],
       "titleEN": "Varia",

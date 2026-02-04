@@ -303,7 +303,8 @@
         formData.append("random_state", document.getElementById("randomState").value);
 
         try {
-          const res = await fetch("/train", { method: "POST", body: formData });
+          const basePath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+          const res = await fetch(basePath + "train", { method: "POST", body: formData });
           const data = await res.json();
           if (!res.ok) {
             throw new Error(data.error || "Failed to train model.");
