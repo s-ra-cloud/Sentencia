@@ -13,6 +13,9 @@ const I18N = {
     action_code: "code",
     members_title: "Members",
     members_subsection: "Members",
+    external_subsection: "External Collaborators",
+    member_james_tagline: "Professor",
+    member_james_affil: "University of Chicago",
     partners_subsection: "Partners & Collaborators",
     funding_title: "Funding",
     funding_lede: "Research conducted within the Machina Research Network is supported by a combination of competitive grants and research contracts.",
@@ -39,6 +42,9 @@ const I18N = {
     action_code: "code",
     members_title: "Membres",
     members_subsection: "Membres",
+    external_subsection: "Collaborateurs externes",
+    member_james_tagline: "Professeur",
+    member_james_affil: "Université de Chicago",
     partners_subsection: "Partenaires & Collaborateurs",
     funding_title: "Financement",
     funding_lede: "Les recherches menées au sein du Machina Research Network sont financées par un ensemble de subventions et de contrats de recherche.",
@@ -599,9 +605,13 @@ function renderOutputs() {
     }).join('');
     
     const teamMembersLabel = currentLang === 'fr' ? 'Membres de l\'équipe' : 'Team Members';
+    const externalLabel = currentLang === 'fr' ? 'Collaborateurs externes' : 'External Collaborators';
     const outputsLabel = currentLang === 'fr' ? 'Productions' : 'Outputs';
     
     const allTeamMembers = [...coreMembers, ...contributors];
+    
+    const internalMembers = allTeamMembers.filter(m => m.member && !m.member.external);
+    const externalMembers = allTeamMembers.filter(m => !m.member || m.member.external);
     
     const renderMemberBadge = (m) => {
       if (m.member) {
@@ -610,8 +620,13 @@ function renderOutputs() {
       return `<span class="teamMemberBadge">${m.name}</span>`;
     };
     
-    const teamMembersHtml = allTeamMembers.length > 0 ? 
-      `<div class="teamMembers"><h4>${teamMembersLabel}</h4><div class="teamMembersList">${allTeamMembers.map(renderMemberBadge).join('')}</div></div>` : '';
+    const internalMembersHtml = internalMembers.length > 0 ? 
+      `<div class="teamMembers"><h4>${teamMembersLabel}</h4><div class="teamMembersList">${internalMembers.map(renderMemberBadge).join('')}</div></div>` : '';
+    
+    const externalMembersHtml = externalMembers.length > 0 ? 
+      `<div class="teamMembers teamMembers--external"><h4>${externalLabel}</h4><div class="teamMembersList">${externalMembers.map(renderMemberBadge).join('')}</div></div>` : '';
+    
+    const teamMembersHtml = internalMembersHtml + externalMembersHtml;
     
     const descHtml = teamDesc ? `<div class="teamDescription">${teamDesc}</div>` : '';
     
