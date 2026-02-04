@@ -278,21 +278,37 @@ function renderPartners() {
   }
   
   container.innerHTML = partners.map(p => {
-    const name = p.name || '';
-    const description = currentLang === 'fr' ? (p.descriptionFR || p.descriptionEN || '') : (p.descriptionEN || '');
-    const scope = currentLang === 'fr' ? (p.scopeFR || p.scopeEN || '') : (p.scopeEN || '');
-    const logo = p.logo ? `<img class="partnerCard__logo" src="${p.logo}" alt="${name}">` : '';
-    const link = p.website ? `<a class="partnerCard__link" href="${p.website}" target="_blank" rel="noreferrer">${currentLang === 'fr' ? 'Visiter le site' : 'Visit website'} →</a>` : '';
-    
-    return `
-      <div class="partnerCard">
-        ${logo}
-        <div class="partnerCard__name">${name}</div>
-        ${scope ? `<div class="partnerCard__scope">${scope}</div>` : ''}
-        ${description ? `<div class="partnerCard__description">${description}</div>` : ''}
-        ${link}
-      </div>
-    `;
+    if (p.type === 'person') {
+      const name = p.name || '';
+      const role = currentLang === 'fr' ? (p.roleFR || p.roleEN || '') : (p.roleEN || '');
+      const affiliation = currentLang === 'fr' ? (p.affiliationFR || p.affiliationEN || '') : (p.affiliationEN || '');
+      const linkedinLink = p.linkedin ? `<a class="memberCard__linkedin" href="${p.linkedin}" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>` : '';
+      
+      return `
+        <div class="card memberCard memberCard--simple">
+          ${linkedinLink}
+          <div class="memberCard__name">${name}</div>
+          <div class="memberCard__tagline">${role}</div>
+          <div class="memberCard__affiliation">${affiliation}</div>
+        </div>
+      `;
+    } else {
+      const name = p.name || '';
+      const description = currentLang === 'fr' ? (p.descriptionFR || p.descriptionEN || '') : (p.descriptionEN || '');
+      const scope = currentLang === 'fr' ? (p.scopeFR || p.scopeEN || '') : (p.scopeEN || '');
+      const logo = p.logo ? `<img class="partnerCard__logo" src="${p.logo}" alt="${name}">` : '';
+      const link = p.website ? `<a class="partnerCard__link" href="${p.website}" target="_blank" rel="noreferrer">${currentLang === 'fr' ? 'Visiter le site' : 'Visit website'} →</a>` : '';
+      
+      return `
+        <div class="partnerCard">
+          ${logo}
+          <div class="partnerCard__name">${name}</div>
+          ${scope ? `<div class="partnerCard__scope">${scope}</div>` : ''}
+          ${description ? `<div class="partnerCard__description">${description}</div>` : ''}
+          ${link}
+        </div>
+      `;
+    }
   }).join('');
 }
 
