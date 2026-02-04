@@ -818,7 +818,7 @@ body{
 }
 
 .memberCard__tagline{
-  margin-top: 8px;
+  margin-top: 2px;
   color: var(--muted);
   font-size: 13px;
   line-height: 1.5;
