@@ -441,8 +441,8 @@
           "title": "",
           "descEN": "Theorizing the Absurd is a philosophical podcast series hosted by Sacha Raoult and Eliot Hallak. Through in-depth conversations, the hosts examine the foundations of theoretical thought, focusing on the conditions under which knowledge, rationality, and meaning are possible.",
           "descFR": "Théoriser l’absurde est une série de podcasts philosophiques animée par Sacha Raoult et Eliot Hallak. À travers des discussions approfondies, les auteurs interrogent les fondements mêmes de la pensée théorique, en particulier les conditions de possibilité de la connaissance, de la rationalité et du sens.",
-          "metaEN": "Epistemology for students",
-          "metaFR": "Épistémologie pour étudiants",
+          "metaEN": "Podcast series",
+          "metaFR": "Séries de podcasts",
           "actions": [
             {
               "url": "https://www.youtube.com/watch?v=X9j_mLDarGo&list=PLQtF4u7HFbE4cahV1CaruA1ufql5HMg_s",
@@ -462,8 +462,8 @@
           "title": "",
           "descEN": "The Prophetic Power of Science Fiction : A Case Study explores how a landmark work of popular science fiction anticipated key dynamics of contemporary societies, including rising inequality, social control, celebrity culture, and spiritual emptiness. A concise reflection at the intersection of science fiction, social philosophy, and cultural analysis.",
           "descFR": "Starmania : une prophétie apocalyptique analyse comment une œuvre majeure de la culture populaire a su anticiper avec une remarquable lucidité certaines dynamiques centrales de nos sociétés contemporaines : inégalités croissantes, contrôle social, culte de la célébrité et vide spirituel. À la croisée de la science-fiction, de la philosophie sociale et de l’histoire des idées.",
-          "metaEN": "When popular science fiction anticipates the pathologies of the modern world.",
-          "metaFR": "Quand la science-fiction populaire anticipe les dérives du monde contemporain.",
+          "metaEN": "Structures and Theory Notebooks",
+          "metaFR": "Carnets de recherche Structures et Théorie",
           "actions": [
             {
               "url": "https://www.amazon.fr/Starmania-proph%C3%A9tie-apocalyptique-Sacha-Raoult/dp/B0FNZW77VT/ref=sr_1_3?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=C0OXVHXBEW5F&dib=eyJ2IjoiMSJ9.NtgvBsjYLZ5kEJR3yLPkLFHFX9xj5srnfvtZ4qh5WdfwtGkdGcsuCTbbZmqpEdkXjnjMF65WzxfT2Cfe0mlAZjMONu4J3xYnWI0ES-36dBO5kfxKuu0vLIOa5anoHz62QWQ9sZaBgbGjBsV9yDpWDV472qlQ8KvDog53VOnaAxWW3PTMoQG3eivNWmALDt0GnHyXzFn14IHN42Sdlwgd-xdzyQrcZ6vvvvfk1BThOriMU9WVuJQnDOBoly2RBnVUE_nyzHj1c0GW4KZchVDZCBWUQhALjCGudUctSvI_XTI.ydT59Uqc2ljRScifpDGHCZ250VEvhWCGoGugWH5F37Y&dib_tag=se&keywords=starmania&qid=1770037187&sprefix=starmani%2Caps%2C233&sr=8-3",
@@ -497,18 +497,18 @@
         },
         {
           "id": "new_1770150761127",
+          "pi": "Sacha Raoult",
+          "meta": "France Forum ",
           "type": "paper",
           "year": 2025,
           "title": "",
-          "titleEN": "Can a society plan for the future based solely on negative historical models? ",
-          "titleFR": "Une société peut-elle se projeter dans l’avenir en se fondant exclusivement sur des modèles historiques négatifs ",
           "descEN": "",
           "descFR": "",
-          "meta": "France Forum ",
           "metaEN": "",
           "metaFR": "",
           "actions": [],
-          "pi": "Sacha Raoult"
+          "titleEN": "Can a society plan for the future based solely on negative historical models? ",
+          "titleFR": "Une société peut-elle se projeter dans l’avenir en se fondant exclusivement sur des modèles historiques négatifs "
         }
       ],
       "titleEN": "Structure and Theory",
