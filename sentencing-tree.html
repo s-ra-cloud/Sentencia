@@ -26,110 +26,79 @@
       text-decoration: underline;
     }
     
+    .tool-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
+    
     .tool-title {
-      font-size: 2.5rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
       letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    
+    .tool-meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
     }
     
     .tool-author {
-      color: var(--muted);
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
+      color: var(--accent);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
     }
     
     .tool-description {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-    }
-    
-    .tool-description h2 {
-      font-size: 1.25rem;
-      margin-bottom: 1rem;
-    }
-    
-    .tool-description p {
       color: var(--muted);
-      margin-bottom: 1rem;
       line-height: 1.7;
-    }
-    
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    
-    .feature {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-    }
-    
-    .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 0.75rem;
-    }
-    
-    .feature h3 {
-      font-size: 1rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .feature p {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-    
-    .launch-section {
-      text-align: center;
-      padding: 3rem;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-    }
-    
-    .launch-section h2 {
-      margin-bottom: 1rem;
-    }
-    
-    .launch-section p {
-      color: var(--muted);
       margin-bottom: 1.5rem;
+    }
+    
+    .tool-features {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      padding-left: 1.25rem;
+    }
+    
+    .tool-features li {
+      margin-bottom: 0.25rem;
     }
     
     .launch-btn {
       display: inline-block;
-      background: var(--accent);
-      color: white;
-      padding: 1rem 2.5rem;
-      border-radius: 8px;
+      background: transparent;
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: background 0.2s;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.2s;
     }
     
     .launch-btn:hover {
-      background: var(--accent-hover);
+      border-color: var(--text);
+      background: var(--card-bg);
     }
     
     .tech-stack {
       margin-top: 2rem;
-      padding-top: 2rem;
+      padding-top: 1.5rem;
       border-top: 1px solid var(--border);
     }
     
-    .tech-stack h3 {
-      font-size: 1rem;
-      margin-bottom: 1rem;
+    .tech-stack-label {
+      font-size: 0.85rem;
       color: var(--muted);
+      margin-bottom: 0.75rem;
     }
     
     .tech-badges {
@@ -141,9 +110,9 @@
     .badge {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
       color: var(--muted);
     }
     
@@ -151,7 +120,7 @@
       text-align: center;
       padding: 2rem;
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       border-top: 1px solid var(--border);
       margin-top: 3rem;
     }
@@ -178,55 +147,30 @@
   </header>
   
   <div class="tool-container">
-    <a href="/#projects" class="back-link">&larr; Back to Research Outputs</a>
+    <a href="/#projects" class="back-link">&larr; Back to Outputs</a>
     
-    <h1 class="tool-title">Sentencing Choice Tree</h1>
-    <p class="tool-author">By Sacha Raoult</p>
-    
-    <div class="tool-description">
-      <h2>About This Tool</h2>
-      <p>
-        The Sentencing Choice Tree is an interactive machine learning tool designed for analyzing sentencing data. 
-        It allows researchers and legal professionals to upload CSV datasets and generate decision tree visualizations 
-        that reveal patterns in sentencing decisions.
-      </p>
-      <p>
-        This tool supports multiple machine learning frameworks and provides detailed performance metrics, 
-        making it valuable for both exploratory analysis and rigorous research.
-      </p>
+    <div class="tool-header">
+      <div>
+        <h1 class="tool-title">Sentencing Choice Tree</h1>
+        <p class="tool-meta">Interactive ML tool · Decision trees · CSV analysis</p>
+        <p class="tool-author">Sacha Raoult</p>
+      </div>
+      <a href="/sentencing-tree-app/" class="launch-btn">Launch</a>
     </div>
     
-    <div class="features">
-      <div class="feature">
-        <div class="feature-icon">📊</div>
-        <h3>CSV Data Upload</h3>
-        <p>Simply upload your sentencing data in CSV format and select your target variable.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🌳</div>
-        <h3>Decision Tree Visualization</h3>
-        <p>Generate clear, interpretable decision trees that show how variables influence outcomes.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🔧</div>
-        <h3>Multiple ML Frameworks</h3>
-        <p>Choose between scikit-learn, XGBoost, or LightGBM for tree generation.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📈</div>
-        <h3>Performance Metrics</h3>
-        <p>Get accuracy scores, confusion matrices, MAE, RMSE, and R² metrics.</p>
-      </div>
-    </div>
+    <p class="tool-description">
+      An interactive machine learning tool for analyzing sentencing data. Upload CSV datasets and generate decision tree visualizations that reveal patterns in sentencing decisions using scikit-learn, XGBoost, or LightGBM.
+    </p>
     
-    <div class="launch-section">
-      <h2>Ready to Analyze Your Data?</h2>
-      <p>Launch the Sentencing Choice Tree application to start exploring your sentencing data.</p>
-      <a href="/sentencing-tree-app/" class="launch-btn">Launch Application</a>
-    </div>
+    <ul class="tool-features">
+      <li>Upload sentencing data in CSV format and select target variables</li>
+      <li>Generate interpretable decision trees showing variable influence</li>
+      <li>Choose between scikit-learn, XGBoost, or LightGBM frameworks</li>
+      <li>Get accuracy scores, confusion matrices, MAE, RMSE, and R² metrics</li>
+    </ul>
     
     <div class="tech-stack">
-      <h3>Built With</h3>
+      <p class="tech-stack-label">Built with</p>
       <div class="tech-badges">
         <span class="badge">Python</span>
         <span class="badge">FastAPI</span>
@@ -240,7 +184,7 @@
   </div>
   
   <footer class="tool-footer">
-    <p>&copy; 2026 Machina Research Network. All rights reserved.</p>
+    <p>&copy; 2026 Machina Research Network</p>
   </footer>
   
   <script>
