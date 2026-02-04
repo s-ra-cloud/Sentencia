@@ -4,57 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sentencing Choice Tree - Machina Research Network</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
   <style>
-    :root {
-      --bg: #ffffff;
-      --text: #1a1a2e;
-      --text-secondary: #64748b;
-      --accent: #2563eb;
-      --accent-hover: #1d4ed8;
-      --border: #e2e8f0;
-      --panel: #f8fafc;
-    }
-    
-    [data-theme="dark"] {
-      --bg: #0f172a;
-      --text: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --accent: #3b82f6;
-      --accent-hover: #60a5fa;
-      --border: #334155;
-      --panel: #1e293b;
-    }
-    
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg);
-    }
-    
-    .navbar a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    
-    .navbar a:hover {
-      color: var(--accent);
-    }
-    
-    .container {
+    .tool-container {
       max-width: 900px;
       margin: 0 auto;
       padding: 3rem 2rem;
@@ -74,44 +26,36 @@
       text-decoration: underline;
     }
     
-    h1 {
+    .tool-title {
       font-size: 2.5rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
     }
     
-    .author {
-      color: var(--text-secondary);
+    .tool-author {
+      color: var(--muted);
       font-size: 1.1rem;
       margin-bottom: 2rem;
     }
     
-    .description {
-      background: var(--panel);
+    .tool-description {
+      background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 2rem;
       margin-bottom: 2rem;
     }
     
-    .description h2 {
+    .tool-description h2 {
       font-size: 1.25rem;
       margin-bottom: 1rem;
     }
     
-    .description p {
-      color: var(--text-secondary);
+    .tool-description p {
+      color: var(--muted);
       margin-bottom: 1rem;
-    }
-    
-    .description ul {
-      color: var(--text-secondary);
-      margin-left: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    
-    .description li {
-      margin-bottom: 0.5rem;
+      line-height: 1.7;
     }
     
     .features {
@@ -122,7 +66,7 @@
     }
     
     .feature {
-      background: var(--panel);
+      background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.5rem;
@@ -139,14 +83,14 @@
     }
     
     .feature p {
-      color: var(--text-secondary);
+      color: var(--muted);
       font-size: 0.9rem;
     }
     
     .launch-section {
       text-align: center;
       padding: 3rem;
-      background: linear-gradient(135deg, var(--panel), var(--bg));
+      background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 16px;
     }
@@ -156,7 +100,7 @@
     }
     
     .launch-section p {
-      color: var(--text-secondary);
+      color: var(--muted);
       margin-bottom: 1.5rem;
     }
     
@@ -185,7 +129,7 @@
     .tech-stack h3 {
       font-size: 1rem;
       margin-bottom: 1rem;
-      color: var(--text-secondary);
+      color: var(--muted);
     }
     
     .tech-badges {
@@ -195,18 +139,18 @@
     }
     
     .badge {
-      background: var(--panel);
+      background: var(--card-bg);
       border: 1px solid var(--border);
       padding: 0.5rem 1rem;
       border-radius: 20px;
       font-size: 0.85rem;
-      color: var(--text-secondary);
+      color: var(--muted);
     }
     
-    .footer {
+    .tool-footer {
       text-align: center;
       padding: 2rem;
-      color: var(--text-secondary);
+      color: var(--muted);
       font-size: 0.9rem;
       border-top: 1px solid var(--border);
       margin-top: 3rem;
@@ -214,18 +158,32 @@
   </style>
 </head>
 <body>
-  <nav class="navbar">
-    <a href="/">Machina Research Network</a>
-    <a href="/#outputs">Back to Outputs</a>
-  </nav>
+  <header class="topbar">
+    <a class="logo" href="/">Machina Research Network</a>
+    <nav class="nav">
+      <a href="/#projects" class="nav__link">Outputs</a>
+      <a href="/#members" class="nav__link">Members</a>
+      <a href="/#funding" class="nav__link">Funding</a>
+    </nav>
+    <div class="topbar__actions">
+      <button class="themeToggle" id="themeToggle" type="button" aria-label="Toggle theme">
+        <span class="themeToggle__icon themeToggle__icon--light">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </span>
+        <span class="themeToggle__icon themeToggle__icon--dark">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+      </button>
+    </div>
+  </header>
   
-  <div class="container">
-    <a href="/#outputs" class="back-link">&larr; Back to Research Outputs</a>
+  <div class="tool-container">
+    <a href="/#projects" class="back-link">&larr; Back to Research Outputs</a>
     
-    <h1>Sentencing Choice Tree</h1>
-    <p class="author">By Sacha Raoult</p>
+    <h1 class="tool-title">Sentencing Choice Tree</h1>
+    <p class="tool-author">By Sacha Raoult</p>
     
-    <div class="description">
+    <div class="tool-description">
       <h2>About This Tool</h2>
       <p>
         The Sentencing Choice Tree is an interactive machine learning tool designed for analyzing sentencing data. 
@@ -281,14 +239,21 @@
     </div>
   </div>
   
-  <footer class="footer">
+  <footer class="tool-footer">
     <p>&copy; 2026 Machina Research Network. All rights reserved.</p>
   </footer>
   
   <script>
-    if (localStorage.getItem('theme') === 'dark') {
-      document.body.setAttribute('data-theme', 'dark');
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
     }
+    
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    });
   </script>
 </body>
 </html>
