@@ -1,1 +1,134 @@
-{"members": [{"id": "jiad", "name": "Jiad Abdul", "bioEN": "Full-stack developer specializing in web applications and data visualization tools. Contributed to decision simulation software and interactive research platforms.", "bioFR": "D\u00e9veloppeur full-stack sp\u00e9cialis\u00e9 dans les applications web et les outils de visualisation de donn\u00e9es. A contribu\u00e9 aux logiciels de simulation de d\u00e9cision et aux plateformes de recherche interactives.", "linkedin": "https://fr.linkedin.com/in/jiad-abdul", "taglineEN": "Engineer", "taglineFR": "Ing\u00e9nieur", "taglineKey": "member_jiad_tagline", "affiliationEN": "Freelance", "affiliationFR": "Freelance", "affiliationKey": "member_jiad_affil"}, {"id": "sofiane", "name": "Sofiane Baddag", "bioEN": "Software engineer with expertise in backend systems and database architecture. Works on research infrastructure and data processing pipelines.", "bioFR": "Ing\u00e9nieur logiciel expert en syst\u00e8mes backend et architecture de bases de donn\u00e9es. Travaille sur l infrastructure de recherche et les pipelines de traitement de donn\u00e9es.", "linkedin": "https://fr.linkedin.com/in/sofiane-baddag-743158145", "taglineEN": "Engineer", "taglineFR": "Ing\u00e9nieur", "taglineKey": "member_sofiane_tagline", "affiliationEN": "Freelance", "affiliationFR": "Freelance", "affiliationKey": "member_sofiane_affil"}, {"id": "belikov", "name": "Alexander Belikov", "bioEN": "Researcher specializing in knowledge graphs and natural language processing. Co-author of research on automated legal document analysis and ethical AI personas.", "bioFR": "Chercheur sp\u00e9cialis\u00e9 dans les graphes de connaissances et le traitement du langage naturel. Co-auteur de recherches sur l analyse automatis\u00e9e de documents juridiques et les personas IA \u00e9thiques.", "linkedin": "https://fr.linkedin.com/in/abelikov", "taglineEN": "Researcher", "taglineFR": "Chercheur", "taglineKey": "member_belikov_tagline", "affiliationEN": "GrowGraph", "affiliationFR": "GrowGraph", "affiliationKey": "member_belikov_affil"}, {"id": "camille", "name": "Camille Bertrand", "bioEN": "PhD candidate at EHESS researching computational approaches to mythology and cultural narratives. Contributes to network analysis of mythological texts.", "bioFR": "Doctorante \u00e0 l EHESS recherchant les approches computationnelles de la mythologie et des r\u00e9cits culturels. Contribue \u00e0 l analyse de r\u00e9seau des textes mythologiques.", "linkedin": "", "taglineEN": "PhD Student", "taglineFR": "Doctorante", "taglineKey": "member_camille_tagline", "affiliationEN": "EHESS", "affiliationFR": "EHESS", "affiliationKey": "member_camille_affil"}, {"id": "laura", "name": "Laura Duparc", "bioEN": "Researcher in computational psychology and mythology at Mohammed VI Polytechnic University. Works on semantic analysis, jurimetrics, and Jungian archetype exploration applications.", "bioFR": "Chercheuse en psychologie computationnelle et mythologie \u00e0 l Universit\u00e9 Mohammed VI Polytechnique. Travaille sur l analyse s\u00e9mantique, la jurim\u00e9trie et les applications d exploration arch\u00e9typale jungienne.", "linkedin": "https://fr.linkedin.com/in/laura-duparc-52504b215", "taglineEN": "Researcher", "taglineFR": "Chercheuse", "taglineKey": "member_laura_tagline", "affiliationEN": "Mohammed VI Polytech", "affiliationFR": "Mohammed VI Polytech", "affiliationKey": "member_laura_affil"}, {"id": "eliot", "name": "Eliot Hallak", "bioEN": "Technical lead at Leveragers with expertise in scalable systems and API development. Builds robust infrastructure for research applications.", "bioFR": "Responsable technique chez Leveragers avec une expertise en syst\u00e8mes \u00e9volutifs et d\u00e9veloppement d API. Construit des infrastructures robustes pour les applications de recherche.", "linkedin": "https://fr.linkedin.com/in/eliothallak", "taglineEN": "Engineer", "taglineFR": "Ing\u00e9nieur", "taglineKey": "member_eliot_tagline", "affiliationEN": "Leveragers", "affiliationFR": "Leveragers", "affiliationKey": "member_eliot_affil"}, {"id": "lisa", "name": "Lisa Juppeaux", "bioEN": "Legal scholar specializing in sentencing research and criminal justice policy. Co-author of applied jurimetric studies on sentencing practices in France.", "bioFR": "Juriste sp\u00e9cialis\u00e9e dans la recherche sur les peines et les politiques de justice p\u00e9nale. Co-auteure d \u00e9tudes jurim\u00e9triques appliqu\u00e9es sur les pratiques de condamnation en France.", "linkedin": "https://fr.linkedin.com/in/lisa-juppeaux", "taglineEN": "Legal Scholar", "taglineFR": "Juriste", "taglineKey": "member_lisa_tagline", "affiliationEN": "Freelance", "affiliationFR": "Freelance", "affiliationKey": "member_lisa_affil"}, {"id": "ami", "name": "Ami Nagai", "bioEN": "PhD candidate at Aix-Marseille University researching computational mythology. Contributes to network analysis projects mapping mythological narratives.", "bioFR": "Doctorante \u00e0 Aix-Marseille Universit\u00e9 recherchant la mythologie computationnelle. Contribue aux projets d analyse de r\u00e9seau cartographiant les r\u00e9cits mythologiques.", "linkedin": "https://www.linkedin.com/in/ami-nagai-4b82a9290/", "taglineEN": "PhD Student", "taglineFR": "Doctorante", "taglineKey": "member_ami_tagline", "affiliationEN": "Aix-Marseille Universit\u00e9", "affiliationFR": "Aix-Marseille Universit\u00e9", "affiliationKey": "member_ami_affil"}, {"id": "eric", "name": "Eric Parisot", "bioEN": "Software engineer with experience in data engineering and visualization. Works on research tools and interactive data platforms.", "bioFR": "Ing\u00e9nieur logiciel avec une exp\u00e9rience en ing\u00e9nierie des donn\u00e9es et visualisation. Travaille sur les outils de recherche et les plateformes de donn\u00e9es interactives.", "linkedin": "https://fr.linkedin.com/in/eric-parisot", "taglineEN": "Engineer", "taglineFR": "Ing\u00e9nieur", "taglineKey": "member_eric_tagline", "affiliationEN": "Freelance", "affiliationFR": "Freelance", "affiliationKey": "member_eric_affil"}, {"id": "sacha", "name": "Sacha Raoult", "bioEN": "Lecturer at Aix-Marseille University and member of Institut Universitaire de France. Leads research in computational law, jurimetrics, and epistemic engineering. Principal investigator on multiple projects.", "bioFR": "Ma\u00eetre de conf\u00e9rences \u00e0 Aix-Marseille Universit\u00e9 et membre de l Institut Universitaire de France. Dirige la recherche en droit computationnel, jurim\u00e9trie et ing\u00e9nierie \u00e9pist\u00e9mique. Investigateur principal sur plusieurs projets.", "linkedin": "https://fr.linkedin.com/in/sacha-raoult", "taglineEN": "Lecturer", "taglineFR": "Ma\u00eetre de conf\u00e9rences", "taglineKey": "member_sacha_tagline", "affiliationEN": "Aix-Marseille Universit\u00e9, Institut Universitaire de France", "affiliationFR": "Aix-Marseille Universit\u00e9, Institut Universitaire de France", "affiliationKey": "member_sacha_affil"}, {"id": "james", "name": "James Evans", "bioEN": "Professor at the University of Chicago specializing in computational social science and the sociology of science.", "bioFR": "Professeur \u00e0 l'Universit\u00e9 de Chicago sp\u00e9cialis\u00e9 en sciences sociales computationnelles et sociologie des sciences.", "linkedin": "", "taglineEN": "Professor", "taglineFR": "Professeur", "affiliationEN": "University of Chicago", "affiliationFR": "Universit\u00e9 de Chicago", "external": true}]}
+{
+  "members": [
+    {
+      "id": "jiad",
+      "name": "Jiad Abdul",
+      "bioEN": "Full-stack developer specializing in web applications and data visualization tools. Contributed to decision simulation software and interactive research platforms.",
+      "bioFR": "D\u00e9veloppeur full-stack sp\u00e9cialis\u00e9 dans les applications web et les outils de visualisation de donn\u00e9es. A contribu\u00e9 aux logiciels de simulation de d\u00e9cision et aux plateformes de recherche interactives.",
+      "linkedin": "https://fr.linkedin.com/in/jiad-abdul",
+      "taglineEN": "Engineer",
+      "taglineFR": "Ing\u00e9nieur",
+      "taglineKey": "member_jiad_tagline",
+      "affiliationEN": "Freelance",
+      "affiliationFR": "Freelance",
+      "affiliationKey": "member_jiad_affil"
+    },
+    {
+      "id": "sofiane",
+      "name": "Sofiane Baddag",
+      "bioEN": "Software engineer with expertise in backend systems and database architecture. Works on research infrastructure and data processing pipelines.",
+      "bioFR": "Ing\u00e9nieur logiciel expert en syst\u00e8mes backend et architecture de bases de donn\u00e9es. Travaille sur l infrastructure de recherche et les pipelines de traitement de donn\u00e9es.",
+      "linkedin": "https://fr.linkedin.com/in/sofiane-baddag-743158145",
+      "taglineEN": "Engineer",
+      "taglineFR": "Ing\u00e9nieur",
+      "taglineKey": "member_sofiane_tagline",
+      "affiliationEN": "Freelance",
+      "affiliationFR": "Freelance",
+      "affiliationKey": "member_sofiane_affil"
+    },
+    {
+      "id": "belikov",
+      "name": "Alexander Belikov",
+      "bioEN": "Researcher specializing in knowledge graphs and natural language processing. Co-author of research on automated legal document analysis and ethical AI personas.",
+      "bioFR": "Chercheur sp\u00e9cialis\u00e9 dans les graphes de connaissances et le traitement du langage naturel. Co-auteur de recherches sur l analyse automatis\u00e9e de documents juridiques et les personas IA \u00e9thiques.",
+      "linkedin": "https://fr.linkedin.com/in/abelikov",
+      "taglineEN": "Researcher",
+      "taglineFR": "Chercheur",
+      "taglineKey": "member_belikov_tagline",
+      "affiliationEN": "GrowGraph",
+      "affiliationFR": "GrowGraph",
+      "affiliationKey": "member_belikov_affil"
+    },
+    {
+      "id": "camille",
+      "name": "Camille Bertrand",
+      "bioEN": "PhD candidate at EHESS researching computational approaches to mythology and cultural narratives. Contributes to network analysis of mythological texts.",
+      "bioFR": "Doctorante \u00e0 l EHESS recherchant les approches computationnelles de la mythologie et des r\u00e9cits culturels. Contribue \u00e0 l analyse de r\u00e9seau des textes mythologiques.",
+      "linkedin": "",
+      "taglineEN": "PhD Student",
+      "taglineFR": "Doctorante",
+      "taglineKey": "member_camille_tagline",
+      "affiliationEN": "EHESS",
+      "affiliationFR": "EHESS",
+      "affiliationKey": "member_camille_affil"
+    },
+    {
+      "id": "laura",
+      "name": "Laura Duparc",
+      "bioEN": "Researcher in computational psychology and mythology at Mohammed VI Polytechnic University. Works on semantic analysis, jurimetrics, and Jungian archetype exploration applications.",
+      "bioFR": "Chercheuse en psychologie computationnelle et mythologie \u00e0 l Universit\u00e9 Mohammed VI Polytechnique. Travaille sur l analyse s\u00e9mantique, la jurim\u00e9trie et les applications d exploration arch\u00e9typale jungienne.",
+      "linkedin": "https://fr.linkedin.com/in/laura-duparc-52504b215",
+      "taglineEN": "Researcher",
+      "taglineFR": "Chercheuse",
+      "taglineKey": "member_laura_tagline",
+      "affiliationEN": "Mohammed VI Polytech",
+      "affiliationFR": "Mohammed VI Polytech",
+      "affiliationKey": "member_laura_affil"
+    },
+    {
+      "id": "eliot",
+      "name": "Eliot Hallak",
+      "bioEN": "Technical lead at Leveragers with expertise in scalable systems and API development. Builds robust infrastructure for research applications.",
+      "bioFR": "Responsable technique chez Leveragers avec une expertise en syst\u00e8mes \u00e9volutifs et d\u00e9veloppement d API. Construit des infrastructures robustes pour les applications de recherche.",
+      "linkedin": "https://fr.linkedin.com/in/eliothallak",
+      "taglineEN": "Engineer",
+      "taglineFR": "Ing\u00e9nieur",
+      "taglineKey": "member_eliot_tagline",
+      "affiliationEN": "Leveragers",
+      "affiliationFR": "Leveragers",
+      "affiliationKey": "member_eliot_affil"
+    },
+    {
+      "id": "lisa",
+      "name": "Lisa Juppeaux",
+      "bioEN": "Legal scholar specializing in sentencing research and criminal justice policy. Co-author of applied jurimetric studies on sentencing practices in France.",
+      "bioFR": "Juriste sp\u00e9cialis\u00e9e dans la recherche sur les peines et les politiques de justice p\u00e9nale. Co-auteure d \u00e9tudes jurim\u00e9triques appliqu\u00e9es sur les pratiques de condamnation en France.",
+      "linkedin": "https://fr.linkedin.com/in/lisa-juppeaux",
+      "taglineEN": "Legal Scholar",
+      "taglineFR": "Juriste",
+      "taglineKey": "member_lisa_tagline",
+      "affiliationEN": "Freelance",
+      "affiliationFR": "Freelance",
+      "affiliationKey": "member_lisa_affil"
+    },
+    {
+      "id": "ami",
+      "name": "Ami Nagai",
+      "bioEN": "PhD candidate at Aix-Marseille University researching computational mythology. Contributes to network analysis projects mapping mythological narratives.",
+      "bioFR": "Doctorante \u00e0 Aix-Marseille Universit\u00e9 recherchant la mythologie computationnelle. Contribue aux projets d analyse de r\u00e9seau cartographiant les r\u00e9cits mythologiques.",
+      "linkedin": "https://www.linkedin.com/in/ami-nagai-4b82a9290/",
+      "taglineEN": "PhD Student",
+      "taglineFR": "Doctorante",
+      "taglineKey": "member_ami_tagline",
+      "affiliationEN": "Aix-Marseille Universit\u00e9",
+      "affiliationFR": "Aix-Marseille Universit\u00e9",
+      "affiliationKey": "member_ami_affil"
+    },
+    {
+      "id": "eric",
+      "name": "Eric Parisot",
+      "bioEN": "Software engineer with experience in data engineering and visualization. Works on research tools and interactive data platforms.",
+      "bioFR": "Ing\u00e9nieur logiciel avec une exp\u00e9rience en ing\u00e9nierie des donn\u00e9es et visualisation. Travaille sur les outils de recherche et les plateformes de donn\u00e9es interactives.",
+      "linkedin": "https://fr.linkedin.com/in/eric-parisot",
+      "taglineEN": "Engineer",
+      "taglineFR": "Ing\u00e9nieur",
+      "taglineKey": "member_eric_tagline",
+      "affiliationEN": "Freelance",
+      "affiliationFR": "Freelance",
+      "affiliationKey": "member_eric_affil"
+    },
+    {
+      "id": "sacha",
+      "name": "Sacha Raoult",
+      "bioEN": "Lecturer at Aix-Marseille University and member of Institut Universitaire de France. Leads research in computational law, jurimetrics, and epistemic engineering. Principal investigator on multiple projects.",
+      "bioFR": "Ma\u00eetre de conf\u00e9rences \u00e0 Aix-Marseille Universit\u00e9 et membre de l Institut Universitaire de France. Dirige la recherche en droit computationnel, jurim\u00e9trie et ing\u00e9nierie \u00e9pist\u00e9mique. Investigateur principal sur plusieurs projets.",
+      "linkedin": "https://fr.linkedin.com/in/sacha-raoult",
+      "taglineEN": "Lecturer",
+      "taglineFR": "Ma\u00eetre de conf\u00e9rences",
+      "taglineKey": "member_sacha_tagline",
+      "affiliationEN": "Aix-Marseille Universit\u00e9, Institut Universitaire de France",
+      "affiliationFR": "Aix-Marseille Universit\u00e9, Institut Universitaire de France",
+      "affiliationKey": "member_sacha_affil"
+    }
+  ]
+}
