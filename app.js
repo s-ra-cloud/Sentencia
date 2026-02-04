@@ -157,16 +157,23 @@ function renderMembers() {
     return aLast.localeCompare(bLast);
   });
   
+  const partnersSection = section.querySelector('.partnersGrid');
+  const partnersTitle = section.querySelector('[data-i18n="partners_subsection"]');
+  
   if (selectedMemberId) {
     const member = dynamicData.members.members.find(m => m.id === selectedMemberId);
     if (member) {
       container.style.display = 'none';
+      if (partnersSection) partnersSection.style.display = 'none';
+      if (partnersTitle) partnersTitle.style.display = 'none';
       renderMemberDetail(member, section);
       return;
     }
   }
   
   container.style.display = '';
+  if (partnersSection) partnersSection.style.display = '';
+  if (partnersTitle) partnersTitle.style.display = '';
   container.innerHTML = sorted.map(m => {
     const hasLinkedin = m.linkedin && m.linkedin !== '' && m.linkedin !== '#';
     const linkedinBtn = hasLinkedin 
