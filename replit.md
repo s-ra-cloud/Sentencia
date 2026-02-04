@@ -55,7 +55,7 @@ Preferred communication style: Simple, everyday language.
 - **Admin page**: `/admin.html` - Password-protected content management interface
 - **Features**:
   - Login with password (default: "Trismegiste")
-  - Manage Outputs (organized by team: Law, Epistemic, Psychology, Mythology, Philosophy, Varia)
+  - Manage Outputs (organized by team: Law, Epistemic, Psychology, Mythology, Philosophy, Structure and Theory)
   - Manage Members (name, tagline, affiliation, LinkedIn, bio EN/FR)
   - Manage Partners (name, website, logo, scope/type EN/FR, description EN/FR)
   - Manage Funding (grants and contracts with amounts, dates, links)

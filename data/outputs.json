@@ -430,7 +430,7 @@
       "titleKey": "cat_philo_title"
     },
     {
-      "id": "varia",
+      "id": "structure",
       "outputs": [
         {
           "id": "new_1770036171322",
@@ -511,9 +511,9 @@
           "pi": "Sacha Raoult"
         }
       ],
-      "titleEN": "Varia",
-      "titleFR": "Varia",
-      "titleKey": "cat_varia_title"
+      "titleEN": "Structure and Theory",
+      "titleFR": "Structure et Théorie",
+      "titleKey": "cat_structure_title"
     }
   ]
 }
