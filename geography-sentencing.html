@@ -89,7 +89,7 @@
     
     .main {
       display: grid;
-      grid-template-columns: 320px 1fr;
+      grid-template-columns: 360px 1fr;
       height: calc(100vh - 42px);
     }
     
@@ -97,6 +97,13 @@
       background: var(--card-bg);
       border-right: 1px solid var(--border);
       padding: 1rem 1.25rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .sidebar__content {
+      flex: 1;
       overflow-y: auto;
     }
     
@@ -144,18 +151,17 @@
     }
     
     .mapContainer {
-      padding: 0.75rem;
+      padding: 0;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
     
     #map {
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-      max-height: calc(100vh - 120px);
+      width: 100%;
+      height: 100%;
     }
     
     .tooltip {
@@ -184,15 +190,18 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      margin-top: 0.5rem;
+      margin-top: auto;
+      padding-top: 1rem;
       font-size: 0.7rem;
       color: var(--text-muted);
+      border-top: 1px solid var(--border);
     }
     
     .legend__bar {
-      width: 150px;
+      width: 120px;
       height: 10px;
       border-radius: 2px;
+      flex-shrink: 0;
     }
     
     .legend__label {
@@ -257,15 +266,16 @@
           <option value="duration" data-i18n-option="duration">Average Sentence Duration</option>
         </select>
       </div>
-    </aside>
-    
-    <div class="mapContainer">
-      <svg id="map"></svg>
+      
       <div class="legend">
         <span class="legend__label" data-i18n="legend_low">Lower severity</span>
         <div class="legend__bar" id="legendBar"></div>
         <span class="legend__label" data-i18n="legend_high">Higher severity</span>
       </div>
+    </aside>
+    
+    <div class="mapContainer">
+      <svg id="map"></svg>
     </div>
   </main>
   
@@ -398,19 +408,22 @@
     document.getElementById('langEN').addEventListener('click', () => applyLanguage('en'));
     document.getElementById('langFR').addEventListener('click', () => applyLanguage('fr'));
     
-    const width = 550;
-    const height = 520;
+    const mapContainer = document.querySelector('.mapContainer');
+    const width = mapContainer.clientWidth;
+    const height = mapContainer.clientHeight;
     
     const svg = d3.select("#map")
-      .attr("width", width)
-      .attr("height", height)
-      .attr("viewBox", `0 0 ${width} ${height}`);
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .attr("viewBox", `0 0 ${width} ${height}`)
+      .attr("preserveAspectRatio", "xMidYMid meet");
     
     const tooltip = d3.select("#tooltip");
     
+    const scale = Math.min(width, height) * 4.5;
     const projection = d3.geoConicConformal()
       .center([2.454071, 46.279229])
-      .scale(2600)
+      .scale(scale)
       .translate([width / 2, height / 2]);
     
     const pathGenerator = d3.geoPath().projection(projection);
