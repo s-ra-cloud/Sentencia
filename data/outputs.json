@@ -33,15 +33,13 @@
           "metaFR": "Carte départementale interactive · trois indicateurs",
           "actions": [
             {
-              "type": "route",
-              "route": "ipv",
-              "labelKey": "action_data"
+              "url": "/geography-sentencing.html",
+              "type": "link",
+              "labelKey": "action_view"
             }
           ],
-          "metaKey": "ipv_card_meta",
           "titleEN": "The Geography of Sentencing in France",
-          "titleFR": "La Géographie du Contentieux Pénal en France",
-          "titleKey": "ipv_card_title"
+          "titleFR": "La Géographie du Contentieux Pénal en France"
         },
         {
           "id": "kg2025",
