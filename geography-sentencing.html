@@ -89,7 +89,7 @@
     
     .main {
       display: grid;
-      grid-template-columns: 360px 1fr;
+      grid-template-columns: 400px 1fr;
       height: calc(100vh - 42px);
     }
     
@@ -115,7 +115,7 @@
     }
     
     .sidebar__section {
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
     }
     
     .sidebar__heading {
@@ -208,6 +208,33 @@
       font-size: 0.65rem;
     }
     
+    .sidebar__controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    
+    .sidebar__btn {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: white;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .sidebar__btn:hover {
+      border-color: var(--text);
+    }
+    
+    .sidebar__btn.active {
+      background: var(--text);
+      color: white;
+      border-color: var(--text);
+    }
+    
     @media (max-width: 900px) {
       .main {
         grid-template-columns: 1fr;
@@ -267,6 +294,18 @@
         </select>
       </div>
       
+      <div class="sidebar__section">
+        <h2 class="sidebar__heading" data-i18n="geo_colormode_heading">Color Mode</h2>
+        <div class="sidebar__controls">
+          <button class="sidebar__btn active" id="colorMode" data-i18n="colormode_color">Color</button>
+          <button class="sidebar__btn" id="bwMode" data-i18n="colormode_bw">Black & White</button>
+        </div>
+      </div>
+      
+      <div class="sidebar__controls">
+        <button class="sidebar__btn" id="exportBtn" data-i18n="export_btn">Export Image</button>
+      </div>
+      
       <div class="legend">
         <span class="legend__label" data-i18n="legend_low">Lower severity</span>
         <div class="legend__bar" id="legendBar"></div>
@@ -302,7 +341,11 @@
         opt_ipv: 'Intimate Partner Violence (IPV)',
         opt_severity: 'Sentencing Severity Index',
         opt_incarceration: 'Incarceration Rate',
-        opt_duration: 'Average Sentence Duration'
+        opt_duration: 'Average Sentence Duration',
+        geo_colormode_heading: 'Color Mode',
+        colormode_color: 'Color',
+        colormode_bw: 'Black & White',
+        export_btn: 'Export Image'
       },
       fr: {
         back_to_main: 'Retour au site principal',
@@ -323,7 +366,11 @@
         opt_ipv: 'Violences conjugales (IPV)',
         opt_severity: 'Indice de sévérité des peines',
         opt_incarceration: 'Taux d\'incarcération',
-        opt_duration: 'Durée moyenne des peines'
+        opt_duration: 'Durée moyenne des peines',
+        geo_colormode_heading: 'Mode couleur',
+        colormode_color: 'Couleur',
+        colormode_bw: 'Noir & Blanc',
+        export_btn: 'Exporter l\'image'
       }
     };
     
@@ -428,16 +475,31 @@
     
     const pathGenerator = d3.geoPath().projection(projection);
     
-    const colorScale = d3.scaleSequential()
+    let colorMode = 'color';
+    
+    const colorScaleColor = d3.scaleSequential()
       .domain([0, 1])
       .interpolator(d3.interpolateRdYlBu);
     
-    const legendBar = document.getElementById('legendBar');
-    const gradient = [];
-    for (let i = 0; i <= 100; i++) {
-      gradient.push(colorScale(1 - i/100));
+    const colorScaleBW = d3.scaleSequential()
+      .domain([0, 1])
+      .interpolator(d3.interpolateGreys);
+    
+    function getColorScale() {
+      return colorMode === 'bw' ? colorScaleBW : colorScaleColor;
     }
-    legendBar.style.background = `linear-gradient(to right, ${gradient.join(', ')})`;
+    
+    function updateLegend() {
+      const legendBar = document.getElementById('legendBar');
+      const scale = getColorScale();
+      const gradient = [];
+      for (let i = 0; i <= 100; i++) {
+        gradient.push(scale(1 - i/100));
+      }
+      legendBar.style.background = `linear-gradient(to right, ${gradient.join(', ')})`;
+    }
+    
+    updateLegend();
     
     let geoData = null;
     
@@ -447,6 +509,7 @@
       const offence = document.getElementById('offenceSelect').value;
       const indicator = document.getElementById('indicatorSelect').value;
       const data = sampleData[offence][indicator];
+      const scale = getColorScale();
       
       const values = Object.values(data);
       const extent = d3.extent(values);
@@ -464,8 +527,10 @@
           const value = data[code];
           if (value === undefined) return "#ddd";
           const normalized = normalizer(value);
-          return colorScale(1 - normalized);
+          return scale(1 - normalized);
         });
+      
+      updateLegend();
     }
     
     d3.json("https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements-version-simplifiee.geojson")
@@ -526,6 +591,44 @@
     
     document.getElementById('offenceSelect').addEventListener('change', updateMap);
     document.getElementById('indicatorSelect').addEventListener('change', updateMap);
+    
+    document.getElementById('colorMode').addEventListener('click', () => {
+      colorMode = 'color';
+      document.getElementById('colorMode').classList.add('active');
+      document.getElementById('bwMode').classList.remove('active');
+      updateMap();
+    });
+    
+    document.getElementById('bwMode').addEventListener('click', () => {
+      colorMode = 'bw';
+      document.getElementById('bwMode').classList.add('active');
+      document.getElementById('colorMode').classList.remove('active');
+      updateMap();
+    });
+    
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const svgElement = document.getElementById('map');
+      const svgData = new XMLSerializer().serializeToString(svgElement);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      
+      canvas.width = width * 2;
+      canvas.height = height * 2;
+      ctx.scale(2, 2);
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, width, height);
+      
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0);
+        const link = document.createElement('a');
+        link.download = 'france-sentencing-map.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      };
+      
+      img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    });
     
     applyLanguage(currentLang);
   </script>
