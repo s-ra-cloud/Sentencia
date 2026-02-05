@@ -98,6 +98,19 @@ Preferred communication style: Simple, everyday language.
 - **Workflow**: Runs `python -m uvicorn main:app --host 0.0.0.0 --port 8000`
 - **Features**: Upload CSV data, generate decision trees, multiple ML frameworks
 
+### Geography of Sentencing Page
+- **Location**: `/geography-sentencing.html`
+- **Description**: Interactive map visualization of sentencing severity across French departments
+- **Features**:
+  - D3.js-powered choropleth map of metropolitan France
+  - Color-coded departments by sentencing severity indicators
+  - Left sidebar with contextual explanations, methodology, and data sources
+  - Two dropdown menus: offense category (IPV) and indicator type (severity index, incarceration rate, average duration)
+  - Bilingual support (EN/FR)
+  - Tooltips showing department-specific data on hover
+- **Data**: Sample IPV sentencing data for all 96 metropolitan departments
+- **External dependency**: D3.js v7 (loaded from CDN), GeoJSON from gregoiredavid/france-geojson
+
 ### Environment Variables
 - `ADMIN_PASSWORD`: Admin authentication password (defaults to 'Trismegiste' if not set)
 
