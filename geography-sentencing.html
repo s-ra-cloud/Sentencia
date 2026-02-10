@@ -392,6 +392,24 @@
       "\uFEFFDépartement", "Département", "Latitude", "Longitude"
     ]);
 
+    const COLUMN_TRANSLATIONS = {
+      "Chômage": { en: "Unemployment Rate", fr: "Chômage" },
+      "Couleur politique": { en: "Political Leaning", fr: "Couleur politique" },
+      "Proportion de récidive légale (VIF)": { en: "Legal Recidivism Rate (IPV)", fr: "Proportion de récidive légale (VIF)" },
+      "Taux de condamnation / 100.000 h (VIF)": { en: "Conviction Rate / 100,000 pop. (IPV)", fr: "Taux de condamnation / 100.000 h (VIF)" },
+      "Taux emprisonnement / condamnation (VIF)": { en: "Incarceration / Conviction Rate (IPV)", fr: "Taux emprisonnement / condamnation (VIF)" },
+      "Résidu taux emprisonnement (VIF)": { en: "Incarceration Rate Residual (IPV)", fr: "Résidu taux emprisonnement (VIF)" },
+      "Proportion de femmes condamnées (VIF)": { en: "Proportion of Women Convicted (IPV)", fr: "Proportion de femmes condamnées (VIF)" },
+      "Durée moyenne des peines prononcées (VIF)": { en: "Average Sentence Duration (IPV)", fr: "Durée moyenne des peines prononcées (VIF)" },
+      "Sévérité (Index)(VIF)": { en: "Severity Index (IPV)", fr: "Indice de sévérité (VIF)" },
+      "Nombres d'auteur poursuivis (VIF)": { en: "Number of Prosecuted Offenders (IPV)", fr: "Nombres d'auteur poursuivis (VIF)" }
+    };
+
+    function getColumnLabel(colName, lang) {
+      const t = COLUMN_TRANSLATIONS[colName];
+      return t ? t[lang] : colName;
+    }
+
     let csvData = {};
     let indicatorColumns = [];
     let geoData = null;
@@ -417,7 +435,15 @@
       document.getElementById('langFR').classList.toggle('active', lang === 'fr');
 
       const offenceSelect = document.getElementById('offenceSelect');
-      offenceSelect.options[0].textContent = I18N[lang].opt_ipv;
+      if (offenceSelect.options.length > 0) {
+        offenceSelect.options[0].textContent = I18N[lang].opt_ipv;
+      }
+
+      const indicatorSelect = document.getElementById('indicatorSelect');
+      for (let i = 0; i < indicatorSelect.options.length; i++) {
+        const colName = indicatorSelect.options[i].value;
+        indicatorSelect.options[i].textContent = getColumnLabel(colName, lang);
+      }
     }
 
     document.getElementById('langEN').addEventListener('click', () => applyLanguage('en'));
@@ -509,7 +535,7 @@
           indicatorColumns.forEach(col => {
             const opt = document.createElement('option');
             opt.value = col;
-            opt.textContent = col;
+            opt.textContent = getColumnLabel(col, currentLang);
             indicatorSelect.appendChild(opt);
           });
 
@@ -561,11 +587,12 @@
             ? (Number.isInteger(value) ? value.toString() : value.toFixed(4).replace(/0+$/, '').replace(/\.$/, ''))
             : 'N/A';
 
+          const indicatorLabel = getColumnLabel(indicator, currentLang);
           tooltip
             .style("opacity", 1)
             .html(`
               <div class="tooltip__name">${d.properties.nom} (${d.properties.code})</div>
-              <div class="tooltip__value">${indicator}: ${formattedValue}</div>
+              <div class="tooltip__value">${indicatorLabel}: ${formattedValue}</div>
             `);
         })
         .on("mousemove", function(event) {
