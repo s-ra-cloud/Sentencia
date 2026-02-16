@@ -1,1 +1,608 @@
-{"categories": [{"id": "law", "outputs": [{"id": "sentencing-tree", "pi": "Sacha Raoult", "type": "software", "year": 2025, "descEN": "An interactive machine learning tool for analyzing sentencing data. Upload CSV datasets and generate decision tree visualizations that reveal patterns in sentencing decisions using scikit-learn, XGBoost, or LightGBM.", "descFR": "Un outil interactif d apprentissage automatique pour analyser les données de condamnation. Téléchargez des jeux de données CSV et générez des visualisations d arbres de décision révélant les schémas dans les décisions de condamnation.", "metaEN": "Interactive ML tool · Decision trees · CSV analysis", "metaFR": "Outil ML interactif · Arbres de décision · Analyse CSV", "actions": [{"url": "/sentencing-tree.html", "type": "link", "labelKey": "action_view"}], "titleEN": "Sentencing Choice Tree", "titleFR": "Arbre de choix de condamnation"}, {"id": "ipv", "pi": "Laura Duparc, Sacha Raoult", "type": "software", "year": 2026, "descEN": "An interactive visualization mapping sentencing patterns across French departments. Explore three key metrics revealing regional disparities in criminal justice outcomes.", "descFR": "Une visualisation interactive cartographiant les pratiques de condamnation à travers les départements français. Explorez trois indicateurs clés révélant les disparités régionales dans les résultats de la justice pénale.", "metaEN": "Interactive departmental map · three metrics", "metaFR": "Carte départementale interactive · trois indicateurs", "actions": [{"url": "/geography-sentencing.html", "type": "link", "labelKey": "action_view"}], "titleEN": "The Geography of Sentencing in France", "titleFR": "La Géographie du Contentieux Pénal en France"}, {"id": "kg2025", "pi": "Alexander V. Belikov, Sacha Raoult", "meta": "arXiv Paper", "type": "paper", "year": 2025, "title": "", "descEN": "A novel methodology for automatically constructing knowledge graphs from French criminal court appeal decisions using natural language processing and semantic extraction techniques.", "descFR": "Une nouvelle méthodologie pour construire automatiquement des graphes de connaissances à partir des décisions en appel des tribunaux pénaux français, utilisant le traitement automatique du langage naturel et des techniques d extraction sémantique.", "metaEN": "", "metaFR": "", "actions": [{"url": "https://arxiv.org/abs/2501.14579", "type": "link", "labelKey": "action_text"}], "titleEN": "Knowledge Graphs Construction from Criminal Court Appeals", "titleFR": "Construction de graphiques de connaissances à partir des appels interjetés devant les tribunaux pénaux"}, {"id": "sent2024", "pi": "Lisa Juppeaux, Sacha Raoult", "type": "paper", "year": 2024, "title": "Sentencing : une revue de la recherche appliquée et pistes pour la recherche fondamentale", "descEN": "A comprehensive review of applied sentencing research, examining methodological approaches and proposing new directions for fundamental research in criminal justice.", "descFR": "Une revue complète de la recherche appliquée sur les peines, examinant les approches méthodologiques et proposant de nouvelles directions pour la recherche fondamentale en justice pénale.", "metaEN": "Journal Article · Nouveaux Problèmes Actuels de Sciences Criminelles · 2024 · Lisa Juppeaux, Sacha Raoult", "metaFR": "Article de revue · Nouveaux Problèmes Actuels de Sciences Criminelles · 2024 · Lisa Juppeaux, Sacha Raoult", "actions": [{"url": "https://www.mediafire.com/file/5zxjkg6ov565126/Vol-XXXI-L-Juppeaux-et-S-Raoult_%25281%2529_stamped_%25281%2529.pdf/file", "type": "link", "labelKey": "action_text"}], "metaKey": "pub1_meta"}, {"id": "ml2022", "pi": "Sacha Raoult", "meta": "Journal Article · Jurimétrie", "type": "paper", "year": 2022, "title": "", "descEN": "Exploring how machine learning techniques can be applied to jurimetric data analysis, offering new computational approaches to legal scholarship.", "descFR": "Exploration de l application des techniques d apprentissage automatique à l analyse des données jurimétriques, proposant de nouvelles approches computationnelles pour la recherche juridique.", "metaEN": "", "metaFR": "", "actions": [{"url": "https://www.mediafire.com/file/c1kbfxk8cq8ne2b/03_Jurime%25CC%2581trie_1_-_S._Raoult.pdf/file", "type": "link", "labelKey": "action_text"}, {"url": "https://www.youtube.com/watch?v=XFIrgddhAGg", "type": "link", "labelKey": "action_video"}], "metaKey": "pub2_meta", "titleEN": "Machine learning in the analysis of jurimetrics data", "titleFR": "L apprentissage automatique dans l analyse des données de la jurimétrie"}, {"id": "laura2024", "pi": "Laura Duparc ", "meta": "Jurimétrie 2024", "type": "video", "year": 2024, "descEN": "Examining the validity and usefulness of small sample size analyses in jurimetric research, and when they can provide meaningful insights.", "descFR": "Examen de la validité et de l utilité des analyses sur petits échantillons dans la recherche jurimétrique, et des cas où elles peuvent fournir des éclairages pertinents.", "actions": [{"url": "https://www.youtube.com/watch?v=jn_kNpzSQns", "type": "link", "labelKey": "action_video"}], "titleEN": "What is the role of small-N analyses in jurimetrics?", "titleFR": "Quelle place pour les analyses de petits N dans la jurimétrie ?", "titleKey": "laura_jurimetrie_title"}, {"id": "new_1770021720273", "pi": "Sacha Raoult, Eliot Hallak, Lisa Juppeaux, Sofiane Baddag", "meta": "", "type": "software", "year": 2026, "title": "Police Custody Assistant", "descEN": "A program designed to assist legal professionals in navigating the complexities of police custody.", "descFR": "Un programme conçu pour aider les professionnels du droit à s'y retrouver dans les complexités de la garde à vue.", "metaEN": "", "metaFR": "", "actions": [], "titleEN": "Police Custody Assistant", "titleFR": "Assistant Garde à Vue"}, {"id": "aveux2025", "type": "paper", "titleEN": "Confession and sincerity in rape trials: an analysis of lawyers'  strategies", "titleFR": "L'Aveu et sa sincérité dans les procès pour viol : une analyse des stratégies d'avocats", "descEN": "An analysis of the role of confession and its perceived sincerity in rape trials, examining the strategies employed by lawyers.", "descFR": "Une analyse du rôle de l'aveu et de sa sincérité perçue dans les procès pour viol, examinant les stratégies employées par les avocats.", "metaEN": "Droit et Société · 2025 · 63,236 words", "metaFR": "Droit et Société · 2025 · 63 236 signes", "pi": "Laura Duparc", "year": 2025, "actions": []}], "titleEN": "Computational Law Research Team", "titleFR": "Équipe de recherche en droit computationnel", "titleKey": "cat_law_title"}, {"id": "epi", "outputs": [{"id": "eep", "pi": "", "type": "software", "year": 2025, "title": "Future of Science Network", "descEN": "A Hub for Innovation in Academic Publishing.", "descFR": "Une plateforme collaborative pour l'innovation dans la publication académique.", "metaEN": "Documentation · Platform", "metaFR": "Documentation · Plateforme", "actions": [{"url": "https://fosn.1337.ma/home", "type": "link", "labelKey": "action_text"}], "metaKey": "eep_card_meta", "titleEN": "", "titleFR": "", "titleKey": "eep_card_title"}, {"id": "new_1770011931614", "pi": "Sacha Raoult", "meta": "", "type": "software", "year": 2026, "title": "Connectica", "descEN": "A software to help academic build their careers, based on circles of collaboration.", "descFR": "Un logiciel destiné à aider les universitaires à développer leur carrière, basé sur des cercles de collaboration.", "metaEN": "Academic Networking Assistant", "metaFR": "Assistant de networking académique", "actions": [{"url": "https://connectica.io", "type": "link", "labelKey": "action_text"}], "titleEN": "", "titleFR": ""}, {"id": "new_1770021925537", "pi": "Eliot Hallak, Laura Duparc, Sacha Raoult", "meta": "", "type": "software", "year": 2019, "title": "Thesis Center", "descEN": "A specialized text editor that handles all formatting automatically", "descFR": "Un éditeur de texte spécialisé qui gère toute la mise en forme automatiquement", "metaEN": "Word Processor for Academic Dissertations", "metaFR": "Editeur de texte pour mémoires et thèse", "actions": [], "titleEN": "", "titleFR": ""}, {"id": "new_1770113091963", "pi": "James Evans, Laura Duparc, Eric Parisot", "meta": "", "type": "software", "year": 2020, "title": "Knowledge Tree", "descEN": "Academic Genealogy of Mentorships.", "descFR": "Généalogie de mentorat académique.", "metaEN": "Platform", "metaFR": "Plateforme", "actions": [{"url": "https://fosn.1337.ma/home", "type": "link", "labelKey": "action_text"}], "titleEN": "", "titleFR": ""}], "titleEN": "Epistemic Engineering Team", "titleFR": "Équipe d ingénierie épistémique", "titleKey": "cat_epi_title"}, {"id": "psy", "outputs": [{"id": "whatif", "pi": "Sacha Raoult, Jiad Abdul", "type": "software", "year": 2021, "title": "What If - Simulate uncertainty in decisions", "descEN": "An open-source tool for simulating how uncertainty affects decision-making processes, helping researchers model cognitive biases and choice behavior.", "descFR": "Un outil open-source pour simuler comment l incertitude affecte les processus de prise de décision, aidant les chercheurs à modéliser les biais cognitifs et les comportements de choix.", "metaEN": "Open Source Tool", "metaFR": "Outils Open Source", "actions": [{"url": "https://github.com/venividivici117/what-if", "type": "link", "labelKey": "action_code"}], "metaKey": "whatif_meta"}, {"id": "emprise", "pi": "Sacha Raoult, Laura Duparc", "type": "paper", "year": 2022, "descEN": "A semantic analysis exploring how concepts of influence, manipulation, and psychological dependence are constructed and interrelated in criminological literature.", "descFR": "Une analyse sémantique explorant comment les concepts d emprise, de manipulation et de dépendance psychologique sont construits et interconnectés dans la littérature criminologique.", "metaEN": "Journal article · Revue de sciences criminelles et de droit pénal comparé", "metaFR": "Article de revue · Revue de sciences criminelles et de droit pénal comparé", "actions": [{"url": "https://shs.hal.science/halshs-03527201", "type": "link", "labelKey": "action_text"}], "metaKey": "emprise_meta", "titleEN": "Influence, manipulation and dependence in the semantic space of criminology", "titleFR": "Emprise, manipulation et dépendance dans l espace sémantique de la criminologie", "titleKey": "emprise_title"}, {"id": "crime", "pi": "Sacha Raoult", "type": "paper", "year": 2020, "descEN": "A theoretical exploration of self-directed criminality, examining the conceptual boundaries between crimes committed for personal benefit and self-harm in a computational model.", "descFR": "Une exploration théorique de la criminalité auto-dirigée, examinant les frontières conceptuelles entre les crimes commis pour son propre bénéfice et l'autodestruction dans un modèle computationel.", "metaEN": "Journal article · Revue de sciences criminelles et de droit pénal comparé · 2020", "metaFR": "Article de revue · Revue de sciences criminelles et de droit pénal comparé · 2020", "actions": [{"url": "https://droit.cairn.info/revue-de-science-criminelle-et-de-droit-penal-compare-2020-3-page-787?lang=fr", "type": "link", "labelKey": "action_text"}], "metaKey": "crime_pour_soi_meta", "titleEN": "Crime for oneself and crime against oneself", "titleFR": "Crime pour soi et crime contre soi", "titleKey": "crime_pour_soi_title"}, {"id": "inhibition2024", "type": "paper", "titleEN": "Latent inhibition deficiencies in rape offenders: a qualitative and quantitative comparison", "titleFR": "Les défaillances de l'inhibition latente chez les auteurs de viol : comparaison qualitative et quantitative", "descEN": "A study examining latent inhibition deficiencies among rape offenders through qualitative and quantitative comparison methods.", "descFR": "Une étude examinant les défaillances de l'inhibition latente chez les auteurs de viol par des méthodes de comparaison qualitative et quantitative.", "metaEN": "Nouveaux Problèmes Actuels de Sciences Criminelles · 2024 · Vol. XXXII · 120,515 words", "metaFR": "Nouveaux Problèmes Actuels de Sciences Criminelles · 2024 · Vol. XXXII · 120 515 signes", "pi": "Laura Duparc", "year": 2024, "actions": []}, {"id": "truecrime2023", "type": "paper", "titleEN": "Understanding women's interest in True Crime", "titleFR": "Comprendre l'intérêt des femmes pour le True Crime", "descEN": "An exploration of why women are particularly drawn to True Crime content, examining psychological and sociological factors.", "descFR": "Une exploration des raisons pour lesquelles les femmes sont particulièrement attirées par le True Crime, examinant les facteurs psychologiques et sociologiques.", "metaEN": "AJ Pénal · 2023/12 · p.564-568 · 22,895 words", "metaFR": "AJ Pénal · 2023/12 · p.564-568 · 22 895 signes", "pi": "Laura Duparc, L. Viburnu", "year": 2023, "actions": []}, {"id": "horsnorme2020", "type": "paper", "titleEN": "Cognitive functioning and extraordinary destiny - Computational contribution to retrospective diagnostics", "titleFR": "Fonctionnement cognitif et destin \"hors norme\" - Contribution computationnelle à la discussion aux diagnostics rétrospectifs", "descEN": "A Master's thesis applying computational methods to the discussion of retrospective diagnostics of cognitive functioning and extraordinary destinies.", "descFR": "Un mémoire de master 2 appliquant des méthodes computationnelles à la discussion des diagnostics rétrospectifs du fonctionnement cognitif et des destins hors norme.", "metaEN": "Master's thesis · Structures et Théorie, Carnets de recherche · June 2020 · PEERS", "metaFR": "Mémoire de master 2 · Structures et Théorie, Carnets de recherche · Juin 2020 · PEERS", "pi": "Laura Duparc", "year": 2020, "actions": []}], "titleEN": "Computational Psychology Research Team", "titleFR": "Équipe de recherche en psychologie computationnelle", "titleKey": "cat_psy_title"}, {"id": "myth", "outputs": [{"id": "shadows", "pi": "Laura Duparc, Camille Bertrand, Ami Nagai", "type": "software", "year": 2026, "descEN": "A network analysis of mythological narratives, mapping the interconnections between characters, themes, and symbolic elements across cultural traditions.", "descFR": "Une analyse de réseau des récits mythologiques, cartographiant les interconnexions entre personnages, thèmes et éléments symboliques à travers les traditions culturelles.", "metaEN": "Mythology Network Analysis", "metaFR": "Analyse de réseau mythologique", "actions": [], "metaKey": "shadows_meta", "titleEN": "Shadows", "titleFR": "Ombres", "titleKey": "shadows_title"}, {"id": "new_1770012051614", "pi": "Laura Duparc", "meta": "", "type": "software", "year": 2026, "title": "Eidolons", "descEN": "An exploratory application of an analysis of unconscious content based on a Jungian framework and using an LLM.", "descFR": "Application exploratoire d une analyse du contenu inconscient basée sur un cadre jungien et utilisant un LLM.", "metaEN": "Archetype Exploration App", "metaFR": "Application d'exploration archétypale", "actions": [{"url": "https:eidolons.app", "type": "link", "labelKey": "action_text"}], "titleEN": "", "titleFR": ""}], "titleEN": "Computational Mythology Research Team", "titleFR": "Équipe de recherche en mythologie computationnelle", "titleKey": "cat_myth_title"}, {"id": "philo", "outputs": [{"id": "ethexco", "pi": "Alexander V. Belikov, Laura Duparc ", "type": "software", "year": 2025, "descEN": "AI personas based on the ethical writings of major philosophers, enabling conversational exploration of philosophical ethics frameworks.", "descFR": "Des personas IA basés sur les écrits éthiques des grands philosophes, permettant une exploration conversationnelle des cadres éthiques philosophiques.", "metaEN": "AI Ethics Personas", "metaFR": "Personas IA éthiques", "actions": [], "metaKey": "ethexco_meta", "titleEN": "EthExCo", "titleFR": "EthExCo", "titleKey": "ethexco_title"}, {"id": "legacy", "pi": "Raphael Liogier, Laura Duparc", "type": "software", "year": 2025, "descEN": "An interlinked library of philosophical texts, creating a navigable network of conceptual connections across the history of philosophy.", "descFR": "Une bibliothèque interconnectée de textes philosophiques, créant un réseau navigable de connexions conceptuelles à travers l histoire de la philosophie.", "metaEN": "Interlinked Philosophical Library", "metaFR": "Bibliothèque philosophique interconnectée ", "actions": [{"url": "https://legacy-um6p.1337.ma/projects/library", "type": "link", "labelKey": "action_text"}], "metaKey": "legacy_meta", "titleEN": "LEGACY Library", "titleFR": "LEGACY", "titleKey": "legacy_title"}, {"id": "new_1770021212764", "pi": "Sacha Raoult, Eric Parisot", "meta": "", "type": "software", "year": 2021, "title": "SEMANTICA (Tractatus Digital)", "descEN": "", "descFR": "", "metaEN": "Interactive version of Wittgenstein's Tractatus", "metaFR": "Version interactive du Tractatus de Wittgenstein", "actions": [], "titleEN": "", "titleFR": ""}, {"id": "new_1770113230108", "pi": "Laura Duparc", "meta": "", "type": "software", "year": 2021, "title": "", "descEN": "A map of influence in major philosophical works.", "descFR": "Une carte des influences dans les grands textes philosophiques.", "metaEN": "", "metaFR": "", "actions": [{"url": "https://legacy-um6p.1337.ma/projects/great-conversation", "type": "link", "labelKey": "action_text"}], "titleEN": "The Great Conversation", "titleFR": "La Grande Conversation"}, {"id": "llmphilosopher2025", "type": "paper", "titleEN": "Validating an Hybrid Evaluation Pipeline for LLM Philosopher Personas: Confucius, Aristotle, Stuart Mill", "titleFR": "Validation d'un pipeline d'évaluation hybride pour les personas philosophiques LLM : Confucius, Aristote, Stuart Mill", "descEN": "A poster presenting a hybrid evaluation pipeline for validating LLM philosopher personas, covering Confucius, Aristotle, and Stuart Mill.", "descFR": "Un poster présentant un pipeline d'évaluation hybride pour la validation de personas philosophiques LLM, couvrant Confucius, Aristote et Stuart Mill.", "metaEN": "Poster · RISE Conference · 2025 · 54,669 words", "metaFR": "Poster · Conférence RISE · 2025 · 54 669 signes", "pi": "Laura Duparc, A. Belikov, O. Goldin, S. C. Angle, P. Taranto", "year": 2025, "actions": []}], "titleEN": "Computational Philosophy Research Team", "titleFR": "Équipe de recherche en philosophie computationnelle", "titleKey": "cat_philo_title"}, {"id": "structure", "outputs": [{"id": "new_1770036171322", "pi": "Sacha Raoult, Eliot Hallak", "meta": "", "type": "podcast", "year": 2019, "title": "", "descEN": "Theorizing the Absurd is a philosophical podcast series hosted by Sacha Raoult and Eliot Hallak. Through in-depth conversations, the hosts examine the foundations of theoretical thought, focusing on the conditions under which knowledge, rationality, and meaning are possible.", "descFR": "Théoriser l’absurde est une série de podcasts philosophiques animée par Sacha Raoult et Eliot Hallak. À travers des discussions approfondies, les auteurs interrogent les fondements mêmes de la pensée théorique, en particulier les conditions de possibilité de la connaissance, de la rationalité et du sens.", "metaEN": "Podcast series", "metaFR": "Séries de podcasts", "actions": [{"url": "https://www.youtube.com/watch?v=X9j_mLDarGo&list=PLQtF4u7HFbE4cahV1CaruA1ufql5HMg_s", "type": "link", "labelKey": "action_text"}], "titleEN": "Theories of the Absurd (French)", "titleFR": "Comment théoriser l'absurde ?"}, {"id": "new_1770037175772", "pi": "Sacha Raoult", "meta": "", "type": "book", "year": 2025, "title": "", "descEN": "The Prophetic Power of Science Fiction : A Case Study explores how a landmark work of popular science fiction anticipated key dynamics of contemporary societies, including rising inequality, social control, celebrity culture, and spiritual emptiness. A concise reflection at the intersection of science fiction, social philosophy, and cultural analysis.", "descFR": "Starmania : une prophétie apocalyptique analyse comment une œuvre majeure de la culture populaire a su anticiper avec une remarquable lucidité certaines dynamiques centrales de nos sociétés contemporaines : inégalités croissantes, contrôle social, culte de la célébrité et vide spirituel. À la croisée de la science-fiction, de la philosophie sociale et de l’histoire des idées.", "metaEN": "Structures and Theory Notebooks", "metaFR": "Carnets de recherche Structures et Théorie", "actions": [{"url": "https://www.amazon.fr/Starmania-proph%C3%A9tie-apocalyptique-Sacha-Raoult/dp/B0FNZW77VT/ref=sr_1_3?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=C0OXVHXBEW5F&dib=eyJ2IjoiMSJ9.NtgvBsjYLZ5kEJR3yLPkLFHFX9xj5srnfvtZ4qh5WdfwtGkdGcsuCTbbZmqpEdkXjnjMF65WzxfT2Cfe0mlAZjMONu4J3xYnWI0ES-36dBO5kfxKuu0vLIOa5anoHz62QWQ9sZaBgbGjBsV9yDpWDV472qlQ8KvDog53VOnaAxWW3PTMoQG3eivNWmALDt0GnHyXzFn14IHN42Sdlwgd-xdzyQrcZ6vvvvfk1BThOriMU9WVuJQnDOBoly2RBnVUE_nyzHj1c0GW4KZchVDZCBWUQhALjCGudUctSvI_XTI.ydT59Uqc2ljRScifpDGHCZ250VEvhWCGoGugWH5F37Y&dib_tag=se&keywords=starmania&qid=1770037187&sprefix=starmani%2Caps%2C233&sr=8-3", "type": "link", "labelKey": "action_text"}], "titleEN": "The Prophetic Power of Science Fiction : A Case Study", "titleFR": "Starmania : un prophétie apocalyptique"}, {"id": "new_1770136148115", "pi": "Sacha Raoult", "meta": "", "type": "video", "year": 2025, "title": "", "descEN": "A series of lectures on ethical symbolism in fairy tales and modern films, based in particular on the work of Carl Jung.", "descFR": "Une série de conférences sur la symbolique éthique dans les contes de fées et les films modernes, s'appuyant notamment sur les travaux de Carl Jung.", "metaEN": "Video lecture series (French)", "metaFR": "Série de conférences", "actions": [{"url": "https://www.youtube.com/watch?v=yHwMA68fBeA&list=PLKGYdim21NP2Fp2x1M1OXZ34M33WFZCxV", "type": "link", "labelKey": "action_text"}], "titleEN": "Symbols of Good and Evil", "titleFR": "Le symbolisme du Bien et du Mal"}, {"id": "new_1770150761127", "pi": "Sacha Raoult", "meta": "France Forum ", "type": "paper", "year": 2025, "title": "", "descEN": "", "descFR": "", "metaEN": "", "metaFR": "", "actions": [], "titleEN": "Can a society plan for the future based solely on negative historical models? ", "titleFR": "Une société peut-elle se projeter dans l’avenir en se fondant exclusivement sur des modèles historiques négatifs "}, {"id": "moriarty2020", "type": "paper", "titleEN": "Is Moriarty a member of MENSA? A response to Persson and an interdisciplinary perspective of genius", "titleFR": "Moriarty est-il membre de MENSA ? Une réponse à Persson et une perspective interdisciplinaire du génie", "descEN": "A short article responding to Persson with an interdisciplinary perspective on the concept of genius.", "descFR": "Un article court répondant à Persson avec une perspective interdisciplinaire sur le concept de génie.", "metaEN": "Structures et Théorie, Carnets de recherche · PEERS · 9,715 words", "metaFR": "Structures et Théorie, Carnets de recherche · PEERS · 9 715 signes", "pi": "Laura Duparc, Sacha Raoult", "year": 2020, "actions": []}], "titleEN": "Structure and Theory", "titleFR": "Structure et Théorie", "titleKey": "cat_structure_title"}]}
+{
+  "categories": [
+    {
+      "id": "law",
+      "outputs": [
+        {
+          "id": "sentencing-tree",
+          "pi": "Sacha Raoult",
+          "type": "software",
+          "year": 2025,
+          "descEN": "An interactive machine learning tool for analyzing sentencing data. Upload CSV datasets and generate decision tree visualizations that reveal patterns in sentencing decisions using scikit-learn, XGBoost, or LightGBM.",
+          "descFR": "Un outil interactif d apprentissage automatique pour analyser les données de condamnation. Téléchargez des jeux de données CSV et générez des visualisations d arbres de décision révélant les schémas dans les décisions de condamnation.",
+          "metaEN": "Interactive ML tool · Decision trees · CSV analysis",
+          "metaFR": "Outil ML interactif · Arbres de décision · Analyse CSV",
+          "actions": [
+            {
+              "url": "/sentencing-tree.html",
+              "type": "link",
+              "labelKey": "action_view"
+            }
+          ],
+          "titleEN": "Sentencing Choice Tree",
+          "titleFR": "Arbre de choix de condamnation"
+        },
+        {
+          "id": "ipv",
+          "pi": "Laura Duparc, Sacha Raoult",
+          "type": "software",
+          "year": 2026,
+          "descEN": "An interactive visualization mapping sentencing patterns across French departments. Explore three key metrics revealing regional disparities in criminal justice outcomes.",
+          "descFR": "Une visualisation interactive cartographiant les pratiques de condamnation à travers les départements français. Explorez trois indicateurs clés révélant les disparités régionales dans les résultats de la justice pénale.",
+          "metaEN": "Interactive departmental map · three metrics",
+          "metaFR": "Carte départementale interactive · trois indicateurs",
+          "actions": [
+            {
+              "url": "/geography-sentencing.html",
+              "type": "link",
+              "labelKey": "action_view"
+            }
+          ],
+          "titleEN": "The Geography of Sentencing in France",
+          "titleFR": "La Géographie du Contentieux Pénal en France"
+        },
+        {
+          "id": "kg2025",
+          "pi": "Alexander V. Belikov, Sacha Raoult",
+          "meta": "arXiv Paper",
+          "type": "paper",
+          "year": 2025,
+          "title": "",
+          "descEN": "A novel methodology for automatically constructing knowledge graphs from French criminal court appeal decisions using natural language processing and semantic extraction techniques.",
+          "descFR": "Une nouvelle méthodologie pour construire automatiquement des graphes de connaissances à partir des décisions en appel des tribunaux pénaux français, utilisant le traitement automatique du langage naturel et des techniques d extraction sémantique.",
+          "metaEN": "",
+          "metaFR": "",
+          "actions": [
+            {
+              "url": "https://arxiv.org/abs/2501.14579",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "titleEN": "Knowledge Graphs Construction from Criminal Court Appeals",
+          "titleFR": "Construction de graphiques de connaissances à partir des appels interjetés devant les tribunaux pénaux"
+        },
+        {
+          "id": "sent2024",
+          "pi": "Lisa Juppeaux, Sacha Raoult",
+          "type": "paper",
+          "year": 2024,
+          "title": "Sentencing : une revue de la recherche appliquée et pistes pour la recherche fondamentale",
+          "descEN": "A comprehensive review of applied sentencing research, examining methodological approaches and proposing new directions for fundamental research in criminal justice.",
+          "descFR": "Une revue complète de la recherche appliquée sur les peines, examinant les approches méthodologiques et proposant de nouvelles directions pour la recherche fondamentale en justice pénale.",
+          "metaEN": "Journal Article · Nouveaux Problèmes Actuels de Sciences Criminelles · 2024 · Lisa Juppeaux, Sacha Raoult",
+          "metaFR": "Article de revue · Nouveaux Problèmes Actuels de Sciences Criminelles · 2024 · Lisa Juppeaux, Sacha Raoult",
+          "actions": [
+            {
+              "url": "https://www.mediafire.com/file/5zxjkg6ov565126/Vol-XXXI-L-Juppeaux-et-S-Raoult_%25281%2529_stamped_%25281%2529.pdf/file",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "metaKey": "pub1_meta"
+        },
+        {
+          "id": "ml2022",
+          "pi": "Sacha Raoult",
+          "meta": "Journal Article · Jurimétrie",
+          "type": "paper",
+          "year": 2022,
+          "title": "",
+          "descEN": "Exploring how machine learning techniques can be applied to jurimetric data analysis, offering new computational approaches to legal scholarship.",
+          "descFR": "Exploration de l application des techniques d apprentissage automatique à l analyse des données jurimétriques, proposant de nouvelles approches computationnelles pour la recherche juridique.",
+          "metaEN": "",
+          "metaFR": "",
+          "actions": [
+            {
+              "url": "https://www.mediafire.com/file/c1kbfxk8cq8ne2b/03_Jurime%25CC%2581trie_1_-_S._Raoult.pdf/file",
+              "type": "link",
+              "labelKey": "action_text"
+            },
+            {
+              "url": "https://www.youtube.com/watch?v=XFIrgddhAGg",
+              "type": "link",
+              "labelKey": "action_video"
+            }
+          ],
+          "metaKey": "pub2_meta",
+          "titleEN": "Machine learning in the analysis of jurimetrics data",
+          "titleFR": "L apprentissage automatique dans l analyse des données de la jurimétrie"
+        },
+        {
+          "id": "laura2024",
+          "pi": "Laura Duparc ",
+          "meta": "Jurimétrie 2024",
+          "type": "video",
+          "year": 2024,
+          "descEN": "Examining the validity and usefulness of small sample size analyses in jurimetric research, and when they can provide meaningful insights.",
+          "descFR": "Examen de la validité et de l utilité des analyses sur petits échantillons dans la recherche jurimétrique, et des cas où elles peuvent fournir des éclairages pertinents.",
+          "actions": [
+            {
+              "url": "https://www.youtube.com/watch?v=jn_kNpzSQns",
+              "type": "link",
+              "labelKey": "action_video"
+            }
+          ],
+          "titleEN": "What is the role of small-N analyses in jurimetrics?",
+          "titleFR": "Quelle place pour les analyses de petits N dans la jurimétrie ?",
+          "titleKey": "laura_jurimetrie_title"
+        },
+        {
+          "id": "new_1770021720273",
+          "pi": "Sacha Raoult, Eliot Hallak, Lisa Juppeaux, Sofiane Baddag",
+          "meta": "",
+          "type": "software",
+          "year": 2026,
+          "title": "Police Custody Assistant",
+          "descEN": "A program designed to assist legal professionals in navigating the complexities of police custody.",
+          "descFR": "Un programme conçu pour aider les professionnels du droit à s'y retrouver dans les complexités de la garde à vue.",
+          "metaEN": "",
+          "metaFR": "",
+          "actions": [],
+          "titleEN": "Police Custody Assistant",
+          "titleFR": "Assistant Garde à Vue"
+        },
+        {
+          "id": "aveux2025",
+          "type": "paper",
+          "titleEN": "Confession and sincerity in rape trials: an analysis of lawyers'  strategies",
+          "titleFR": "L'Aveu et sa sincérité dans les procès pour viol : une analyse des stratégies d'avocats",
+          "descEN": "An analysis of the role of confession and its perceived sincerity in rape trials, examining the strategies employed by lawyers.",
+          "descFR": "Une analyse du rôle de l'aveu et de sa sincérité perçue dans les procès pour viol, examinant les stratégies employées par les avocats.",
+          "metaEN": "Droit et Société · 2025 · 63,236 words",
+          "metaFR": "Droit et Société · 2025 · 63 236 signes",
+          "pi": "Laura Duparc",
+          "year": 2025,
+          "actions": []
+        }
+      ],
+      "titleEN": "Computational Law Research Team",
+      "titleFR": "Équipe de recherche en droit computationnel",
+      "titleKey": "cat_law_title"
+    },
+    {
+      "id": "epi",
+      "outputs": [
+        {
+          "id": "eep",
+          "pi": "",
+          "type": "software",
+          "year": 2025,
+          "title": "Future of Science Network",
+          "descEN": "A Hub for Innovation in Academic Publishing.",
+          "descFR": "Une plateforme collaborative pour l'innovation dans la publication académique.",
+          "metaEN": "Documentation · Platform",
+          "metaFR": "Documentation · Plateforme",
+          "actions": [
+            {
+              "url": "https://fosn.1337.ma/home",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "metaKey": "eep_card_meta",
+          "titleEN": "",
+          "titleFR": "",
+          "titleKey": "eep_card_title"
+        },
+        {
+          "id": "new_1770011931614",
+          "pi": "Sacha Raoult",
+          "meta": "",
+          "type": "software",
+          "year": 2026,
+          "title": "Connectica",
+          "descEN": "A software to help academic build their careers, based on circles of collaboration.",
+          "descFR": "Un logiciel destiné à aider les universitaires à développer leur carrière, basé sur des cercles de collaboration.",
+          "metaEN": "Academic Networking Assistant",
+          "metaFR": "Assistant de networking académique",
+          "actions": [
+            {
+              "url": "https://connectica.io",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "titleEN": "",
+          "titleFR": ""
+        },
+        {
+          "id": "new_1770021925537",
+          "pi": "Eliot Hallak, Laura Duparc, Sacha Raoult",
+          "meta": "",
+          "type": "software",
+          "year": 2019,
+          "title": "Thesis Center",
+          "descEN": "A specialized text editor that handles all formatting automatically",
+          "descFR": "Un éditeur de texte spécialisé qui gère toute la mise en forme automatiquement",
+          "metaEN": "Word Processor for Academic Dissertations",
+          "metaFR": "Editeur de texte pour mémoires et thèse",
+          "actions": [],
+          "titleEN": "",
+          "titleFR": ""
+        },
+        {
+          "id": "new_1770113091963",
+          "pi": "James Evans, Laura Duparc, Eric Parisot",
+          "meta": "",
+          "type": "software",
+          "year": 2020,
+          "title": "Knowledge Tree",
+          "descEN": "Academic Genealogy of Mentorships.",
+          "descFR": "Généalogie de mentorat académique.",
+          "metaEN": "Platform",
+          "metaFR": "Plateforme",
+          "actions": [
+            {
+              "url": "https://fosn.1337.ma/home",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "titleEN": "",
+          "titleFR": ""
+        },
+        {
+          "id": "pluralisme2025",
+          "type": "paper",
+          "titleEN": "A pluralist defense of pluralism: towards an easing of epistemic hostilities in social sciences",
+          "titleFR": "Une défense pluraliste du pluralisme : vers un apaisement des hostilités épistémiques en sciences sociales",
+          "descEN": "A book chapter presenting a pluralist defense of methodological and epistemic pluralism in the social sciences, arguing for reducing hostilities between competing paradigms.",
+          "descFR": "Un chapitre d'ouvrage présentant une défense pluraliste du pluralisme méthodologique et épistémique en sciences sociales, plaidant pour une réduction des hostilités entre paradigmes concurrents.",
+          "metaEN": "Book chapter · in: Luc-Henri Choquet (ed.) La baisse des hostilités · Accepted 2025 · Forthcoming",
+          "metaFR": "Chapitre d'ouvrage · in : Luc-Henri Choquet (dir.) La baisse des hostilités · Accepté en 2025 · En cours d'édition",
+          "pi": "Sacha Raoult",
+          "year": 2025,
+          "actions": []
+        }
+      ],
+      "titleEN": "Epistemic Engineering Team",
+      "titleFR": "Équipe d ingénierie épistémique",
+      "titleKey": "cat_epi_title"
+    },
+    {
+      "id": "psy",
+      "outputs": [
+        {
+          "id": "whatif",
+          "pi": "Sacha Raoult, Jiad Abdul",
+          "type": "software",
+          "year": 2021,
+          "title": "What If - Simulate uncertainty in decisions",
+          "descEN": "An open-source tool for simulating how uncertainty affects decision-making processes, helping researchers model cognitive biases and choice behavior.",
+          "descFR": "Un outil open-source pour simuler comment l incertitude affecte les processus de prise de décision, aidant les chercheurs à modéliser les biais cognitifs et les comportements de choix.",
+          "metaEN": "Open Source Tool",
+          "metaFR": "Outils Open Source",
+          "actions": [
+            {
+              "url": "https://github.com/venividivici117/what-if",
+              "type": "link",
+              "labelKey": "action_code"
+            }
+          ],
+          "metaKey": "whatif_meta"
+        },
+        {
+          "id": "emprise",
+          "pi": "Sacha Raoult, Laura Duparc",
+          "type": "paper",
+          "year": 2022,
+          "descEN": "A semantic analysis exploring how concepts of influence, manipulation, and psychological dependence are constructed and interrelated in criminological literature.",
+          "descFR": "Une analyse sémantique explorant comment les concepts d emprise, de manipulation et de dépendance psychologique sont construits et interconnectés dans la littérature criminologique.",
+          "metaEN": "Journal article · Revue de sciences criminelles et de droit pénal comparé",
+          "metaFR": "Article de revue · Revue de sciences criminelles et de droit pénal comparé",
+          "actions": [
+            {
+              "url": "https://shs.hal.science/halshs-03527201",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "metaKey": "emprise_meta",
+          "titleEN": "Influence, manipulation and dependence in the semantic space of criminology",
+          "titleFR": "Emprise, manipulation et dépendance dans l espace sémantique de la criminologie",
+          "titleKey": "emprise_title"
+        },
+        {
+          "id": "crime",
+          "pi": "Sacha Raoult",
+          "type": "paper",
+          "year": 2020,
+          "descEN": "A theoretical exploration of self-directed criminality, examining the conceptual boundaries between crimes committed for personal benefit and self-harm in a computational model.",
+          "descFR": "Une exploration théorique de la criminalité auto-dirigée, examinant les frontières conceptuelles entre les crimes commis pour son propre bénéfice et l'autodestruction dans un modèle computationel.",
+          "metaEN": "Journal article · Revue de sciences criminelles et de droit pénal comparé · 2020",
+          "metaFR": "Article de revue · Revue de sciences criminelles et de droit pénal comparé · 2020",
+          "actions": [
+            {
+              "url": "https://droit.cairn.info/revue-de-science-criminelle-et-de-droit-penal-compare-2020-3-page-787?lang=fr",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "metaKey": "crime_pour_soi_meta",
+          "titleEN": "Crime for oneself and crime against oneself",
+          "titleFR": "Crime pour soi et crime contre soi",
+          "titleKey": "crime_pour_soi_title"
+        },
+        {
+          "id": "inhibition2024",
+          "type": "paper",
+          "titleEN": "Latent inhibition deficiencies in rape offenders: a qualitative and quantitative comparison",
+          "titleFR": "Les défaillances de l'inhibition latente chez les auteurs de viol : comparaison qualitative et quantitative",
+          "descEN": "A study examining latent inhibition deficiencies among rape offenders through qualitative and quantitative comparison methods.",
+          "descFR": "Une étude examinant les défaillances de l'inhibition latente chez les auteurs de viol par des méthodes de comparaison qualitative et quantitative.",
+          "metaEN": "Nouveaux Problèmes Actuels de Sciences Criminelles · 2024 · Vol. XXXII · 120,515 words",
+          "metaFR": "Nouveaux Problèmes Actuels de Sciences Criminelles · 2024 · Vol. XXXII · 120 515 signes",
+          "pi": "Laura Duparc",
+          "year": 2024,
+          "actions": []
+        },
+        {
+          "id": "truecrime2023",
+          "type": "paper",
+          "titleEN": "Understanding women's interest in True Crime",
+          "titleFR": "Comprendre l'intérêt des femmes pour le True Crime",
+          "descEN": "An exploration of why women are particularly drawn to True Crime content, examining psychological and sociological factors.",
+          "descFR": "Une exploration des raisons pour lesquelles les femmes sont particulièrement attirées par le True Crime, examinant les facteurs psychologiques et sociologiques.",
+          "metaEN": "AJ Pénal · 2023/12 · p.564-568 · 22,895 words",
+          "metaFR": "AJ Pénal · 2023/12 · p.564-568 · 22 895 signes",
+          "pi": "Laura Duparc, L. Viburnu",
+          "year": 2023,
+          "actions": []
+        },
+        {
+          "id": "horsnorme2020",
+          "type": "paper",
+          "titleEN": "Cognitive functioning and extraordinary destiny - Computational contribution to retrospective diagnostics",
+          "titleFR": "Fonctionnement cognitif et destin \"hors norme\" - Contribution computationnelle à la discussion aux diagnostics rétrospectifs",
+          "descEN": "A Master's thesis applying computational methods to the discussion of retrospective diagnostics of cognitive functioning and extraordinary destinies.",
+          "descFR": "Un mémoire de master 2 appliquant des méthodes computationnelles à la discussion des diagnostics rétrospectifs du fonctionnement cognitif et des destins hors norme.",
+          "metaEN": "Master's thesis · Structures et Théorie, Carnets de recherche · June 2020 · PEERS",
+          "metaFR": "Mémoire de master 2 · Structures et Théorie, Carnets de recherche · Juin 2020 · PEERS",
+          "pi": "Laura Duparc",
+          "year": 2020,
+          "actions": []
+        }
+      ],
+      "titleEN": "Computational Psychology Research Team",
+      "titleFR": "Équipe de recherche en psychologie computationnelle",
+      "titleKey": "cat_psy_title"
+    },
+    {
+      "id": "myth",
+      "outputs": [
+        {
+          "id": "shadows",
+          "pi": "Laura Duparc, Camille Bertrand, Ami Nagai",
+          "type": "software",
+          "year": 2026,
+          "descEN": "A network analysis of mythological narratives, mapping the interconnections between characters, themes, and symbolic elements across cultural traditions.",
+          "descFR": "Une analyse de réseau des récits mythologiques, cartographiant les interconnexions entre personnages, thèmes et éléments symboliques à travers les traditions culturelles.",
+          "metaEN": "Mythology Network Analysis",
+          "metaFR": "Analyse de réseau mythologique",
+          "actions": [],
+          "metaKey": "shadows_meta",
+          "titleEN": "Shadows",
+          "titleFR": "Ombres",
+          "titleKey": "shadows_title"
+        },
+        {
+          "id": "new_1770012051614",
+          "pi": "Laura Duparc",
+          "meta": "",
+          "type": "software",
+          "year": 2026,
+          "title": "Eidolons",
+          "descEN": "An exploratory application of an analysis of unconscious content based on a Jungian framework and using an LLM.",
+          "descFR": "Application exploratoire d une analyse du contenu inconscient basée sur un cadre jungien et utilisant un LLM.",
+          "metaEN": "Archetype Exploration App",
+          "metaFR": "Application d'exploration archétypale",
+          "actions": [
+            {
+              "url": "https:eidolons.app",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "titleEN": "",
+          "titleFR": ""
+        }
+      ],
+      "titleEN": "Computational Mythology Research Team",
+      "titleFR": "Équipe de recherche en mythologie computationnelle",
+      "titleKey": "cat_myth_title"
+    },
+    {
+      "id": "philo",
+      "outputs": [
+        {
+          "id": "ethexco",
+          "pi": "Alexander V. Belikov, Laura Duparc ",
+          "type": "software",
+          "year": 2025,
+          "descEN": "AI personas based on the ethical writings of major philosophers, enabling conversational exploration of philosophical ethics frameworks.",
+          "descFR": "Des personas IA basés sur les écrits éthiques des grands philosophes, permettant une exploration conversationnelle des cadres éthiques philosophiques.",
+          "metaEN": "AI Ethics Personas",
+          "metaFR": "Personas IA éthiques",
+          "actions": [],
+          "metaKey": "ethexco_meta",
+          "titleEN": "EthExCo",
+          "titleFR": "EthExCo",
+          "titleKey": "ethexco_title"
+        },
+        {
+          "id": "legacy",
+          "pi": "Raphael Liogier, Laura Duparc",
+          "type": "software",
+          "year": 2025,
+          "descEN": "An interlinked library of philosophical texts, creating a navigable network of conceptual connections across the history of philosophy.",
+          "descFR": "Une bibliothèque interconnectée de textes philosophiques, créant un réseau navigable de connexions conceptuelles à travers l histoire de la philosophie.",
+          "metaEN": "Interlinked Philosophical Library",
+          "metaFR": "Bibliothèque philosophique interconnectée ",
+          "actions": [
+            {
+              "url": "https://legacy-um6p.1337.ma/projects/library",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "metaKey": "legacy_meta",
+          "titleEN": "LEGACY Library",
+          "titleFR": "LEGACY",
+          "titleKey": "legacy_title"
+        },
+        {
+          "id": "new_1770021212764",
+          "pi": "Sacha Raoult, Eric Parisot",
+          "meta": "",
+          "type": "software",
+          "year": 2021,
+          "title": "SEMANTICA (Tractatus Digital)",
+          "descEN": "",
+          "descFR": "",
+          "metaEN": "Interactive version of Wittgenstein's Tractatus",
+          "metaFR": "Version interactive du Tractatus de Wittgenstein",
+          "actions": [],
+          "titleEN": "",
+          "titleFR": ""
+        },
+        {
+          "id": "new_1770113230108",
+          "pi": "Laura Duparc",
+          "meta": "",
+          "type": "software",
+          "year": 2021,
+          "title": "",
+          "descEN": "A map of influence in major philosophical works.",
+          "descFR": "Une carte des influences dans les grands textes philosophiques.",
+          "metaEN": "",
+          "metaFR": "",
+          "actions": [
+            {
+              "url": "https://legacy-um6p.1337.ma/projects/great-conversation",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "titleEN": "The Great Conversation",
+          "titleFR": "La Grande Conversation"
+        },
+        {
+          "id": "llmphilosopher2025",
+          "type": "paper",
+          "titleEN": "Validating an Hybrid Evaluation Pipeline for LLM Philosopher Personas: Confucius, Aristotle, Stuart Mill",
+          "titleFR": "Validation d'un pipeline d'évaluation hybride pour les personas philosophiques LLM : Confucius, Aristote, Stuart Mill",
+          "descEN": "A poster presenting a hybrid evaluation pipeline for validating LLM philosopher personas, covering Confucius, Aristotle, and Stuart Mill.",
+          "descFR": "Un poster présentant un pipeline d'évaluation hybride pour la validation de personas philosophiques LLM, couvrant Confucius, Aristote et Stuart Mill.",
+          "metaEN": "Poster · RISE Conference · 2025 · 54,669 words",
+          "metaFR": "Poster · Conférence RISE · 2025 · 54 669 signes",
+          "pi": "Laura Duparc, A. Belikov, O. Goldin, S. C. Angle, P. Taranto",
+          "year": 2025,
+          "actions": []
+        }
+      ],
+      "titleEN": "Computational Philosophy Research Team",
+      "titleFR": "Équipe de recherche en philosophie computationnelle",
+      "titleKey": "cat_philo_title"
+    },
+    {
+      "id": "structure",
+      "outputs": [
+        {
+          "id": "new_1770036171322",
+          "pi": "Sacha Raoult, Eliot Hallak",
+          "meta": "",
+          "type": "podcast",
+          "year": 2019,
+          "title": "",
+          "descEN": "Theorizing the Absurd is a philosophical podcast series hosted by Sacha Raoult and Eliot Hallak. Through in-depth conversations, the hosts examine the foundations of theoretical thought, focusing on the conditions under which knowledge, rationality, and meaning are possible.",
+          "descFR": "Théoriser l’absurde est une série de podcasts philosophiques animée par Sacha Raoult et Eliot Hallak. À travers des discussions approfondies, les auteurs interrogent les fondements mêmes de la pensée théorique, en particulier les conditions de possibilité de la connaissance, de la rationalité et du sens.",
+          "metaEN": "Podcast series",
+          "metaFR": "Séries de podcasts",
+          "actions": [
+            {
+              "url": "https://www.youtube.com/watch?v=X9j_mLDarGo&list=PLQtF4u7HFbE4cahV1CaruA1ufql5HMg_s",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "titleEN": "Theories of the Absurd (French)",
+          "titleFR": "Comment théoriser l'absurde ?"
+        },
+        {
+          "id": "new_1770037175772",
+          "pi": "Sacha Raoult",
+          "meta": "",
+          "type": "book",
+          "year": 2025,
+          "title": "",
+          "descEN": "The Prophetic Power of Science Fiction : A Case Study explores how a landmark work of popular science fiction anticipated key dynamics of contemporary societies, including rising inequality, social control, celebrity culture, and spiritual emptiness. A concise reflection at the intersection of science fiction, social philosophy, and cultural analysis.",
+          "descFR": "Starmania : une prophétie apocalyptique analyse comment une œuvre majeure de la culture populaire a su anticiper avec une remarquable lucidité certaines dynamiques centrales de nos sociétés contemporaines : inégalités croissantes, contrôle social, culte de la célébrité et vide spirituel. À la croisée de la science-fiction, de la philosophie sociale et de l’histoire des idées.",
+          "metaEN": "Structures and Theory Notebooks",
+          "metaFR": "Carnets de recherche Structures et Théorie",
+          "actions": [
+            {
+              "url": "https://www.amazon.fr/Starmania-proph%C3%A9tie-apocalyptique-Sacha-Raoult/dp/B0FNZW77VT/ref=sr_1_3?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=C0OXVHXBEW5F&dib=eyJ2IjoiMSJ9.NtgvBsjYLZ5kEJR3yLPkLFHFX9xj5srnfvtZ4qh5WdfwtGkdGcsuCTbbZmqpEdkXjnjMF65WzxfT2Cfe0mlAZjMONu4J3xYnWI0ES-36dBO5kfxKuu0vLIOa5anoHz62QWQ9sZaBgbGjBsV9yDpWDV472qlQ8KvDog53VOnaAxWW3PTMoQG3eivNWmALDt0GnHyXzFn14IHN42Sdlwgd-xdzyQrcZ6vvvvfk1BThOriMU9WVuJQnDOBoly2RBnVUE_nyzHj1c0GW4KZchVDZCBWUQhALjCGudUctSvI_XTI.ydT59Uqc2ljRScifpDGHCZ250VEvhWCGoGugWH5F37Y&dib_tag=se&keywords=starmania&qid=1770037187&sprefix=starmani%2Caps%2C233&sr=8-3",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "titleEN": "The Prophetic Power of Science Fiction : A Case Study",
+          "titleFR": "Starmania : un prophétie apocalyptique"
+        },
+        {
+          "id": "new_1770136148115",
+          "pi": "Sacha Raoult",
+          "meta": "",
+          "type": "video",
+          "year": 2025,
+          "title": "",
+          "descEN": "A series of lectures on ethical symbolism in fairy tales and modern films, based in particular on the work of Carl Jung.",
+          "descFR": "Une série de conférences sur la symbolique éthique dans les contes de fées et les films modernes, s'appuyant notamment sur les travaux de Carl Jung.",
+          "metaEN": "Video lecture series (French)",
+          "metaFR": "Série de conférences",
+          "actions": [
+            {
+              "url": "https://www.youtube.com/watch?v=yHwMA68fBeA&list=PLKGYdim21NP2Fp2x1M1OXZ34M33WFZCxV",
+              "type": "link",
+              "labelKey": "action_text"
+            }
+          ],
+          "titleEN": "Symbols of Good and Evil",
+          "titleFR": "Le symbolisme du Bien et du Mal"
+        },
+        {
+          "id": "new_1770150761127",
+          "pi": "Sacha Raoult",
+          "meta": "France Forum ",
+          "type": "paper",
+          "year": 2025,
+          "title": "",
+          "descEN": "",
+          "descFR": "",
+          "metaEN": "",
+          "metaFR": "",
+          "actions": [],
+          "titleEN": "Can a society plan for the future based solely on negative historical models? ",
+          "titleFR": "Une société peut-elle se projeter dans l’avenir en se fondant exclusivement sur des modèles historiques négatifs "
+        },
+        {
+          "id": "moriarty2020",
+          "type": "paper",
+          "titleEN": "Is Moriarty a member of MENSA? A response to Persson and an interdisciplinary perspective of genius",
+          "titleFR": "Moriarty est-il membre de MENSA ? Une réponse à Persson et une perspective interdisciplinaire du génie",
+          "descEN": "A short article responding to Persson with an interdisciplinary perspective on the concept of genius.",
+          "descFR": "Un article court répondant à Persson avec une perspective interdisciplinaire sur le concept de génie.",
+          "metaEN": "Structures et Théorie, Carnets de recherche · PEERS · 9,715 words",
+          "metaFR": "Structures et Théorie, Carnets de recherche · PEERS · 9 715 signes",
+          "pi": "Laura Duparc, Sacha Raoult",
+          "year": 2020,
+          "actions": []
+        }
+      ],
+      "titleEN": "Structure and Theory",
+      "titleFR": "Structure et Théorie",
+      "titleKey": "cat_structure_title"
+    }
+  ]
+}
