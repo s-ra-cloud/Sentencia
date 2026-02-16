@@ -420,6 +420,7 @@
       "Chômage": { en: "Unemployment Rate", fr: "Chômage" },
       "Couleur politique": { en: "Political Leaning", fr: "Couleur politique" },
       "Population": { en: "Population (2023)", fr: "Population (2023)" },
+      "Durée moy. emprisonnement ferme": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emprisonnement ferme (mois)" },
       "Proportion de récidive légale (VIF)": { en: "Legal Recidivism Rate (IPV)", fr: "Proportion de récidive légale (VIF)" },
       "Taux de condamnation / 100.000 h (VIF)": { en: "Conviction Rate / 100,000 pop. (IPV)", fr: "Taux de condamnation / 100.000 h (VIF)" },
       "Taux emprisonnement / condamnation (VIF)": { en: "Incarceration / Conviction Rate (IPV)", fr: "Taux emprisonnement / condamnation (VIF)" },
@@ -449,7 +450,7 @@
       return t ? t[lang] : colName;
     }
 
-    const GENERAL_COLUMNS = new Set(["Chômage", "Couleur politique", "Population"]);
+    const GENERAL_COLUMNS = new Set(["Chômage", "Couleur politique", "Population", "Durée moy. emprisonnement ferme"]);
 
     const CATEGORY_COLUMN_MAP = {
       'general': col => GENERAL_COLUMNS.has(col),
