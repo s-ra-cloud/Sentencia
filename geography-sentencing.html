@@ -472,7 +472,26 @@
       "Taux emp. ferme spécifique (5. Infractions à la législation sur les stupéfiants)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
       "Taux emp. ferme spécifique (6. Violences sexuelles)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
       "Taux emp. ferme spécifique (VIF)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
-      "Taux emp. ferme spécifique (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" }
+      "Taux emp. ferme spécifique (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
+      "Taux emp. résiduel récidive (1. Conduite avec alcool ou stupéfiants)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (2. Vols aggravés)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (3. Vols simples)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (4. Infractions à la police des étrangers)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (5. Infractions à la législation sur les stupéfiants)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (6. Violences sexuelles)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (VIF)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" }
+    };
+
+    const RECIDIVISM_REGRESSION = {
+      '1': { a: 0.338, b: 0.8, r2: 0.377 },
+      '2': { a: 0.437, b: 34.56, r2: 0.101 },
+      '3': { a: 0.528, b: 9.22, r2: 0.259 },
+      '4': { a: 2.112, b: 23.69, r2: 0.181 },
+      '5': { a: 0.848, b: 13.42, r2: 0.284 },
+      '6': { a: 1.108, b: 33.14, r2: 0.025 },
+      '7': { a: 0.314, b: 9.46, r2: 0.014 },
+      '8': { a: 0.486, b: 9.85, r2: 0.155 }
     };
 
     const INDICATOR_DESCRIPTIONS = {
@@ -513,6 +532,20 @@
       if (colName.startsWith('Taux récidive légale')) return descs['recidive_legale'];
       if (colName.startsWith('Taux emp. ferme / conda')) return descs['taux_emp_conda'];
       if (colName.startsWith('Taux emp. ferme spécifique')) return descs['taux_emp_specifique'];
+      if (colName.startsWith('Taux emp. résiduel récidive')) {
+        const catNum = colName.includes('(VIF)') ? '7' :
+          (colName.match(/\((\d+)\./) || [])[1];
+        const reg = catNum ? RECIDIVISM_REGRESSION[catNum] : null;
+        if (reg) {
+          const sign = reg.b >= 0 ? '+' : '';
+          const eq = `${reg.a} \u00d7 recidivism_rate ${sign} ${reg.b}`;
+          if (lang === 'fr') {
+            return `Taux d\u2019emprisonnement r\u00e9siduel apr\u00e8s prise en compte de la r\u00e9cidive l\u00e9gale. On calcule d\u2019abord, par r\u00e9gression lin\u00e9aire sur l\u2019ensemble des d\u00e9partements, le taux d\u2019emprisonnement \u00ab attendu \u00bb en fonction du taux de r\u00e9cidive : taux attendu = ${eq} (R\u00b2 = ${reg.r2}). Le r\u00e9sidu est la diff\u00e9rence entre le taux observ\u00e9 et ce taux attendu. Une valeur positive signifie que le d\u00e9partement emprisonne plus que ce que son taux de r\u00e9cidive l\u00e9gale laisserait pr\u00e9dire. Une valeur n\u00e9gative signifie qu\u2019il emprisonne moins.`;
+          } else {
+            return `Residual imprisonment rate after accounting for legal recidivism. A linear regression across all departments estimates the \u201cexpected\u201d imprisonment rate based on the recidivism rate: expected rate = ${eq} (R\u00b2 = ${reg.r2}). The residual is the difference between the observed rate and the expected rate. A positive value means the department imprisons more than its recidivism rate would predict. A negative value means it imprisons less.`;
+          }
+        }
+      }
       if (colName.includes('Taux') && colName.includes('100')) return descs['taux_poursuivis'];
       if (colName.includes('Durée moy. emp. ferme')) return descs['duree_emp'];
       if (colName.includes('Durée moyenne des peines')) return descs['duree_emp'];
@@ -558,6 +591,7 @@
       if (colName.includes('Taux emprisonnement')) return true;
       if (colName.includes('Résidu taux emprisonnement')) return true;
       if (colName.startsWith('Taux emp. ferme')) return true;
+      if (colName.startsWith('Taux emp. résiduel')) return true;
       return false;
     }
 
