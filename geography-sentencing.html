@@ -521,8 +521,8 @@
     }
 
     const SEVERITY_WARNING = {
-      en: '\u26A0 Caution: These figures should not be interpreted as a measure of judges\u2019 severity all else being equal. Cases reaching sentencing in each department may differ substantially due to varying prosecution policies, case filtering, plea-bargaining practices, and local case mix. Truly comparable severity data would require access to individual criminal case records \u2014 open data that remains long overdue in France.',
-      fr: '\u26A0 Attention : Ces chiffres ne peuvent pas \u00eatre interpr\u00e9t\u00e9s comme mesurant la s\u00e9v\u00e9rit\u00e9 des juges toutes choses \u00e9gales par ailleurs. Les affaires arrivant au stade du jugement dans chaque d\u00e9partement peuvent diff\u00e9rer consid\u00e9rablement en raison de politiques de poursuites variables, du filtrage des affaires, des pratiques de comparution sur reconnaissance pr\u00e9alable de culpabilit\u00e9 et de la composition locale du contentieux. Des donn\u00e9es de s\u00e9v\u00e9rit\u00e9 v\u00e9ritablement comparables n\u00e9cessiteraient l\u2019acc\u00e8s aux donn\u00e9es individuelles des affaires p\u00e9nales \u2014 une ouverture des donn\u00e9es qui se fait attendre depuis bien trop longtemps en France.'
+      en: '\u26A0 Caution: These figures should not be interpreted as a measure of judges\u2019 severity all else being equal. Cases reaching sentencing in each department may differ substantially due to varying prosecution policies, case filtering, plea-bargaining practices, and local case mix. This will become possible when <a href="https://www.courdecassation.fr/acces-rapide-judilibre" target="_blank" style="color:#c0392b;">Judilibre</a> includes first-instance court decisions, by applying <a href="https://arxiv.org/abs/2501.14579" target="_blank" style="color:#c0392b;">this analytical method</a>.',
+      fr: '\u26A0 Attention : Ces chiffres ne peuvent pas \u00eatre interpr\u00e9t\u00e9s comme mesurant la s\u00e9v\u00e9rit\u00e9 des juges toutes choses \u00e9gales par ailleurs. Les affaires arrivant au stade du jugement dans chaque d\u00e9partement peuvent diff\u00e9rer consid\u00e9rablement en raison de politiques de poursuites variables, du filtrage des affaires, des pratiques de comparution sur reconnaissance pr\u00e9alable de culpabilit\u00e9 et de la composition locale du contentieux. Ce qui sera possible quand <a href="https://www.courdecassation.fr/acces-rapide-judilibre" target="_blank" style="color:#c0392b;">Judilibre</a> contiendra les décisions de premières instances, en appliquant <a href="https://arxiv.org/abs/2501.14579" target="_blank" style="color:#c0392b;">cette méthode d\'analyse</a>.'
     };
 
     function isSeverityIndicator(colName) {
@@ -542,7 +542,7 @@
       if (col) {
         descEl.textContent = getIndicatorDescription(col, currentLang);
         if (isSeverityIndicator(col)) {
-          warnEl.textContent = SEVERITY_WARNING[currentLang];
+          warnEl.innerHTML = SEVERITY_WARNING[currentLang];
           warnEl.style.display = 'block';
         } else {
           warnEl.style.display = 'none';
