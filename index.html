@@ -18,7 +18,7 @@
       <button class="nav__link" data-route="program" data-i18n="nav_program">Research Program</button>
       <button class="nav__link" data-route="projects" data-i18n="nav_projects">Outputs</button>
       <button class="nav__link" data-route="members" data-i18n="nav_members">Members</button>
-      <button class="nav__link" data-route="funding" data-i18n="nav_funding">Funding</button>
+      <button class="nav__link nav__link--admin-only" data-route="funding" data-i18n="nav_funding" style="display:none;">Funding</button>
     </div>
 
     <div class="langToggle" title="Language">
@@ -266,7 +266,7 @@
     </div>
   </section>
 
-  <section class="page" id="funding">
+  <section class="page page--admin-only" id="funding" style="display:none;">
     <div class="container">
       <h1 class="h1" data-i18n="funding_title">Funding</h1>
       <div class="fundingWrap">

@@ -18,16 +18,16 @@
     },
     {
       "id": "legacy",
+      "pi": "",
+      "type": "grant",
+      "dates": "2025-2028",
+      "links": [],
       "title": "LEGACY",
-      "titleKey": "",
+      "amount": "EUR 162,000",
       "titleEN": "LEGACY",
       "titleFR": "LEGACY",
-      "pi": "",
-      "organization": "Chair of Transitions",
-      "dates": "2025-2028",
-      "type": "grant",
-      "amount": "EUR 162,000",
-      "links": []
+      "titleKey": "",
+      "organization": "Chair of Transitions"
     },
     {
       "id": "ias_eep",

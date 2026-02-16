@@ -62,6 +62,17 @@ const I18N = {
 let currentLang = localStorage.getItem("lang") || "en";
 let dynamicData = { outputs: null, members: null, funding: null, program: null, partners: null, teamDescriptions: null };
 
+function isAdminMode() {
+  return !!sessionStorage.getItem('adminToken');
+}
+
+function applyAdminVisibility() {
+  const show = isAdminMode();
+  document.querySelectorAll('.nav__link--admin-only, .page--admin-only').forEach(el => {
+    el.style.display = show ? '' : 'none';
+  });
+}
+
 async function loadDynamicData() {
   try {
     const [outputs, members, funding, program, partners, teamDescriptions] = await Promise.all([
@@ -716,6 +727,9 @@ if (themeBtn){
 }
 
 function setRoute(route){
+  if (route === 'funding' && !isAdminMode()) {
+    route = 'home';
+  }
   document.querySelectorAll(".page").forEach(p => p.classList.remove("is-active"));
   const el = document.getElementById(route);
   if (el) el.classList.add("is-active");
@@ -739,5 +753,6 @@ function hookRoutes(){
 hookRoutes();
 applyTheme(currentTheme);
 applyLanguage(currentLang);
+applyAdminVisibility();
 setRoute("home");
 loadDynamicData();
