@@ -1,30 +1,17 @@
 {
   "members": [
     {
-      "id": "jiad",
-      "name": "Jiad Abdul",
-      "bioEN": "Full-stack developer specializing in web applications and data visualization tools. Contributed to decision simulation software and interactive research platforms.",
-      "bioFR": "D\u00e9veloppeur full-stack sp\u00e9cialis\u00e9 dans les applications web et les outils de visualisation de donn\u00e9es. A contribu\u00e9 aux logiciels de simulation de d\u00e9cision et aux plateformes de recherche interactives.",
-      "linkedin": "https://fr.linkedin.com/in/jiad-abdul",
-      "taglineEN": "Engineer",
-      "taglineFR": "Ing\u00e9nieur",
-      "taglineKey": "member_jiad_tagline",
-      "affiliationEN": "Freelance",
-      "affiliationFR": "Freelance",
-      "affiliationKey": "member_jiad_affil"
-    },
-    {
-      "id": "sofiane",
-      "name": "Sofiane Baddag",
-      "bioEN": "Software engineer with expertise in backend systems and database architecture. Works on research infrastructure and data processing pipelines.",
-      "bioFR": "Ing\u00e9nieur logiciel expert en syst\u00e8mes backend et architecture de bases de donn\u00e9es. Travaille sur l infrastructure de recherche et les pipelines de traitement de donn\u00e9es.",
-      "linkedin": "https://fr.linkedin.com/in/sofiane-baddag-743158145",
-      "taglineEN": "Engineer",
-      "taglineFR": "Ing\u00e9nieur",
-      "taglineKey": "member_sofiane_tagline",
-      "affiliationEN": "Freelance",
-      "affiliationFR": "Freelance",
-      "affiliationKey": "member_sofiane_affil"
+      "id": "bareham",
+      "name": "David Bareham",
+      "bioEN": "",
+      "bioFR": "",
+      "linkedin": "",
+      "taglineEN": "Post-Doctoral Researcher",
+      "taglineFR": "Chercheur post-doctoral",
+      "taglineKey": "member_bareham_tagline",
+      "affiliationEN": "CY Cergy Paris Universit\u00e9",
+      "affiliationFR": "CY Cergy Paris Universit\u00e9",
+      "affiliationKey": "member_bareham_affil"
     },
     {
       "id": "belikov",

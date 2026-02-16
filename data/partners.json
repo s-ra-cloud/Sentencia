@@ -1,5 +1,25 @@
 {"partners": [
   {
+    "id": "jiad",
+    "type": "person",
+    "name": "Jiad Abdul",
+    "roleEN": "Engineer",
+    "roleFR": "Ingénieur",
+    "affiliationEN": "Freelance",
+    "affiliationFR": "Freelance",
+    "linkedin": "https://fr.linkedin.com/in/jiad-abdul"
+  },
+  {
+    "id": "sofiane",
+    "type": "person",
+    "name": "Sofiane Baddag",
+    "roleEN": "Engineer",
+    "roleFR": "Ingénieur",
+    "affiliationEN": "Freelance",
+    "affiliationFR": "Freelance",
+    "linkedin": "https://fr.linkedin.com/in/sofiane-baddag-743158145"
+  },
+  {
     "id": "james",
     "type": "person",
     "name": "James Evans",
@@ -7,6 +27,36 @@
     "roleFR": "Professeur",
     "affiliationEN": "University of Chicago",
     "affiliationFR": "Université de Chicago",
+    "linkedin": ""
+  },
+  {
+    "id": "francois",
+    "type": "person",
+    "name": "Pieter François",
+    "roleEN": "Researcher",
+    "roleFR": "Chercheur",
+    "affiliationEN": "University of Oxford",
+    "affiliationFR": "Université d'Oxford",
+    "linkedin": ""
+  },
+  {
+    "id": "jobard",
+    "type": "person",
+    "name": "Fabien Jobard",
+    "roleEN": "Researcher",
+    "roleFR": "Chercheur",
+    "affiliationEN": "CNRS",
+    "affiliationFR": "CNRS",
+    "linkedin": ""
+  },
+  {
+    "id": "liogier",
+    "type": "person",
+    "name": "Raphaël Liogier",
+    "roleEN": "Professor",
+    "roleFR": "Professeur",
+    "affiliationEN": "Sciences Po Aix",
+    "affiliationFR": "Sciences Po Aix",
     "linkedin": ""
   }
 ]}
