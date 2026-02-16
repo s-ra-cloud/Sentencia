@@ -281,7 +281,8 @@
       <div class="sidebar__section">
         <h2 class="sidebar__heading" data-i18n="geo_offence_heading">Offence Category</h2>
         <select class="sidebar__select" id="offenceSelect">
-          <option value="ipv" data-i18n-option="ipv">Intimate Partner Violence (IPV)</option>
+          <option value="general">General Information</option>
+          <option value="ipv">Intimate Partner Violence (IPV)</option>
         </select>
       </div>
       
@@ -332,6 +333,7 @@
         geo_indicator_heading: 'Indicator',
         legend_low: 'Lower severity',
         legend_high: 'Higher severity',
+        opt_general: 'General Information',
         opt_ipv: 'Intimate Partner Violence (IPV)',
         geo_colormode_heading: 'Color Mode',
         colormode_color: 'Color',
@@ -351,6 +353,7 @@
         geo_indicator_heading: 'Indicateur',
         legend_low: 'Sévérité moindre',
         legend_high: 'Sévérité plus élevée',
+        opt_general: 'Informations générales',
         opt_ipv: 'Violences conjugales (IPV)',
         geo_colormode_heading: 'Mode couleur',
         colormode_color: 'Couleur',
@@ -410,6 +413,29 @@
       return t ? t[lang] : colName;
     }
 
+    const GENERAL_COLUMNS = new Set(["Chômage", "Couleur politique"]);
+
+    function getColumnsForCategory(category) {
+      if (category === 'general') {
+        return indicatorColumns.filter(c => GENERAL_COLUMNS.has(c));
+      }
+      return indicatorColumns.filter(c => !GENERAL_COLUMNS.has(c));
+    }
+
+    function populateIndicatorDropdown() {
+      const category = document.getElementById('offenceSelect').value;
+      const cols = getColumnsForCategory(category);
+      const indicatorSelect = document.getElementById('indicatorSelect');
+      indicatorSelect.innerHTML = '';
+      cols.forEach(col => {
+        const opt = document.createElement('option');
+        opt.value = col;
+        opt.textContent = getColumnLabel(col, currentLang);
+        indicatorSelect.appendChild(opt);
+      });
+      updateMap();
+    }
+
     let csvData = {};
     let indicatorColumns = [];
     let geoData = null;
@@ -435,8 +461,9 @@
       document.getElementById('langFR').classList.toggle('active', lang === 'fr');
 
       const offenceSelect = document.getElementById('offenceSelect');
-      if (offenceSelect.options.length > 0) {
-        offenceSelect.options[0].textContent = I18N[lang].opt_ipv;
+      if (offenceSelect.options.length >= 2) {
+        offenceSelect.options[0].textContent = I18N[lang].opt_general;
+        offenceSelect.options[1].textContent = I18N[lang].opt_ipv;
       }
 
       const indicatorSelect = document.getElementById('indicatorSelect');
@@ -530,14 +557,7 @@
 
           indicatorColumns = headers.filter((h, i) => i !== deptColIndex && !EXCLUDED_COLUMNS.has(h) && !h.toLowerCase().includes('latitude') && !h.toLowerCase().includes('longitude'));
 
-          const indicatorSelect = document.getElementById('indicatorSelect');
-          indicatorSelect.innerHTML = '';
-          indicatorColumns.forEach(col => {
-            const opt = document.createElement('option');
-            opt.value = col;
-            opt.textContent = getColumnLabel(col, currentLang);
-            indicatorSelect.appendChild(opt);
-          });
+          populateIndicatorDropdown();
 
           csvData = {};
           for (let i = 1; i < lines.length; i++) {
@@ -608,7 +628,7 @@
       updateMap();
     }).catch(error => console.error("Error loading data:", error));
 
-    document.getElementById('offenceSelect').addEventListener('change', updateMap);
+    document.getElementById('offenceSelect').addEventListener('change', populateIndicatorDropdown);
     document.getElementById('indicatorSelect').addEventListener('change', updateMap);
 
     document.getElementById('colorMode').addEventListener('click', () => {
