@@ -451,7 +451,15 @@
       "Sévérité résiduelle (5. Infractions à la législation sur les stupéfiants)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
       "Sévérité résiduelle (6. Violences sexuelles)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
       "Sévérité résiduelle (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
-      "Sévérité résiduelle (VIF)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" }
+      "Sévérité résiduelle (VIF)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Taux récidive légale (1. Conduite avec alcool ou stupéfiants)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (2. Vols aggravés)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (3. Vols simples)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (4. Infractions à la police des étrangers)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (5. Infractions à la législation sur les stupéfiants)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (6. Violences sexuelles)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (VIF)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" }
     };
 
     const INDICATOR_DESCRIPTIONS = {
@@ -463,6 +471,7 @@
         'taux_poursuivis': 'Number of prosecuted offenders per 100,000 inhabitants for this crime category.',
         'duree_emp': 'Weighted average duration of prison sentences for this specific crime category, in months. Weighted by the number of sentences handed down at each tribunal.',
         'severite_residuelle': 'Measures whether a department is disproportionately severe for this specific crime compared to its general sentencing level. Positive values indicate the department punishes this crime more harshly than its overall pattern would suggest. Negative values indicate relative leniency for this crime. A value near zero means the department\'s severity for this crime is consistent with its general severity.',
+        'recidive_legale': 'Legal recidivism rate: percentage of convicted offenders who were in a state of "legal recidivism" (récidive légale). In French criminal law, legal recidivism is a specific legal status — it applies when a person commits a new offence of a similar nature within a defined time period after a prior definitive conviction. Unlike general reoffending, legal recidivism is a formal aggravating circumstance that can double the maximum sentence. This indicator shows the share of convictions in which the offender held this status.',
         'default': ''
       },
       fr: {
@@ -473,6 +482,7 @@
         'taux_poursuivis': 'Nombre d\'auteurs poursuivis pour 100 000 habitants pour cette catégorie d\'infraction.',
         'duree_emp': 'Durée moyenne pondérée des peines d\'emprisonnement ferme pour cette catégorie d\'infraction spécifique, en mois. Pondérée par le nombre de condamnations prononcées dans chaque tribunal.',
         'severite_residuelle': 'Mesure si un département est disproportionnément sévère pour ce crime spécifique par rapport à son niveau général de sévérité. Les valeurs positives indiquent que le département punit ce crime plus durement que ce que son profil général laisserait supposer. Les valeurs négatives indiquent une clémence relative. Une valeur proche de zéro signifie que la sévérité pour ce crime est cohérente avec la sévérité générale.',
+        'recidive_legale': 'Taux de récidive légale : pourcentage de condamnés en état de récidive légale. En droit pénal français, la récidive légale est un statut juridique précis — elle s\'applique lorsqu\'une personne commet une nouvelle infraction de même nature dans un délai défini après une condamnation définitive antérieure. Contrairement à la simple réitération, la récidive légale est une circonstance aggravante formelle qui peut entraîner le doublement du maximum de la peine encourue. Cet indicateur montre la part des condamnations dans lesquelles le prévenu avait ce statut.',
         'default': ''
       }
     };
@@ -481,6 +491,7 @@
       const descs = INDICATOR_DESCRIPTIONS[lang] || INDICATOR_DESCRIPTIONS['en'];
       if (descs[colName]) return descs[colName];
       if (colName.startsWith('Sévérité résiduelle')) return descs['severite_residuelle'];
+      if (colName.startsWith('Taux récidive légale')) return descs['recidive_legale'];
       if (colName.includes('Taux') && colName.includes('100')) return descs['taux_poursuivis'];
       if (colName.includes('Durée moy. emp. ferme')) return descs['duree_emp'];
       if (colName.includes('Durée moyenne des peines')) return descs['duree_emp'];
