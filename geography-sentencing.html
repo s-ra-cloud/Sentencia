@@ -418,14 +418,8 @@
       "Couleur politique": { en: "Political Leaning", fr: "Couleur politique" },
       "Population": { en: "Population (2023)", fr: "Population (2023)" },
       "Durée moy. emprisonnement ferme": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emprisonnement ferme (mois)" },
-      "Proportion de récidive légale (VIF)": { en: "Legal Recidivism Rate (IPV)", fr: "Proportion de récidive légale (VIF)" },
-      "Taux de condamnation / 100.000 h (VIF)": { en: "Conviction Rate / 100,000 pop. (IPV)", fr: "Taux de condamnation / 100.000 h (VIF)" },
-      "Taux emprisonnement / condamnation (VIF)": { en: "Incarceration / Conviction Rate (IPV)", fr: "Taux emprisonnement / condamnation (VIF)" },
-      "Résidu taux emprisonnement (VIF)": { en: "Incarceration Rate Residual (IPV)", fr: "Résidu taux emprisonnement (VIF)" },
-      "Proportion de femmes condamnées (VIF)": { en: "Proportion of Women Convicted (IPV)", fr: "Proportion de femmes condamnées (VIF)" },
-      "Durée moyenne des peines prononcées (VIF)": { en: "Average Sentence Duration (IPV)", fr: "Durée moyenne des peines prononcées (VIF)" },
-      "Sévérité (Index)(VIF)": { en: "Severity Index (IPV)", fr: "Indice de sévérité (VIF)" },
-      "Taux d'auteur poursuivis / 100.000 h (VIF)": { en: "Prosecution Rate / 100,000 pop. (IPV)", fr: "Taux d'auteur poursuivis / 100.000 h (VIF)" },
+      "Taux poursuivis / 100k (VIF)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
+      "Durée moy. emp. ferme (VIF)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
       "Taux poursuivis / 100k (1. Conduite avec alcool ou stupéfiants)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
       "Taux poursuivis / 100k (2. Vols aggravés)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
       "Taux poursuivis / 100k (3. Vols simples)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
@@ -628,31 +622,10 @@
       if (colName.includes('Taux') && colName.includes('100')) return descs['taux_poursuivis'];
       if (colName.includes('Durée moy. emp. ferme')) return descs['duree_emp'];
       if (colName.includes('Durée moyenne des peines')) return descs['duree_emp'];
-      if (colName.includes('Sévérité (Index)')) return descs['severite_residuelle'];
-      if (colName.includes('Proportion de récidive')) {
-        return lang === 'fr'
-          ? 'Proportion de condamnés en situation de récidive légale pour cette catégorie d\'infraction.'
-          : 'Proportion of convicted offenders in legal recidivism for this crime category.';
-      }
-      if (colName.includes('Taux emprisonnement')) {
+      if (colName.includes('Taux emprisonnement') && !colName.includes('résiduel')) {
         return lang === 'fr'
           ? 'Part des condamnations ayant donné lieu à une peine d\'emprisonnement ferme.'
           : 'Share of convictions resulting in a prison sentence.';
-      }
-      if (colName.includes('Résidu taux emprisonnement')) {
-        return lang === 'fr'
-          ? 'Écart entre le taux d\'emprisonnement observé et le taux attendu compte tenu de la structure des infractions.'
-          : 'Difference between observed imprisonment rate and the expected rate given the structure of offences.';
-      }
-      if (colName.includes('Proportion de femmes')) {
-        return lang === 'fr'
-          ? 'Proportion de femmes parmi les personnes condamnées pour cette catégorie d\'infraction.'
-          : 'Proportion of women among those convicted for this crime category.';
-      }
-      if (colName.includes('Taux de condamnation')) {
-        return lang === 'fr'
-          ? 'Nombre de condamnations pour 100 000 habitants pour cette catégorie d\'infraction.'
-          : 'Number of convictions per 100,000 inhabitants for this crime category.';
       }
       return descs['default'];
     }
@@ -666,9 +639,7 @@
       if (colName.includes('Durée moy')) return true;
       if (colName.includes('Durée moyenne')) return true;
       if (colName.startsWith('Sévérité résiduelle')) return true;
-      if (colName.includes('Sévérité (Index)')) return true;
       if (colName.includes('Taux emprisonnement')) return true;
-      if (colName.includes('Résidu taux emprisonnement')) return true;
       if (colName.startsWith('Taux emp. ferme')) return true;
       if (colName.startsWith('Taux emp. résiduel')) return true;
       if (colName.startsWith('Durée rés. récidive')) return true;
