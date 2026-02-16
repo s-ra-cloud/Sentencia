@@ -434,7 +434,14 @@
       "Taux poursuivis / 100k (4. Infractions à la police des étrangers)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
       "Taux poursuivis / 100k (5. Infractions à la législation sur les stupéfiants)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
       "Taux poursuivis / 100k (6. Violences sexuelles)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
-      "Taux poursuivis / 100k (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." }
+      "Taux poursuivis / 100k (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
+      "Durée moy. emp. ferme (1. Conduite avec alcool ou stupéfiants)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (2. Vols aggravés)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (3. Vols simples)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (4. Infractions à la police des étrangers)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (5. Infractions à la législation sur les stupéfiants)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (6. Violences sexuelles)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" }
     };
 
     function getColumnLabel(colName, lang) {
@@ -448,8 +455,8 @@
       'general': col => GENERAL_COLUMNS.has(col),
       'ipv': col => col.includes('(VIF)'),
       'cat1': col => col.includes('(1. Conduite'),
-      'cat2': col => col.includes('(2. Vols'),
-      'cat3': col => col.includes('(3. Vols'),
+      'cat2': col => col.includes('(2. Vols agg'),
+      'cat3': col => col.includes('(3. Vols sim'),
       'cat4': col => col.includes('(4. Infractions'),
       'cat5': col => col.includes('(5. Infractions'),
       'cat6': col => col.includes('(6. Violences'),
