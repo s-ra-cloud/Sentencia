@@ -309,9 +309,9 @@
       </div>
       
       <div class="legend">
-        <span class="legend__label" data-i18n="legend_low">Lower severity</span>
+        <span class="legend__label" id="legendLabelLow">Lower severity</span>
         <div class="legend__bar" id="legendBar"></div>
-        <span class="legend__label" data-i18n="legend_high">Higher severity</span>
+        <span class="legend__label" id="legendLabelHigh">Higher severity</span>
       </div>
     </aside>
     
@@ -337,6 +337,14 @@
         geo_indicator_heading: 'Indicator',
         legend_low: 'Lower severity',
         legend_high: 'Higher severity',
+        legend_lower: 'Lower',
+        legend_higher: 'Higher',
+        legend_shorter: 'Shorter sentences',
+        legend_longer: 'Longer sentences',
+        legend_left: 'Left',
+        legend_right: 'Right',
+        legend_fewer: 'Fewer prosecutions',
+        legend_more: 'More prosecutions',
         opt_general: 'General Information',
         opt_cat1: 'Driving under Alcohol/Drugs',
         opt_cat2: 'Aggravated Theft',
@@ -364,6 +372,14 @@
         geo_indicator_heading: 'Indicateur',
         legend_low: 'Sévérité moindre',
         legend_high: 'Sévérité plus élevée',
+        legend_lower: 'Moins élevé',
+        legend_higher: 'Plus élevé',
+        legend_shorter: 'Peines plus courtes',
+        legend_longer: 'Peines plus longues',
+        legend_left: 'Gauche',
+        legend_right: 'Droite',
+        legend_fewer: 'Moins de poursuites',
+        legend_more: 'Plus de poursuites',
         opt_general: 'Informations générales',
         opt_cat1: 'Conduite avec alcool ou stupéfiants',
         opt_cat2: 'Vols aggravés',
@@ -685,10 +701,42 @@
       return false;
     }
 
+    function getLegendLabels(colName, lang) {
+      const t = I18N[lang];
+      if (colName === 'Couleur politique') {
+        return { low: t.legend_left, high: t.legend_right };
+      }
+      if (colName.startsWith('Taux poursuivis')) {
+        return { low: t.legend_fewer, high: t.legend_more };
+      }
+      if (colName.includes('Durée moy') || colName.includes('Durée moyenne') ||
+          colName.startsWith('Durée rés. récidive')) {
+        return { low: t.legend_shorter, high: t.legend_longer };
+      }
+      if (colName.startsWith('Sévérité résiduelle') || colName.startsWith('Sévérité combinée') ||
+          colName.startsWith('Taux emp. ferme spécifique') || colName.startsWith('Taux emp. résiduel') ||
+          colName.includes('Taux emprisonnement') || colName.startsWith('Taux emp. ferme / conda')) {
+        return { low: t.legend_low, high: t.legend_high };
+      }
+      if (colName === 'Chômage' || colName === 'Population' || colName.startsWith('Taux récidive légale')) {
+        return { low: t.legend_lower, high: t.legend_higher };
+      }
+      return { low: t.legend_lower, high: t.legend_higher };
+    }
+
+    function updateLegendLabels() {
+      const col = document.getElementById('indicatorSelect').value;
+      if (!col) return;
+      const labels = getLegendLabels(col, currentLang);
+      document.getElementById('legendLabelLow').textContent = labels.low;
+      document.getElementById('legendLabelHigh').textContent = labels.high;
+    }
+
     function updateIndicatorDescription() {
       const col = document.getElementById('indicatorSelect').value;
       const descEl = document.getElementById('indicatorDescription');
       const warnEl = document.getElementById('indicatorWarning');
+      updateLegendLabels();
       if (col) {
         descEl.textContent = getIndicatorDescription(col, currentLang);
         if (isSeverityIndicator(col)) {
