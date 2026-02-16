@@ -500,7 +500,24 @@
       "Durée rés. récidive spécifique (5. Infractions à la législation sur les stupéfiants)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
       "Durée rés. récidive spécifique (6. Violences sexuelles)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
       "Durée rés. récidive spécifique (VIF)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
-      "Durée rés. récidive spécifique (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" }
+      "Durée rés. récidive spécifique (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
+      "Sévérité combinée (1. Conduite avec alcool ou stupéfiants)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (2. Vols aggravés)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (3. Vols simples)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (4. Infractions à la police des étrangers)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (5. Infractions à la législation sur les stupéfiants)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (6. Violences sexuelles)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (VIF)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée globale": { en: "Overall Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée globale (adj. récidive)" },
+      "Sévérité combinée spécifique (1. Conduite avec alcool ou stupéfiants)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (2. Vols aggravés)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (3. Vols simples)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (4. Infractions à la police des étrangers)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (5. Infractions à la législation sur les stupéfiants)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (6. Violences sexuelles)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (VIF)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" }
     };
 
     const RECIDIVISM_REGRESSION = {
@@ -622,6 +639,27 @@
       if (colName.includes('Taux') && colName.includes('100')) return descs['taux_poursuivis'];
       if (colName.includes('Durée moy. emp. ferme')) return descs['duree_emp'];
       if (colName.includes('Durée moyenne des peines')) return descs['duree_emp'];
+      if (colName.startsWith('Sévérité combinée (')) {
+        if (lang === 'fr') {
+          return "Indice de sévérité combiné après prise en compte de la récidive légale. Somme des z-scores du taux d'emprisonnement résiduel et de la durée résiduelle pour cette infraction. Combine à la fois la propension à emprisonner et la longueur des peines, au-delà de ce que le taux de récidive prédit. Une valeur positive signifie une sévérité globale supérieure à la moyenne nationale. Une valeur négative signifie une sévérité inférieure.";
+        } else {
+          return "Combined severity index after accounting for legal recidivism. Sum of the z-scores of the residual imprisonment rate and residual sentence duration for this crime. Combines both the propensity to imprison and the length of sentences, beyond what the recidivism rate predicts. A positive value means overall severity above the national average. A negative value means below.";
+        }
+      }
+      if (colName === 'Sévérité combinée globale') {
+        if (lang === 'fr') {
+          return "Indice de sévérité combiné global après prise en compte de la récidive légale. Somme des z-scores du taux d'emprisonnement résiduel global et de la durée résiduelle globale. Synthétise en un seul chiffre la sévérité d'un département par rapport à la moyenne nationale, toutes infractions confondues, après avoir neutralisé l'effet mécanique de la récidive.";
+        } else {
+          return "Overall combined severity index after accounting for legal recidivism. Sum of the z-scores of the overall residual imprisonment rate and overall residual sentence duration. Synthesizes into a single number how severe a department is compared to the national average, across all crimes, after neutralizing the mechanical effect of recidivism.";
+        }
+      }
+      if (colName.startsWith('Sévérité combinée spécifique')) {
+        if (lang === 'fr') {
+          return "Indice de sévérité combiné spécifique à cette infraction. Somme des z-scores spécifiques du taux d'emprisonnement résiduel et de la durée résiduelle. Une valeur positive indique que le département est particulièrement sévère pour cette infraction par rapport à sa tendance générale. Une valeur négative signifie qu'il est relativement plus clément pour cette infraction.";
+        } else {
+          return "Crime-specific combined severity index. Sum of the crime-specific z-scores for residual imprisonment rate and residual duration. A positive value indicates the department is particularly severe for this crime compared to its general tendency. A negative value means it is relatively more lenient for this crime.";
+        }
+      }
       if (colName.includes('Taux emprisonnement') && !colName.includes('résiduel')) {
         return lang === 'fr'
           ? 'Part des condamnations ayant donné lieu à une peine d\'emprisonnement ferme.'
@@ -643,6 +681,7 @@
       if (colName.startsWith('Taux emp. ferme')) return true;
       if (colName.startsWith('Taux emp. résiduel')) return true;
       if (colName.startsWith('Durée rés. récidive')) return true;
+      if (colName.startsWith('Sévérité combinée')) return true;
       return false;
     }
 
@@ -669,7 +708,7 @@
       return t ? t[lang] : colName;
     }
 
-    const GENERAL_COLUMNS = new Set(["Chômage", "Couleur politique", "Population", "Durée moy. emprisonnement ferme", "Taux emprisonnement ferme global", "Taux emp. résiduel récidive global", "Durée rés. récidive global"]);
+    const GENERAL_COLUMNS = new Set(["Chômage", "Couleur politique", "Population", "Durée moy. emprisonnement ferme", "Taux emprisonnement ferme global", "Taux emp. résiduel récidive global", "Durée rés. récidive global", "Sévérité combinée globale"]);
 
     const CATEGORY_COLUMN_MAP = {
       'general': col => GENERAL_COLUMNS.has(col),
