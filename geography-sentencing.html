@@ -689,19 +689,34 @@
 
     document.getElementById('exportBtn').addEventListener('click', () => {
       const svgElement = document.getElementById('map');
-      const svgData = new XMLSerializer().serializeToString(svgElement);
+      const bbox = svgElement.getBBox();
+      const vb = svgElement.getAttribute('viewBox').split(' ').map(Number);
+      const svgW = vb[2] || width;
+      const svgH = vb[3] || height;
+
+      const cloned = svgElement.cloneNode(true);
+      cloned.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      cloned.setAttribute('width', svgW);
+      cloned.setAttribute('height', svgH);
+
+      const styles = document.createElement('style');
+      styles.textContent = 'path { stroke: #fff; stroke-width: 0.5px; }';
+      cloned.insertBefore(styles, cloned.firstChild);
+
+      const svgData = new XMLSerializer().serializeToString(cloned);
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       const img = new Image();
+      const scale = 2;
 
-      canvas.width = width * 2;
-      canvas.height = height * 2;
-      ctx.scale(2, 2);
+      canvas.width = svgW * scale;
+      canvas.height = svgH * scale;
+      ctx.scale(scale, scale);
       ctx.fillStyle = 'white';
-      ctx.fillRect(0, 0, width, height);
+      ctx.fillRect(0, 0, svgW, svgH);
 
       img.onload = () => {
-        ctx.drawImage(img, 0, 0);
+        ctx.drawImage(img, 0, 0, svgW, svgH);
         const link = document.createElement('a');
         link.download = 'france-sentencing-map.png';
         link.href = canvas.toDataURL('image/png');
