@@ -297,6 +297,7 @@
         <h2 class="sidebar__heading" data-i18n="geo_indicator_heading">Indicator</h2>
         <select class="sidebar__select" id="indicatorSelect">
         </select>
+        <p class="indicator-description" id="indicatorDescription" style="margin-top:8px;font-size:0.85rem;color:#666;line-height:1.4;"></p>
       </div>
       
       <div class="sidebar__section">
@@ -443,15 +444,84 @@
       "Durée moy. emp. ferme (5. Infractions à la législation sur les stupéfiants)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
       "Durée moy. emp. ferme (6. Violences sexuelles)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
       "Durée moy. emp. ferme (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
-      "Sévérité résiduelle (1. Conduite avec alcool ou stupéfiants)": { en: "Residual Severity Index", fr: "Indice de sévérité résiduelle" },
-      "Sévérité résiduelle (2. Vols aggravés)": { en: "Residual Severity Index", fr: "Indice de sévérité résiduelle" },
-      "Sévérité résiduelle (3. Vols simples)": { en: "Residual Severity Index", fr: "Indice de sévérité résiduelle" },
-      "Sévérité résiduelle (4. Infractions à la police des étrangers)": { en: "Residual Severity Index", fr: "Indice de sévérité résiduelle" },
-      "Sévérité résiduelle (5. Infractions à la législation sur les stupéfiants)": { en: "Residual Severity Index", fr: "Indice de sévérité résiduelle" },
-      "Sévérité résiduelle (6. Violences sexuelles)": { en: "Residual Severity Index", fr: "Indice de sévérité résiduelle" },
-      "Sévérité résiduelle (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Residual Severity Index", fr: "Indice de sévérité résiduelle" },
-      "Sévérité résiduelle (VIF)": { en: "Residual Severity Index", fr: "Indice de sévérité résiduelle" }
+      "Sévérité résiduelle (1. Conduite avec alcool ou stupéfiants)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (2. Vols aggravés)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (3. Vols simples)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (4. Infractions à la police des étrangers)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (5. Infractions à la législation sur les stupéfiants)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (6. Violences sexuelles)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (VIF)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" }
     };
+
+    const INDICATOR_DESCRIPTIONS = {
+      en: {
+        'Chômage': 'Unemployment rate in the department, expressed as a percentage of the active population.',
+        'Couleur politique': 'Political leaning of the department based on recent election results.',
+        'Population': 'Total population of the department (2023 census data).',
+        'Durée moy. emprisonnement ferme': 'Weighted average duration of prison sentences across all crime categories in this department, in months.',
+        'taux_poursuivis': 'Number of prosecuted offenders per 100,000 inhabitants for this crime category.',
+        'duree_emp': 'Weighted average duration of prison sentences for this specific crime category, in months. Weighted by the number of sentences handed down at each tribunal.',
+        'severite_residuelle': 'Measures whether a department is disproportionately severe for this specific crime compared to its general sentencing level. Positive values indicate the department punishes this crime more harshly than its overall pattern would suggest. Negative values indicate relative leniency for this crime. A value near zero means the department\'s severity for this crime is consistent with its general severity.',
+        'default': ''
+      },
+      fr: {
+        'Chômage': 'Taux de chômage dans le département, exprimé en pourcentage de la population active.',
+        'Couleur politique': 'Tendance politique du département basée sur les résultats des élections récentes.',
+        'Population': 'Population totale du département (données du recensement 2023).',
+        'Durée moy. emprisonnement ferme': 'Durée moyenne pondérée des peines d\'emprisonnement ferme toutes catégories confondues dans ce département, en mois.',
+        'taux_poursuivis': 'Nombre d\'auteurs poursuivis pour 100 000 habitants pour cette catégorie d\'infraction.',
+        'duree_emp': 'Durée moyenne pondérée des peines d\'emprisonnement ferme pour cette catégorie d\'infraction spécifique, en mois. Pondérée par le nombre de condamnations prononcées dans chaque tribunal.',
+        'severite_residuelle': 'Mesure si un département est disproportionnément sévère pour ce crime spécifique par rapport à son niveau général de sévérité. Les valeurs positives indiquent que le département punit ce crime plus durement que ce que son profil général laisserait supposer. Les valeurs négatives indiquent une clémence relative. Une valeur proche de zéro signifie que la sévérité pour ce crime est cohérente avec la sévérité générale.',
+        'default': ''
+      }
+    };
+
+    function getIndicatorDescription(colName, lang) {
+      const descs = INDICATOR_DESCRIPTIONS[lang] || INDICATOR_DESCRIPTIONS['en'];
+      if (descs[colName]) return descs[colName];
+      if (colName.startsWith('Sévérité résiduelle')) return descs['severite_residuelle'];
+      if (colName.includes('Taux') && colName.includes('100')) return descs['taux_poursuivis'];
+      if (colName.includes('Durée moy. emp. ferme')) return descs['duree_emp'];
+      if (colName.includes('Durée moyenne des peines')) return descs['duree_emp'];
+      if (colName.includes('Sévérité (Index)')) return descs['severite_residuelle'];
+      if (colName.includes('Proportion de récidive')) {
+        return lang === 'fr'
+          ? 'Proportion de condamnés en situation de récidive légale pour cette catégorie d\'infraction.'
+          : 'Proportion of convicted offenders in legal recidivism for this crime category.';
+      }
+      if (colName.includes('Taux emprisonnement')) {
+        return lang === 'fr'
+          ? 'Part des condamnations ayant donné lieu à une peine d\'emprisonnement ferme.'
+          : 'Share of convictions resulting in a prison sentence.';
+      }
+      if (colName.includes('Résidu taux emprisonnement')) {
+        return lang === 'fr'
+          ? 'Écart entre le taux d\'emprisonnement observé et le taux attendu compte tenu de la structure des infractions.'
+          : 'Difference between observed imprisonment rate and the expected rate given the structure of offences.';
+      }
+      if (colName.includes('Proportion de femmes')) {
+        return lang === 'fr'
+          ? 'Proportion de femmes parmi les personnes condamnées pour cette catégorie d\'infraction.'
+          : 'Proportion of women among those convicted for this crime category.';
+      }
+      if (colName.includes('Taux de condamnation')) {
+        return lang === 'fr'
+          ? 'Nombre de condamnations pour 100 000 habitants pour cette catégorie d\'infraction.'
+          : 'Number of convictions per 100,000 inhabitants for this crime category.';
+      }
+      return descs['default'];
+    }
+
+    function updateIndicatorDescription() {
+      const col = document.getElementById('indicatorSelect').value;
+      const descEl = document.getElementById('indicatorDescription');
+      if (col) {
+        descEl.textContent = getIndicatorDescription(col, currentLang);
+      } else {
+        descEl.textContent = '';
+      }
+    }
 
     function getColumnLabel(colName, lang) {
       const t = COLUMN_TRANSLATIONS[colName];
@@ -492,6 +562,7 @@
         indicatorSelect.appendChild(opt);
       });
       updateMap();
+      updateIndicatorDescription();
     }
 
     let csvData = {};
@@ -529,6 +600,7 @@
         const colName = indicatorSelect.options[i].value;
         indicatorSelect.options[i].textContent = getColumnLabel(colName, lang);
       }
+      updateIndicatorDescription();
     }
 
     document.getElementById('langEN').addEventListener('click', () => applyLanguage('en'));
@@ -687,7 +759,7 @@
     }).catch(error => console.error("Error loading data:", error));
 
     document.getElementById('offenceSelect').addEventListener('change', populateIndicatorDropdown);
-    document.getElementById('indicatorSelect').addEventListener('change', updateMap);
+    document.getElementById('indicatorSelect').addEventListener('change', () => { updateMap(); updateIndicatorDescription(); });
 
     document.getElementById('colorMode').addEventListener('click', () => {
       colorMode = 'color';
