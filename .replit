@@ -12,10 +12,6 @@ author = "agent"
 task = "workflow.run"
 args = "Preview Server"
 
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "Sentencing Tree App"
-
 [[workflows.workflow]]
 name = "Preview Server"
 author = "agent"
@@ -27,18 +23,6 @@ outputType = "webview"
 task = "shell.exec"
 args = "node server.js"
 waitForPort = 5000
-
-[[workflows.workflow]]
-name = "Sentencing Tree App"
-author = "agent"
-
-[workflows.workflow.metadata]
-outputType = "console"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd sentencing-tree && python -m uvicorn main:app --host 0.0.0.0 --port 8000"
-waitForPort = 8000
 
 [[ports]]
 localPort = 5000

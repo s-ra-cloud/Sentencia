@@ -4,9 +4,17 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const { spawn } = require('child_process');
 
 const app = express();
 const PORT = 5000;
+
+const sentencingProc = spawn('python', ['-m', 'uvicorn', 'main:app', '--host', '0.0.0.0', '--port', '8000'], {
+  cwd: path.join(__dirname, 'sentencing-tree'),
+  stdio: 'inherit'
+});
+sentencingProc.on('error', (err) => console.error('Sentencing Tree failed to start:', err));
+process.on('exit', () => sentencingProc.kill());
 
 const UPLOADS_DIR = path.join(__dirname, 'uploads');
 if (!fs.existsSync(UPLOADS_DIR)) {
