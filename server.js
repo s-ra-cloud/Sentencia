@@ -9,12 +9,21 @@ const { spawn } = require('child_process');
 const app = express();
 const PORT = 5000;
 
-const sentencingProc = spawn('python', ['-m', 'uvicorn', 'main:app', '--host', '0.0.0.0', '--port', '8000'], {
-  cwd: path.join(__dirname, 'sentencing-tree'),
-  stdio: 'inherit'
-});
-sentencingProc.on('error', (err) => console.error('Sentencing Tree failed to start:', err));
-process.on('exit', () => sentencingProc.kill());
+let sentencingProc = null;
+function startSentencingTree() {
+  console.log('Starting Sentencing Tree Python backend...');
+  sentencingProc = spawn('python', ['-m', 'uvicorn', 'main:app', '--host', '0.0.0.0', '--port', '8000'], {
+    cwd: path.join(__dirname, 'sentencing-tree'),
+    stdio: ['ignore', 'inherit', 'inherit']
+  });
+  sentencingProc.on('error', (err) => console.error('Sentencing Tree failed to start:', err));
+  sentencingProc.on('exit', (code) => {
+    console.log(`Sentencing Tree exited with code ${code}, restarting in 3s...`);
+    setTimeout(startSentencingTree, 3000);
+  });
+}
+startSentencingTree();
+process.on('exit', () => { if (sentencingProc) sentencingProc.kill(); });
 
 const UPLOADS_DIR = path.join(__dirname, 'uploads');
 if (!fs.existsSync(UPLOADS_DIR)) {
@@ -58,7 +67,15 @@ app.use(express.json());
 app.use('/sentencing-tree-app', createProxyMiddleware({
   target: 'http://localhost:8000',
   changeOrigin: true,
-  pathRewrite: { '^/sentencing-tree-app': '' }
+  pathRewrite: { '^/sentencing-tree-app': '' },
+  on: {
+    error: (err, req, res) => {
+      console.error('Proxy error:', err.message);
+      if (!res.headersSent) {
+        res.status(503).send('<html><body style="font-family:sans-serif;text-align:center;padding:60px;"><h2>Sentencing Choice Tree is starting up...</h2><p>The Python backend is loading. Please refresh this page in a few seconds.</p><script>setTimeout(()=>location.reload(),5000)</script></body></html>');
+      }
+    }
+  }
 }));
 
 app.use(express.static('.'));
