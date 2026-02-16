@@ -480,7 +480,16 @@
       "Taux emp. résiduel récidive (5. Infractions à la législation sur les stupéfiants)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
       "Taux emp. résiduel récidive (6. Violences sexuelles)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
       "Taux emp. résiduel récidive (VIF)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
-      "Taux emp. résiduel récidive (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" }
+      "Taux emp. résiduel récidive (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive global": { en: "Overall Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel global (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (1. Conduite avec alcool ou stupéfiants)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (2. Vols aggravés)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (3. Vols simples)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (4. Infractions à la police des étrangers)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (5. Infractions à la législation sur les stupéfiants)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (6. Violences sexuelles)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (VIF)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" }
     };
 
     const RECIDIVISM_REGRESSION = {
@@ -544,6 +553,20 @@
           } else {
             return `Residual imprisonment rate after accounting for legal recidivism. A linear regression across all departments estimates the \u201cexpected\u201d imprisonment rate based on the recidivism rate: expected rate = ${eq} (R\u00b2 = ${reg.r2}). The residual is the difference between the observed rate and the expected rate. A positive value means the department imprisons more than its recidivism rate would predict. A negative value means it imprisons less.`;
           }
+        }
+      }
+      if (colName === 'Taux emp. résiduel récidive global') {
+        if (lang === 'fr') {
+          return "Taux d'emprisonnement résiduel global après prise en compte de la récidive légale. Pour chaque département, c'est la moyenne pondérée (par le nombre de condamnations) des taux d'emprisonnement résiduels calculés pour chaque catégorie d'infraction. Une valeur positive signifie que le département emprisonne globalement plus que ce que ses taux de récidive laisseraient prédire.";
+        } else {
+          return "Overall residual imprisonment rate after accounting for legal recidivism. For each department, this is the weighted average (by number of convictions) of the residual imprisonment rates computed for each crime category. A positive value means the department imprisons more overall than what its recidivism rates would predict.";
+        }
+      }
+      if (colName.startsWith('Taux emp. résiduel récidive spécifique')) {
+        if (lang === 'fr') {
+          return "Écart entre le z-score du taux d'emprisonnement résiduel (adj. récidive) pour cette infraction et le z-score du résiduel global du département. Une valeur positive indique que le département est particulièrement sévère pour cette infraction spécifique, au-delà de sa tendance générale. Une valeur négative signifie qu'il est relativement plus clément pour cette infraction par rapport à sa sévérité générale.";
+        } else {
+          return "Difference between the z-score of the residual imprisonment rate (adj. for recidivism) for this crime and the z-score of the department's overall residual. A positive value indicates the department is particularly severe for this specific crime, beyond its general tendency. A negative value means it is relatively more lenient for this crime compared to its overall severity.";
         }
       }
       if (colName.includes('Taux') && colName.includes('100')) return descs['taux_poursuivis'];
@@ -618,7 +641,7 @@
       return t ? t[lang] : colName;
     }
 
-    const GENERAL_COLUMNS = new Set(["Chômage", "Couleur politique", "Population", "Durée moy. emprisonnement ferme", "Taux emprisonnement ferme global"]);
+    const GENERAL_COLUMNS = new Set(["Chômage", "Couleur politique", "Population", "Durée moy. emprisonnement ferme", "Taux emprisonnement ferme global", "Taux emp. résiduel récidive global"]);
 
     const CATEGORY_COLUMN_MAP = {
       'general': col => GENERAL_COLUMNS.has(col),
