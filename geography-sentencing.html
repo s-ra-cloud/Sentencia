@@ -282,7 +282,14 @@
         <h2 class="sidebar__heading" data-i18n="geo_offence_heading">Offence Category</h2>
         <select class="sidebar__select" id="offenceSelect">
           <option value="general">General Information</option>
+          <option value="cat1">Driving under Alcohol/Drugs</option>
+          <option value="cat2">Aggravated Theft</option>
+          <option value="cat3">Simple Theft</option>
+          <option value="cat4">Immigration Offences</option>
+          <option value="cat5">Drug Offences</option>
+          <option value="cat6">Sexual Violence</option>
           <option value="ipv">Intimate Partner Violence (IPV)</option>
+          <option value="cat8">Contempt &amp; Violence against Authority</option>
         </select>
       </div>
       
@@ -334,7 +341,14 @@
         legend_low: 'Lower severity',
         legend_high: 'Higher severity',
         opt_general: 'General Information',
+        opt_cat1: 'Driving under Alcohol/Drugs',
+        opt_cat2: 'Aggravated Theft',
+        opt_cat3: 'Simple Theft',
+        opt_cat4: 'Immigration Offences',
+        opt_cat5: 'Drug Offences',
+        opt_cat6: 'Sexual Violence',
         opt_ipv: 'Intimate Partner Violence (IPV)',
+        opt_cat8: 'Contempt & Violence against Authority',
         geo_colormode_heading: 'Color Mode',
         colormode_color: 'Color',
         colormode_bw: 'Black & White',
@@ -354,7 +368,14 @@
         legend_low: 'Sévérité moindre',
         legend_high: 'Sévérité plus élevée',
         opt_general: 'Informations générales',
-        opt_ipv: 'Violences conjugales (IPV)',
+        opt_cat1: 'Conduite avec alcool ou stupéfiants',
+        opt_cat2: 'Vols aggravés',
+        opt_cat3: 'Vols simples',
+        opt_cat4: 'Infractions à la police des étrangers',
+        opt_cat5: 'Infractions à la législation sur les stupéfiants',
+        opt_cat6: 'Violences sexuelles',
+        opt_ipv: 'Violences conjugales (VIF)',
+        opt_cat8: 'Outrage, rébellion et violences sur dépositaires de l\'autorité publique',
         geo_colormode_heading: 'Mode couleur',
         colormode_color: 'Couleur',
         colormode_bw: 'Noir & Blanc',
@@ -406,7 +427,14 @@
       "Proportion de femmes condamnées (VIF)": { en: "Proportion of Women Convicted (IPV)", fr: "Proportion de femmes condamnées (VIF)" },
       "Durée moyenne des peines prononcées (VIF)": { en: "Average Sentence Duration (IPV)", fr: "Durée moyenne des peines prononcées (VIF)" },
       "Sévérité (Index)(VIF)": { en: "Severity Index (IPV)", fr: "Indice de sévérité (VIF)" },
-      "Taux d'auteur poursuivis / 100.000 h (VIF)": { en: "Prosecution Rate / 100,000 pop. (IPV)", fr: "Taux d'auteur poursuivis / 100.000 h (VIF)" }
+      "Taux d'auteur poursuivis / 100.000 h (VIF)": { en: "Prosecution Rate / 100,000 pop. (IPV)", fr: "Taux d'auteur poursuivis / 100.000 h (VIF)" },
+      "Taux poursuivis / 100k (1. Conduite avec alcool ou stupéfiants)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
+      "Taux poursuivis / 100k (2. Vols aggravés)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
+      "Taux poursuivis / 100k (3. Vols simples)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
+      "Taux poursuivis / 100k (4. Infractions à la police des étrangers)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
+      "Taux poursuivis / 100k (5. Infractions à la législation sur les stupéfiants)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
+      "Taux poursuivis / 100k (6. Violences sexuelles)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." },
+      "Taux poursuivis / 100k (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Prosecution Rate / 100k pop.", fr: "Taux de poursuites / 100k hab." }
     };
 
     function getColumnLabel(colName, lang) {
@@ -416,11 +444,24 @@
 
     const GENERAL_COLUMNS = new Set(["Chômage", "Couleur politique", "Population"]);
 
+    const CATEGORY_COLUMN_MAP = {
+      'general': col => GENERAL_COLUMNS.has(col),
+      'ipv': col => col.includes('(VIF)'),
+      'cat1': col => col.includes('(1. Conduite'),
+      'cat2': col => col.includes('(2. Vols'),
+      'cat3': col => col.includes('(3. Vols'),
+      'cat4': col => col.includes('(4. Infractions'),
+      'cat5': col => col.includes('(5. Infractions'),
+      'cat6': col => col.includes('(6. Violences'),
+      'cat8': col => col.includes('(8. Outrage')
+    };
+
     function getColumnsForCategory(category) {
-      if (category === 'general') {
-        return indicatorColumns.filter(c => GENERAL_COLUMNS.has(c));
+      const matcher = CATEGORY_COLUMN_MAP[category];
+      if (matcher) {
+        return indicatorColumns.filter(matcher);
       }
-      return indicatorColumns.filter(c => !GENERAL_COLUMNS.has(c));
+      return indicatorColumns;
     }
 
     function populateIndicatorDropdown() {
@@ -462,9 +503,9 @@
       document.getElementById('langFR').classList.toggle('active', lang === 'fr');
 
       const offenceSelect = document.getElementById('offenceSelect');
-      if (offenceSelect.options.length >= 2) {
-        offenceSelect.options[0].textContent = I18N[lang].opt_general;
-        offenceSelect.options[1].textContent = I18N[lang].opt_ipv;
+      const optKeys = ['opt_general','opt_cat1','opt_cat2','opt_cat3','opt_cat4','opt_cat5','opt_cat6','opt_ipv','opt_cat8'];
+      for (let i = 0; i < optKeys.length && i < offenceSelect.options.length; i++) {
+        offenceSelect.options[i].textContent = I18N[lang][optKeys[i]];
       }
 
       const indicatorSelect = document.getElementById('indicatorSelect');
