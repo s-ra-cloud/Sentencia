@@ -306,6 +306,7 @@
       
       <div class="sidebar__controls">
         <button class="sidebar__btn" id="exportBtn" data-i18n="export_btn">Export Image</button>
+        <button class="sidebar__btn" id="downloadDataBtn" data-i18n="download_data_btn">Download All Data</button>
       </div>
       
       <div class="legend">
@@ -357,7 +358,8 @@
         geo_colormode_heading: 'Color Mode',
         colormode_color: 'Color',
         colormode_bw: 'Black & White',
-        export_btn: 'Export Image'
+        export_btn: 'Export Image',
+        download_data_btn: 'Download All Data'
       },
       fr: {
         back_to_main: 'Retour au site principal',
@@ -392,7 +394,8 @@
         geo_colormode_heading: 'Mode couleur',
         colormode_color: 'Couleur',
         colormode_bw: 'Noir & Blanc',
-        export_btn: 'Exporter l\'image'
+        export_btn: 'Exporter l\'image',
+        download_data_btn: 'Télécharger toutes les données'
       }
     };
 
@@ -1040,6 +1043,37 @@
       };
 
       img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    });
+
+    document.getElementById('downloadDataBtn').addEventListener('click', () => {
+      const CODE_TO_DEPT = {};
+      for (const [name, code] of Object.entries(DEPT_NAME_TO_CODE)) {
+        CODE_TO_DEPT[code] = name;
+      }
+      const codes = Object.keys(csvData).sort();
+      const cols = indicatorColumns;
+      const lang = currentLang;
+      const esc = (s) => '"' + String(s).replace(/"/g, '""') + '"';
+      const headerRow = [esc('Department Code'), esc('Department Name')];
+      cols.forEach(col => {
+        headerRow.push(esc(getColumnLabel(col, lang)));
+      });
+      const csvRows = [headerRow.join(',')];
+      codes.forEach(code => {
+        const row = [code, esc(CODE_TO_DEPT[code] || code)];
+        cols.forEach(col => {
+          const v = csvData[code][col];
+          row.push(v !== null && v !== undefined ? v : '');
+        });
+        csvRows.push(row.join(','));
+      });
+      const csvContent = csvRows.join('\n');
+      const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'sentencing-data-by-department.csv';
+      link.click();
+      URL.revokeObjectURL(link.href);
     });
 
     applyLanguage(currentLang);
