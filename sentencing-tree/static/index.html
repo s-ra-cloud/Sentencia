@@ -226,8 +226,25 @@
       }
 
       function parseCSVColumns(text) {
-        const firstLine = text.split(/\r?\n/)[0];
-        return firstLine.split(",").map((c) => c.trim()).filter(Boolean);
+        let line = text.split(/\r?\n/)[0];
+        if (line.charCodeAt(0) === 0xFEFF) line = line.slice(1);
+        const cols = [];
+        let current = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          if (inQuotes) {
+            if (ch === '"' && line[i + 1] === '"') { current += '"'; i++; }
+            else if (ch === '"') { inQuotes = false; }
+            else { current += ch; }
+          } else {
+            if (ch === '"') { inQuotes = true; }
+            else if (ch === ',') { cols.push(current.trim()); current = ''; }
+            else { current += ch; }
+          }
+        }
+        if (current.trim()) cols.push(current.trim());
+        return cols.filter(Boolean);
       }
 
       function renderFeatures() {

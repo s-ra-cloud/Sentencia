@@ -236,10 +236,15 @@ async def train(
         return JSONResponse(status_code=429, content={"error": error_msg})
     
     content = await file.read()
+    if content[:3] == b'\xef\xbb\xbf':
+        content = content[3:]
     try:
-        df = pd.read_csv(io.BytesIO(content))
+        df = pd.read_csv(io.BytesIO(content), encoding='utf-8')
     except Exception as exc:
         return JSONResponse(status_code=400, content={"error": str(exc)})
+
+    df.columns = [c.strip().strip('"') for c in df.columns]
+    target = target.strip().strip('"')
 
     if target not in df.columns:
         return JSONResponse(
@@ -247,7 +252,7 @@ async def train(
             content={"error": "Target column not found in CSV."},
         )
 
-    feature_list = [f for f in features.split(",") if f]
+    feature_list = [f.strip().strip('"') for f in features.split(",") if f.strip()]
     if not feature_list:
         return JSONResponse(status_code=400, content={"error": "No features selected."})
 
