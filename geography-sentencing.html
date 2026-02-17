@@ -1054,9 +1054,39 @@
       const cols = indicatorColumns;
       const lang = currentLang;
       const esc = (s) => '"' + String(s).replace(/"/g, '""') + '"';
+      const CRIME_CATS_EN = {
+        '(VIF)': 'IPV',
+        '(1. Conduite': 'Driving under Alcohol/Drugs',
+        '(2. Vols agg': 'Aggravated Theft',
+        '(3. Vols sim': 'Simple Theft',
+        '(4. Infractions à la police': 'Immigration Offences',
+        '(5. Infractions à la législation': 'Drug Offences',
+        '(6. Violences': 'Sexual Violence',
+        '(8. Outrage': 'Contempt & Violence against Authority'
+      };
+      const CRIME_CATS_FR = {
+        '(VIF)': 'VIF',
+        '(1. Conduite': 'Conduite alcool/stupéfiants',
+        '(2. Vols agg': 'Vols aggravés',
+        '(3. Vols sim': 'Vols simples',
+        '(4. Infractions à la police': 'Police des étrangers',
+        '(5. Infractions à la législation': 'Stupéfiants',
+        '(6. Violences': 'Violences sexuelles',
+        '(8. Outrage': 'Outrage/rébellion/violences'
+      };
+      function getCsvColumnLabel(colName, lang) {
+        const base = getColumnLabel(colName, lang);
+        const cats = lang === 'fr' ? CRIME_CATS_FR : CRIME_CATS_EN;
+        for (const [key, label] of Object.entries(cats)) {
+          if (colName.includes(key)) {
+            return base + ' - ' + label;
+          }
+        }
+        return base;
+      }
       const headerRow = [esc('Department Code'), esc('Department Name')];
       cols.forEach(col => {
-        headerRow.push(esc(getColumnLabel(col, lang)));
+        headerRow.push(esc(getCsvColumnLabel(col, lang)));
       });
       const csvRows = [headerRow.join(',')];
       codes.forEach(code => {
