@@ -749,9 +749,6 @@ if (themeBtn){
 }
 
 function setRoute(route){
-  if (route === 'funding' && !isAdminMode()) {
-    route = 'home';
-  }
   document.querySelectorAll(".page").forEach(p => p.classList.remove("is-active"));
   const el = document.getElementById(route);
   if (el) el.classList.add("is-active");
