@@ -254,6 +254,27 @@
           "actions": [],
           "titleEN": "A pluralist defense of pluralism: towards an easing of epistemic hostilities in social sciences",
           "titleFR": "Une défense pluraliste du pluralisme : vers un apaisement des hostilités épistémiques en sciences sociales"
+        },
+        {
+          "id": "new_1771425981528",
+          "pi": "Sacha Raoult",
+          "meta": "",
+          "type": "software",
+          "year": 2026,
+          "title": "Paper as Reviewer",
+          "descEN": "",
+          "descFR": "",
+          "metaEN": "Turn a research paper into a reviewing agent",
+          "metaFR": "Transforme un article en évaluateur scientifique",
+          "actions": [
+            {
+              "url": "https://paper-agent-ai.replit.app",
+              "type": "link",
+              "labelKey": "action_code"
+            }
+          ],
+          "titleEN": "",
+          "titleFR": ""
         }
       ],
       "titleEN": "Epistemic Engineering Team",

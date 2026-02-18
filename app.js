@@ -26,7 +26,14 @@ const I18N = {
     hero_cta: "View Outputs",
     contact_title: "Get in Touch",
     contact_subtitle: "Interested in collaborating or learning more about our research?",
-    contact_btn: "Contact Us"
+    contact_btn: "Contact Us",
+    funding_narrative_en: `<p>Since its inception in 2019, the Machina Research Network has been supported by a range of institutional partners and funding bodies that have enabled the development of its interdisciplinary research agenda.</p>
+<p>The Network's foundational project, the <strong>Epistemic Engineering Platform</strong>, was launched with support from the <a href="https://www.univ-amu.fr" target="_blank" rel="noreferrer">Aix-Marseille Universit\u00e9</a> through its AM*IDEX excellence initiative (PI: S. Raoult, amU). This initial grant allowed the team to build the computational infrastructure and collaborative tools that underpin much of the Network\u2019s current work in open scientific editing and knowledge engineering.</p>
+<p>In parallel, a collaboration with the <a href="https://www.uchicago.edu" target="_blank" rel="noreferrer">University of Chicago</a> through the Stefanovich Institute for the Formation of Knowledge provided early support for the <strong>Knowledge Tree</strong> project (PI: J. Evans, University of Chicago), a joint effort exploring computational approaches to mapping scientific knowledge structures.</p>
+<p>From 2022, the SATT Sud Est technology transfer office in Marseille funded two applied research contracts: <strong>SEMANTICA</strong>, focused on semantic analysis tools, and the <strong>Police Custody Assistant</strong>, a project applying natural language processing to legal procedures (PI: S. Raoult, amU).</p>
+<p>The Network has also received support from the <a href="https://www.iufrance.fr" target="_blank" rel="noreferrer">Institut Universitaire de France</a> (IUF) for a multi-year research program on <strong>criminal defense open data</strong> (PI: S. Raoult, IUF/amU), enabling large-scale quantitative work on sentencing patterns and access to justice.</p>
+<p>More recently, a major research contract with <a href="https://www.um6p.ma" target="_blank" rel="noreferrer">Universit\u00e9 Mohammed VI Polytechnique</a> (Ben Guerir, Morocco) has supported the creation of the <strong>IAS Epistemic Engineering Platform</strong> (PI: R. Liogier, amU/UM6P), expanding the Network\u2019s research on computational epistemology and AI-assisted knowledge production to an international scale.</p>
+<p>In 2025, the Network joined the <strong>F.AI.R Justice</strong> initiative supported by CY Cergy Paris Universit\u00e9 (PI: F. Jobard, CNRS), and secured funding from the <strong>LEGACY Chair of Transitions</strong>, further broadening its research into the computational study of justice systems and societal transitions.</p>`
   },
   fr: {
     nav_program: "Programme de recherche",
@@ -55,7 +62,14 @@ const I18N = {
     hero_cta: "Voir les Outputs",
     contact_title: "Nous Contacter",
     contact_subtitle: "Intéressé par une collaboration ou pour en savoir plus sur nos recherches ?",
-    contact_btn: "Contactez-nous"
+    contact_btn: "Contactez-nous",
+    funding_narrative_en: `<p>Depuis sa cr\u00e9ation en 2019, le Machina Research Network b\u00e9n\u00e9ficie du soutien de divers partenaires institutionnels et organismes de financement qui ont permis le d\u00e9veloppement de son programme de recherche interdisciplinaire.</p>
+<p>Le projet fondateur du r\u00e9seau, la <strong>Plateforme d\u2019Ing\u00e9nierie \u00c9pist\u00e9mique</strong>, a \u00e9t\u00e9 lanc\u00e9 avec le soutien d\u2019<a href="https://www.univ-amu.fr" target="_blank" rel="noreferrer">Aix-Marseille Universit\u00e9</a> dans le cadre de son initiative d\u2019excellence AM*IDEX (IP : S. Raoult, amU). Cette subvention initiale a permis de construire l\u2019infrastructure computationnelle et les outils collaboratifs qui sous-tendent une grande partie des travaux actuels du r\u00e9seau en \u00e9dition scientifique ouverte et en ing\u00e9nierie des connaissances.</p>
+<p>Parall\u00e8lement, une collaboration avec l\u2019<a href="https://www.uchicago.edu" target="_blank" rel="noreferrer">Universit\u00e9 de Chicago</a> via le Stefanovich Institute for the Formation of Knowledge a soutenu le projet <strong>Knowledge Tree</strong> (IP : J. Evans, Universit\u00e9 de Chicago), une initiative conjointe explorant les approches computationnelles de cartographie des structures de connaissances scientifiques.</p>
+<p>\u00c0 partir de 2022, la SATT Sud Est (soci\u00e9t\u00e9 d\u2019acc\u00e9l\u00e9ration du transfert de technologies) \u00e0 Marseille a financ\u00e9 deux contrats de recherche appliqu\u00e9e : <strong>SEMANTICA</strong>, ax\u00e9 sur les outils d\u2019analyse s\u00e9mantique, et l\u2019<strong>Assistant de Garde \u00e0 Vue</strong>, un projet appliquant le traitement automatique du langage aux proc\u00e9dures judiciaires (IP : S. Raoult, amU).</p>
+<p>Le r\u00e9seau a \u00e9galement re\u00e7u le soutien de l\u2019<a href="https://www.iufrance.fr" target="_blank" rel="noreferrer">Institut Universitaire de France</a> (IUF) pour un programme de recherche pluriannuel sur les <strong>donn\u00e9es ouvertes de la d\u00e9fense p\u00e9nale</strong> (IP : S. Raoult, IUF/amU), permettant des travaux quantitatifs \u00e0 grande \u00e9chelle sur les pratiques de condamnation et l\u2019acc\u00e8s \u00e0 la justice.</p>
+<p>Plus r\u00e9cemment, un important contrat de recherche avec l\u2019<a href="https://www.um6p.ma" target="_blank" rel="noreferrer">Universit\u00e9 Mohammed VI Polytechnique</a> (Ben Guerir, Maroc) a soutenu la cr\u00e9ation de la <strong>Plateforme d\u2019Ing\u00e9nierie \u00c9pist\u00e9mique de l\u2019IAS</strong> (IP : R. Liogier, amU/UM6P), \u00e9largissant les recherches du r\u00e9seau en \u00e9pist\u00e9mologie computationnelle et en production de connaissances assist\u00e9e par l\u2019IA \u00e0 une \u00e9chelle internationale.</p>
+<p>En 2025, le r\u00e9seau a rejoint l\u2019initiative <strong>F.AI.R Justice</strong> soutenue par CY Cergy Paris Universit\u00e9 (IP : F. Jobard, CNRS), et a obtenu un financement de la <strong>Chaire LEGACY des Transitions</strong>, \u00e9largissant encore ses recherches \u00e0 l\u2019\u00e9tude computationnelle des syst\u00e8mes de justice et des transitions soci\u00e9tales.</p>`
   }
 };
 
@@ -71,6 +85,10 @@ function applyAdminVisibility() {
   document.querySelectorAll('.nav__link--admin-only, .page--admin-only').forEach(el => {
     el.style.display = show ? '' : 'none';
   });
+  const fundingPublic = document.getElementById('fundingPublic');
+  const fundingAdmin = document.getElementById('fundingAdmin');
+  if (fundingPublic) fundingPublic.style.display = show ? 'none' : '';
+  if (fundingAdmin) fundingAdmin.style.display = show ? '' : 'none';
 }
 
 async function loadDynamicData() {
@@ -703,6 +721,10 @@ function applyLanguage(lang){
   const active = document.querySelector(`.langBtn[data-lang="${lang}"]`);
   if (active) active.classList.add("is-active");
   renderOutputs();
+  const narrativeEl = document.getElementById('fundingNarrative');
+  if (narrativeEl) {
+    narrativeEl.innerHTML = I18N[lang] && I18N[lang]['funding_narrative_en'] || '';
+  }
 }
 
 document.querySelectorAll(".langBtn").forEach(btn => {

@@ -18,7 +18,7 @@
       <button class="nav__link" data-route="program" data-i18n="nav_program">Research Program</button>
       <button class="nav__link" data-route="projects" data-i18n="nav_projects">Outputs</button>
       <button class="nav__link" data-route="members" data-i18n="nav_members">Members</button>
-      <button class="nav__link nav__link--admin-only" data-route="funding" data-i18n="nav_funding" style="display:none;">Funding</button>
+      <button class="nav__link" data-route="funding" data-i18n="nav_funding">Funding</button>
     </div>
 
     <div class="langToggle" title="Language">
@@ -266,136 +266,22 @@
     </div>
   </section>
 
-  <section class="page page--admin-only" id="funding" style="display:none;">
+  <section class="page" id="funding">
     <div class="container">
       <h1 class="h1" data-i18n="funding_title">Funding</h1>
-      <div class="fundingWrap">
-        <div class="fundingLead muted" data-i18n="funding_lede"></div>
-        
-        <div class="fundingProgress" id="fundingProgress"></div>
 
-        <div class="grantList" aria-label="Funding list">
+      <div class="fundingPublic" id="fundingPublic">
+        <div class="fundingNarrative" id="fundingNarrative"></div>
+      </div>
 
-          <div class="grantRow">
-            <div class="grantMain">
-              <div class="grantTitle">F.AI.R Justice</div>
-<div class="grantOrg">Principal Investigator: F. Jobard (CNRS)</div>
-              <div class="grantOrg">CYU Initiative</div>
-              <div class="grantLinks">
-                <a class="grantLink" href="https://www.cyu.fr/actualites/fair-justice-big-data-megadonnees" target="_blank" rel="noreferrer">Reference</a>
-              </div>
-            </div>
-            <div class="grantMeta">
-              <div class="grantDates">2025-2026</div>
-              <div class="grantType" data-i18n="grant_type_grant">Grant</div>
-            </div>
-            <div class="grantAmount">
-              <div class="grantMoney">EUR 50,000</div>
-            </div>
-          </div>
-
-          <div class="grantRow">
-            <div class="grantMain">
-              <div class="grantTitle">Criminal defense open data</div>
-<div class="grantOrg">Principal Investigator: S. Raoult (IUF, amU)</div>
-              <div class="grantOrg">IUF</div>
-              <div class="grantLinks">
-                <a class="grantLink" href="https://www.iufrance.fr/les-membres-de-liuf/membre/2506-sacha-raoult.html" target="_blank" rel="noreferrer">Reference</a>
-              </div>
-            </div>
-            <div class="grantMeta">
-              <div class="grantDates">2023-2027</div>
-              <div class="grantType" data-i18n="grant_type_grant">Grant</div>
-            </div>
-            <div class="grantAmount">
-              <div class="grantMoney">EUR 75,000</div>
-            </div>
-          </div>
-
-          <div class="grantRow">
-            <div class="grantMain">
-              <div class="grantTitle" data-i18n="grant_title_ias_eep">IAS Epistemic Engineering Platform</div>
-<div class="grantOrg">Principal Investigator: R. Liogier (amU, UM6P)</div>
-              <div class="grantOrg">Université Mohammed VI Polytechnique (Ben Guerir, MA)</div>
-              <div class="grantLinks">
-                <a class="grantLink" href="https://dx.doi.org/10.13039/100016566" target="_blank" rel="noreferrer">FUNDREF</a>
-              </div>
-            </div>
-            <div class="grantMeta">
-              <div class="grantDates">2024-2027</div>
-              <div class="grantType" data-i18n="grant_type_contract">Contract</div>
-            </div>
-            <div class="grantAmount">
-              <div class="grantMoney">EUR 630,000</div>
-            </div>
-          </div>
-
-          <div class="grantRow">
-            <div class="grantMain">
-              <div class="grantTitle" data-i18n="grant_title_pca">Police Custody Assistant</div>
-<div class="grantOrg">Principal Investigator: S. Raoult (IUF, amU)</div>
-              <div class="grantOrg">SATT Sud Est (Marseille, FR)</div>
-            </div>
-            <div class="grantMeta">
-              <div class="grantDates">2024-2025</div>
-              <div class="grantType" data-i18n="grant_type_contract">Contract</div>
-            </div>
-            <div class="grantAmount">
-              <div class="grantMoney">EUR 50,000</div>
-            </div>
-          </div>
-
-          <div class="grantRow">
-            <div class="grantMain">
-              <div class="grantTitle" data-i18n="grant_title_semantica">SEMANTICA</div>
-<div class="grantOrg">Principal Investigator: S. Raoult (IUF, amU)</div>
-              <div class="grantOrg">SATT Sud Est (Marseille, FR)</div>
-            </div>
-            <div class="grantMeta">
-              <div class="grantDates">2022</div>
-              <div class="grantType" data-i18n="grant_type_contract">Contract</div>
-            </div>
-            <div class="grantAmount">
-              <div class="grantMoney">EUR 26,000</div>
-            </div>
-          </div>
-
-          <div class="grantRow">
-            <div class="grantMain">
-              <div class="grantTitle" data-i18n="grant_title_kt">Knowledge Tree</div>
-<div class="grantOrg">Principal Investigator: James Evans (University of Chicago)</div>
-              <div class="grantOrg">Stefanovich Institue for the Formation of Knowledge (Chicago, US)</div>
-            </div>
-            <div class="grantMeta">
-              <div class="grantDates">2021-2022</div>
-              <div class="grantType" data-i18n="grant_type_grant">Grant</div>
-            </div>
-            <div class="grantAmount">
-              <div class="grantMoney">USD 30,000</div>
-            </div>
-          </div>
-
-          <div class="grantRow">
-            <div class="grantMain">
-              <div class="grantTitle" data-i18n="eep_card_title">Epistemic Engineering Platform</div>
-<div class="grantOrg">Principal Investigator: S. Raoult (IUF, amU)</div>
-              <div class="grantOrg">Fondation Aix-Marseille Universite AM*IDEX (Marseille, FR)</div>
-              <div class="grantLinks">
-                <a class="grantLink" href="https://www.univ-amu.fr/en/public/actualites/labelling-amidex-support-peers-project-open-and-collaborative-scientific-editing" target="_blank" rel="noreferrer">Homepage</a>
-                <a class="grantLink" href="https://dx.doi.org/10.13039/100007587" target="_blank" rel="noreferrer">FUNDREF</a>
-              </div>
-            </div>
-            <div class="grantMeta">
-              <div class="grantDates">2020-2023</div>
-              <div class="grantType" data-i18n="grant_type_grant">Grant</div>
-            </div>
-            <div class="grantAmount">
-              <div class="grantMoney">EUR 323,000</div>
-            </div>
-          </div>
-
+      <div class="fundingAdmin admin-only" id="fundingAdmin" style="display:none;">
+        <div class="fundingWrap">
+          <div class="fundingLead muted" data-i18n="funding_lede"></div>
+          <div class="fundingProgress" id="fundingProgress"></div>
+          <div class="grantList" aria-label="Funding list"></div>
         </div>
       </div>
+
     </div>
   </section>
 

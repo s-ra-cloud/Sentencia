@@ -43,7 +43,12 @@ Preferred communication style: Simple, everyday language.
 - **Bearer token pattern**: Password sent as Bearer token in Authorization header for protected routes
 - **No session management**: Stateless authentication
 
-### Funding Progress Bar
+### Funding Page (dual view)
+- **Public view**: Narrative academic text describing funding history since 2019 (bilingual EN/FR), no amounts or precise years
+- **Admin view**: Detailed grant list with amounts, dates, progress bar (visible only when logged in via `sessionStorage.getItem('adminToken')`)
+- **Toggle logic**: `applyAdminVisibility()` shows `#fundingPublic` or `#fundingAdmin` based on admin status
+
+### Funding Progress Bar (admin only)
 - **Visual progress indicator** showing funding status
 - **Consumption logic**:
   - If funding period is completed (end year < current year): Fully consumed

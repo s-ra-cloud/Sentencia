@@ -1137,6 +1137,24 @@ body{
 
 .link:hover{ opacity: 0.7; }
 
+.fundingNarrative{
+  max-width: 800px;
+  margin-top: 12px;
+  line-height: 1.8;
+  font-size: 15px;
+  color: var(--text);
+}
+.fundingNarrative p{
+  margin-bottom: 14px;
+}
+.fundingNarrative a{
+  color: var(--accent, #2563eb);
+  text-decoration: underline;
+}
+.fundingNarrative strong{
+  font-weight: 600;
+}
+
 .fundingWrap{
   max-width: 1000px;
   margin-top: 16px;
