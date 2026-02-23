@@ -7,9 +7,9 @@
           "id": "sentencing-tree",
           "pi": "Sacha Raoult",
           "type": "software",
-          "year": 2025,
+          "year": 2026,
           "descEN": "An interactive machine learning tool for analyzing sentencing data. Upload CSV datasets and generate decision tree visualizations that reveal patterns in sentencing decisions using scikit-learn, XGBoost, or LightGBM.",
-          "descFR": "Un outil interactif d apprentissage automatique pour analyser les données de condamnation. Téléchargez des jeux de données CSV et générez des visualisations d arbres de décision révélant les schémas dans les décisions de condamnation.",
+          "descFR": "Un outil interactif d'apprentissage automatique pour analyser les données de condamnation. Téléchargez des jeux de données CSV et générez des visualisations d arbres de décision révélant les schémas dans les décisions de condamnation.",
           "metaEN": "Interactive ML tool · Decision trees · CSV analysis",
           "metaFR": "Outil ML interactif · Arbres de décision · Analyse CSV",
           "actions": [
@@ -27,6 +27,7 @@
           "pi": "Computation Law Team",
           "type": "software",
           "year": null,
+          "title": "FR-PENAL-MAP",
           "descEN": "An interactive visualization mapping sentencing patterns across French departments. Explore key metrics revealing regional disparities in criminal justice outcomes.",
           "descFR": "Une visualisation interactive cartographiant les pratiques de condamnation à travers les départements français. Explorez les indicateurs clés révélant les disparités régionales dans les résultats de la justice pénale.",
           "metaEN": "The Geography of Sentencing in France",
@@ -39,8 +40,7 @@
             }
           ],
           "titleEN": "",
-          "titleFR": "",
-          "title": "FR-PENAL-MAP"
+          "titleFR": ""
         },
         {
           "id": "kg2025",
