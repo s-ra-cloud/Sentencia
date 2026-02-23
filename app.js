@@ -565,6 +565,7 @@ function renderOutputs() {
   contentContainer.className = 'teamTabContent';
   
   const allMembers = dynamicData.members?.members || [];
+  const teamNames = new Set(allCategories.map(c => (c.titleEN || '').toLowerCase()).concat(allCategories.map(c => (c.titleFR || '').toLowerCase())).filter(n => n));
   
   categories.forEach(cat => {
     const isActive = cat.id === activeTab;
@@ -585,7 +586,7 @@ function renderOutputs() {
         const names = o.pi.split(/,|&/).map(n => n.trim()).filter(n => n);
         names.forEach(name => {
           const cleanName = name.replace(/\s*\([^)]*\)\s*/g, '').trim();
-          if (cleanName) {
+          if (cleanName && !teamNames.has(cleanName.toLowerCase()) && !/\bteam\b/i.test(cleanName)) {
             piCounts[cleanName] = (piCounts[cleanName] || 0) + 1;
           }
         });
@@ -772,6 +773,7 @@ function renderWIP() {
   contentContainer.className = 'teamTabContent';
 
   const allMembers = dynamicData.members?.members || [];
+  const teamNames = new Set(allCategories.map(c => (c.titleEN || '').toLowerCase()).concat(allCategories.map(c => (c.titleFR || '').toLowerCase())).filter(n => n));
 
   categories.forEach(cat => {
     const isActive = cat.id === activeTab;
@@ -792,7 +794,7 @@ function renderWIP() {
         const names = o.pi.split(/,|&/).map(n => n.trim()).filter(n => n);
         names.forEach(name => {
           const cleanName = name.replace(/\s*\([^)]*\)\s*/g, '').trim();
-          if (cleanName) {
+          if (cleanName && !teamNames.has(cleanName.toLowerCase()) && !/\bteam\b/i.test(cleanName)) {
             piCounts[cleanName] = (piCounts[cleanName] || 0) + 1;
           }
         });
