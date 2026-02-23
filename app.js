@@ -577,8 +577,10 @@ function renderOutputs() {
     const teamDescData = dynamicData.teamDescriptions && dynamicData.teamDescriptions[cat.id];
     const teamDesc = teamDescData ? (currentLang === 'fr' ? teamDescData.fr : teamDescData.en) : '';
     
+    const fullCat = allCategories.find(c => c.id === cat.id);
+    const allOutputsForTeam = fullCat ? fullCat.outputs : cat.outputs;
     const piCounts = {};
-    outputs.forEach(o => {
+    allOutputsForTeam.forEach(o => {
       if (o.pi) {
         const names = o.pi.split(/,|&/).map(n => n.trim()).filter(n => n);
         names.forEach(name => {
@@ -591,7 +593,7 @@ function renderOutputs() {
     });
     
     const sortedPIs = Object.entries(piCounts).sort((a, b) => b[1] - a[1]);
-    const coreThreshold = Math.max(2, Math.floor(outputs.length * 0.2));
+    const coreThreshold = Math.max(2, Math.floor(allOutputsForTeam.length * 0.2));
     
     const coreMembers = [];
     const contributors = [];
@@ -782,8 +784,10 @@ function renderWIP() {
     const teamDescData = dynamicData.teamDescriptions && dynamicData.teamDescriptions[cat.id];
     const teamDesc = teamDescData ? (currentLang === 'fr' ? teamDescData.fr : teamDescData.en) : '';
 
+    const fullCat = allCategories.find(c => c.id === cat.id);
+    const allOutputsForTeam = fullCat ? fullCat.outputs : cat.outputs;
     const piCounts = {};
-    outputs.forEach(o => {
+    allOutputsForTeam.forEach(o => {
       if (o.pi) {
         const names = o.pi.split(/,|&/).map(n => n.trim()).filter(n => n);
         names.forEach(name => {
@@ -796,7 +800,7 @@ function renderWIP() {
     });
 
     const sortedPIs = Object.entries(piCounts).sort((a, b) => b[1] - a[1]);
-    const coreThreshold = Math.max(2, Math.floor(outputs.length * 0.2));
+    const coreThreshold = Math.max(2, Math.floor(allOutputsForTeam.length * 0.2));
 
     const coreMembers = [];
     const contributors = [];
