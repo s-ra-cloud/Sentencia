@@ -730,10 +730,10 @@ function renderWIP() {
 
   const existingTabs = container.querySelector('.teamTabs');
   const existingContent = container.querySelector('.teamTabContent');
-  const existingTitle = container.querySelector('.h1');
+  const existingSummary = container.querySelector('.outputsSummary');
   if (existingTabs) existingTabs.remove();
   if (existingContent) existingContent.remove();
-  if (existingTitle) existingTitle.remove();
+  if (existingSummary) existingSummary.remove();
 
   const allCategories = dynamicData.outputs.categories;
   const categories = allCategories.map(cat => ({
@@ -741,20 +741,41 @@ function renderWIP() {
     outputs: cat.outputs.filter(o => !o.year || o.year === 'None' || o.year === null)
   })).filter(cat => cat.outputs.length > 0);
 
-  if (categories.length === 0) {
-    const emptyMsg = document.createElement('h1');
-    emptyMsg.className = 'h1';
-    emptyMsg.setAttribute('data-i18n', 'wip_title');
-    emptyMsg.textContent = currentLang === 'fr' ? 'Travaux en cours' : 'Work in Progress';
-    container.appendChild(emptyMsg);
-    return;
-  }
+  if (categories.length === 0) return;
 
-  const titleEl = document.createElement('h1');
-  titleEl.className = 'h1';
-  titleEl.setAttribute('data-i18n', 'wip_title');
-  titleEl.textContent = currentLang === 'fr' ? 'Travaux en cours' : 'Work in Progress';
-  container.appendChild(titleEl);
+  const typeCounts = { software: 0, paper: 0, video: 0, podcast: 0, book: 0 };
+  categories.forEach(cat => {
+    cat.outputs.forEach(o => {
+      if (o.type && typeCounts.hasOwnProperty(o.type)) {
+        typeCounts[o.type]++;
+      }
+    });
+  });
+
+  const typeLabels = {
+    software: { icon: '{}', color: '#3b82f6', en: 'softwares', fr: 'logiciels' },
+    paper: { icon: 'Aa', color: '#22c55e', en: 'papers', fr: 'articles' },
+    video: { icon: '|>', color: '#ef4444', en: 'videos', fr: 'vidéos' },
+    podcast: { icon: '))', color: '#a855f7', en: 'podcasts', fr: 'podcasts' },
+    book: { icon: '[]', color: '#f59e0b', en: 'books', fr: 'livres' }
+  };
+
+  const summaryParts = Object.entries(typeCounts)
+    .filter(([_, count]) => count > 0)
+    .map(([type, count]) => {
+      const info = typeLabels[type];
+      const label = currentLang === 'fr' ? info.fr : info.en;
+      return `<span class="summaryItem"><span class="summaryIcon" style="background:${info.color}">${info.icon}</span>${count} ${label}</span>`;
+    });
+
+  const introText = currentLang === 'fr'
+    ? 'Machina Research Network travaille actuellement sur'
+    : 'Machina Research Network is currently working on';
+
+  const summaryDiv = document.createElement('div');
+  summaryDiv.className = 'outputsSummary';
+  summaryDiv.innerHTML = `<p>${introText} ${summaryParts.join(', ')}.</p>`;
+  container.appendChild(summaryDiv);
 
   const activeTab = container.dataset.activeTab || categories[0]?.id || '';
 

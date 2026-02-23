@@ -26,11 +26,11 @@
           "id": "ipv",
           "pi": "Computation Law Team",
           "type": "software",
-          "year": 2026,
-          "descEN": "An interactive visualization mapping sentencing patterns across French departments. Explore three key metrics revealing regional disparities in criminal justice outcomes.",
-          "descFR": "Une visualisation interactive cartographiant les pratiques de condamnation à travers les départements français. Explorez trois indicateurs clés révélant les disparités régionales dans les résultats de la justice pénale.",
-          "metaEN": "Interactive departmental map · three metrics",
-          "metaFR": "Carte départementale interactive · trois indicateurs",
+          "year": null,
+          "descEN": "An interactive visualization mapping sentencing patterns across French departments. Explore key metrics revealing regional disparities in criminal justice outcomes.",
+          "descFR": "Une visualisation interactive cartographiant les pratiques de condamnation à travers les départements français. Explorez les indicateurs clés révélant les disparités régionales dans les résultats de la justice pénale.",
+          "metaEN": "The Geography of Sentencing in France",
+          "metaFR": "La Géographie du Contentieux Pénal en France",
           "actions": [
             {
               "url": "/geography-sentencing.html",
@@ -38,8 +38,9 @@
               "labelKey": "action_view"
             }
           ],
-          "titleEN": "The Geography of Sentencing in France",
-          "titleFR": "La Géographie du Contentieux Pénal en France"
+          "titleEN": "",
+          "titleFR": "",
+          "title": "FR-PENAL-MAP"
         },
         {
           "id": "kg2025",
