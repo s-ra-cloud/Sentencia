@@ -166,14 +166,14 @@
       "outputs": [
         {
           "id": "eep",
-          "pi": "",
+          "pi": "Epistemic Engineering Platform",
           "type": "software",
           "year": null,
           "title": "Future of Science Network",
           "descEN": "A Hub for Innovation in Academic Publishing.",
           "descFR": "Une plateforme collaborative pour l'innovation dans la publication académique.",
-          "metaEN": "Documentation · Platform",
-          "metaFR": "Documentation · Plateforme",
+          "metaEN": "",
+          "metaFR": "",
           "actions": [
             {
               "url": "https://fosn.1337.ma/home",
