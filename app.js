@@ -169,6 +169,7 @@ function renderDynamicContent() {
   renderFunding();
   renderProgram();
   renderOutputs();
+  renderWIP();
   applyLanguage(currentLang);
   hookRoutes();
 }
@@ -508,7 +509,11 @@ function renderOutputs() {
   if (existingContent) existingContent.remove();
   if (existingSummary) existingSummary.remove();
   
-  const categories = dynamicData.outputs.categories;
+  const allCategories = dynamicData.outputs.categories;
+  const categories = allCategories.map(cat => ({
+    ...cat,
+    outputs: cat.outputs.filter(o => o.year && o.year !== 'None' && o.year !== null)
+  })).filter(cat => cat.outputs.length > 0);
   const activeTab = container.dataset.activeTab || categories[0]?.id || '';
   
   const typeCounts = { software: 0, paper: 0, video: 0, podcast: 0, book: 0 };
@@ -712,6 +717,208 @@ function renderOutputs() {
   });
 }
 
+function renderWIP() {
+  if (!dynamicData.outputs) return;
+  const wipSection = document.getElementById('wip');
+  if (!wipSection) return;
+
+  const container = wipSection.querySelector('.container');
+  if (!container) return;
+
+  const existingTabs = container.querySelector('.teamTabs');
+  const existingContent = container.querySelector('.teamTabContent');
+  const existingTitle = container.querySelector('.h1');
+  if (existingTabs) existingTabs.remove();
+  if (existingContent) existingContent.remove();
+  if (existingTitle) existingTitle.remove();
+
+  const allCategories = dynamicData.outputs.categories;
+  const categories = allCategories.map(cat => ({
+    ...cat,
+    outputs: cat.outputs.filter(o => !o.year || o.year === 'None' || o.year === null)
+  })).filter(cat => cat.outputs.length > 0);
+
+  if (categories.length === 0) {
+    const emptyMsg = document.createElement('h1');
+    emptyMsg.className = 'h1';
+    emptyMsg.setAttribute('data-i18n', 'wip_title');
+    emptyMsg.textContent = currentLang === 'fr' ? 'Travaux en cours' : 'Work in Progress';
+    container.appendChild(emptyMsg);
+    return;
+  }
+
+  const titleEl = document.createElement('h1');
+  titleEl.className = 'h1';
+  titleEl.setAttribute('data-i18n', 'wip_title');
+  titleEl.textContent = currentLang === 'fr' ? 'Travaux en cours' : 'Work in Progress';
+  container.appendChild(titleEl);
+
+  const activeTab = container.dataset.activeTab || categories[0]?.id || '';
+
+  const tabsHtml = categories.map(cat => {
+    const label = currentLang === 'fr' ? (cat.titleFR || cat.titleEN) : cat.titleEN;
+    const isActive = cat.id === activeTab;
+    return `<button class="teamTab${isActive ? ' is-active' : ''}" data-tab="${cat.id}" type="button">${label}</button>`;
+  }).join('');
+
+  const tabsContainer = document.createElement('div');
+  tabsContainer.className = 'teamTabs';
+  tabsContainer.innerHTML = tabsHtml;
+  container.appendChild(tabsContainer);
+
+  const contentContainer = document.createElement('div');
+  contentContainer.className = 'teamTabContent';
+
+  const allMembers = dynamicData.members?.members || [];
+
+  categories.forEach(cat => {
+    const isActive = cat.id === activeTab;
+    const panelDiv = document.createElement('div');
+    panelDiv.className = `teamPanel${isActive ? ' is-active' : ''}`;
+    panelDiv.dataset.panel = cat.id;
+
+    const outputs = cat.outputs;
+
+    const teamDescData = dynamicData.teamDescriptions && dynamicData.teamDescriptions[cat.id];
+    const teamDesc = teamDescData ? (currentLang === 'fr' ? teamDescData.fr : teamDescData.en) : '';
+
+    const piCounts = {};
+    outputs.forEach(o => {
+      if (o.pi) {
+        const names = o.pi.split(/,|&/).map(n => n.trim()).filter(n => n);
+        names.forEach(name => {
+          const cleanName = name.replace(/\s*\([^)]*\)\s*/g, '').trim();
+          if (cleanName) {
+            piCounts[cleanName] = (piCounts[cleanName] || 0) + 1;
+          }
+        });
+      }
+    });
+
+    const sortedPIs = Object.entries(piCounts).sort((a, b) => b[1] - a[1]);
+    const coreThreshold = Math.max(2, Math.floor(outputs.length * 0.2));
+
+    const coreMembers = [];
+    const contributors = [];
+
+    sortedPIs.forEach(([name, count]) => {
+      const matchedMember = allMembers.find(m => {
+        const nameParts = name.toLowerCase().split(' ');
+        const memberParts = m.name.toLowerCase().split(' ');
+        return nameParts.some(p => memberParts.includes(p));
+      });
+
+      const memberInfo = { name, count, member: matchedMember };
+
+      if (count >= coreThreshold) {
+        coreMembers.push(memberInfo);
+      } else {
+        contributors.push(memberInfo);
+      }
+    });
+
+    const barsHtml = outputs.map(o => {
+      const titleAttr = o.titleKey ? `data-i18n="${o.titleKey}"` : '';
+      const descAttr = o.descKey ? `data-i18n="${o.descKey}"` : '';
+      const metaAttr = o.metaKey ? `data-i18n="${o.metaKey}"` : '';
+      const title = o.title || (currentLang === 'fr' ? (o.titleFR || o.titleEN) : o.titleEN) || '';
+      const desc = o.desc || (currentLang === 'fr' ? (o.descFR || o.descEN) : o.descEN) || '';
+      const meta = o.meta || (currentLang === 'fr' ? (o.metaFR || o.metaEN) : o.metaEN) || '';
+
+      const fileBtn = o.fileUrl ?
+        `<a class="actionBtn actionBtn--download" href="${o.fileUrl}" download="${o.fileName || 'download'}">${currentLang === 'fr' ? 'Télécharger' : 'Download'}</a>` : '';
+
+      const externalActions = (o.actions || []).map(a => {
+        if (a.type === 'route') {
+          return `<button class="actionBtn" data-route="${a.route}" type="button" data-i18n="${a.labelKey}">data</button>`;
+        } else {
+          return `<a class="actionBtn" href="${a.url}" rel="noreferrer" target="_blank" data-i18n="${a.labelKey}">link</a>`;
+        }
+      }).join('');
+
+      const actions = fileBtn + externalActions;
+
+      const typeIcons = {
+        software: { icon: '{}', color: '#3b82f6' },
+        paper: { icon: 'Aa', color: '#22c55e' },
+        video: { icon: '|>', color: '#ef4444' },
+        podcast: { icon: '))', color: '#a855f7' },
+        book: { icon: '[]', color: '#f59e0b' }
+      };
+      const typeInfo = typeIcons[o.type] || { icon: '?', color: '#64748b' };
+
+      const piDisplay = o.pi || '';
+      const wipLabel = currentLang === 'fr' ? 'En cours' : 'In progress';
+
+      return `
+        <div class="outputBar" data-year="0">
+          <div class="outputBar__year">
+            <span class="outputBar__wipBadge">${wipLabel}</span>
+            <span class="outputBar__type" style="background: ${typeInfo.color}" title="${o.type || 'unknown'}">${typeInfo.icon}</span>
+          </div>
+          <div class="outputBar__content">
+            <div class="outputBar__title" ${titleAttr}>${title}</div>
+            ${meta ? `<div class="outputBar__meta" ${metaAttr}>${meta}</div>` : ''}
+            ${piDisplay ? `<div class="outputBar__pi" style="color: ${typeInfo.color}">${piDisplay}</div>` : ''}
+            ${desc ? `<div class="outputBar__desc" ${descAttr}>${desc}</div>` : ''}
+          </div>
+          <div class="outputBar__actions" aria-label="Actions">${actions}</div>
+        </div>
+      `;
+    }).join('');
+
+    const teamMembersLabel = currentLang === 'fr' ? 'Membres de l\'équipe' : 'Team Members';
+    const externalLabel = currentLang === 'fr' ? 'Collaborateurs externes' : 'External Collaborators';
+    const outputsLabel = currentLang === 'fr' ? 'Projets en cours' : 'Ongoing Projects';
+
+    const allTeamMembers = [...coreMembers, ...contributors];
+
+    const internalMembers = allTeamMembers.filter(m => m.member && !m.member.external);
+    const externalMembers = allTeamMembers.filter(m => !m.member || m.member.external);
+
+    const renderMemberBadge = (m) => {
+      if (m.member) {
+        return `<span class="teamMemberBadge teamMemberBadge--linked" data-member-id="${m.member.id}">${m.name}</span>`;
+      }
+      return `<span class="teamMemberBadge">${m.name}</span>`;
+    };
+
+    const internalMembersHtml = internalMembers.length > 0 ?
+      `<div class="teamMembers"><h4>${teamMembersLabel}</h4><div class="teamMembersList">${internalMembers.map(renderMemberBadge).join('')}</div></div>` : '';
+
+    const externalMembersHtml = externalMembers.length > 0 ?
+      `<div class="teamMembers teamMembers--external"><h4>${externalLabel}</h4><div class="teamMembersList">${externalMembers.map(renderMemberBadge).join('')}</div></div>` : '';
+
+    const teamMembersHtml = internalMembersHtml + externalMembersHtml;
+
+    const descHtml = teamDesc ? `<div class="teamDescription">${teamDesc}</div>` : '';
+
+    panelDiv.innerHTML = `
+      ${descHtml}
+      ${teamMembersHtml}
+      <div class="teamOutputsSection">
+        <h4>${outputsLabel}</h4>
+        <div class="outputList">${barsHtml}</div>
+      </div>
+    `;
+    contentContainer.appendChild(panelDiv);
+  });
+
+  container.appendChild(contentContainer);
+
+  tabsContainer.addEventListener('click', (e) => {
+    const tab = e.target.closest('.teamTab');
+    if (!tab) return;
+    const tabId = tab.dataset.tab;
+    container.dataset.activeTab = tabId;
+    tabsContainer.querySelectorAll('.teamTab').forEach(t => t.classList.remove('is-active'));
+    tab.classList.add('is-active');
+    contentContainer.querySelectorAll('.teamPanel').forEach(p => p.classList.remove('is-active'));
+    const panel = contentContainer.querySelector(`.teamPanel[data-panel="${tabId}"]`);
+    if (panel) panel.classList.add('is-active');
+  });
+}
+
 function applyLanguage(lang){
   currentLang = lang;
   localStorage.setItem("lang", lang);
@@ -725,6 +932,7 @@ function applyLanguage(lang){
   const active = document.querySelector(`.langBtn[data-lang="${lang}"]`);
   if (active) active.classList.add("is-active");
   renderOutputs();
+  renderWIP();
   const narrativeEl = document.getElementById('fundingNarrative');
   if (narrativeEl) {
     narrativeEl.innerHTML = I18N[lang] && I18N[lang]['funding_narrative_en'] || '';

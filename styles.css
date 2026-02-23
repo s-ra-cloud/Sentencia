@@ -543,6 +543,14 @@ body{
   align-items: center;
   gap: 6px;
 }
+.outputBar__wipBadge{
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
 .outputBar__type{
   display: inline-flex;
   align-items: center;
