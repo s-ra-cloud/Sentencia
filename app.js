@@ -2,9 +2,11 @@ const I18N = {
   en: {
     nav_program: "Research Program",
     nav_projects: "Outputs",
+    nav_wip: "Work in Progress",
     nav_members: "Members",
     nav_funding: "Funding",
     projects_title: "Outputs",
+    wip_title: "Work in Progress",
     projects_show_more: "Show more",
     projects_show_less: "Show less",
     action_data: "data",
@@ -38,9 +40,11 @@ const I18N = {
   fr: {
     nav_program: "Programme de recherche",
     nav_projects: "Outputs",
+    nav_wip: "Travaux en cours",
     nav_members: "Membres",
     nav_funding: "Financement",
     projects_title: "Outputs",
+    wip_title: "Travaux en cours",
     projects_show_more: "Voir plus",
     projects_show_less: "Voir moins",
     action_data: "données",
