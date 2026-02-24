@@ -1,0 +1,9 @@
+node_modules/
+.pythonlibs/
+.cache/
+.config/
+.upm/
+uploads/
+attached_assets/
+*.pyc
+__pycache__/
