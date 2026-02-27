@@ -99,7 +99,7 @@ body{
 
 .brand{
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
   cursor: pointer;
   user-select: none;
@@ -108,6 +108,11 @@ body{
   flex-shrink: 0;
 }
 .brand:hover{ opacity: 1; }
+.brand__logo{
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+}
 
 .brand__name--short { display: none; }
 
