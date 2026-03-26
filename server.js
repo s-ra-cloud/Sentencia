@@ -93,15 +93,17 @@ async function initializeDatabase() {
     
     const keys = ['outputs', 'members', 'funding', 'program', 'partners', 'team_descriptions'];
     for (const key of keys) {
-      const filePath = path.join(__dirname, 'data', `${key}.json`);
-      if (fs.existsSync(filePath)) {
-        const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-        await client.query(
-          `INSERT INTO content (key, data, updated_at) VALUES ($1, $2, CURRENT_TIMESTAMP)
-           ON CONFLICT (key) DO UPDATE SET data = $2, updated_at = CURRENT_TIMESTAMP`,
-          [key, JSON.stringify(data)]
-        );
-        console.log(`Synced ${key} from JSON file`);
+      const existing = await client.query('SELECT 1 FROM content WHERE key = $1', [key]);
+      if (existing.rows.length === 0) {
+        const filePath = path.join(__dirname, 'data', `${key}.json`);
+        if (fs.existsSync(filePath)) {
+          const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+          await client.query(
+            `INSERT INTO content (key, data) VALUES ($1, $2)`,
+            [key, JSON.stringify(data)]
+          );
+          console.log(`Seeded ${key} from JSON file`);
+        }
       }
     }
   } finally {
