@@ -114,11 +114,8 @@ body{
   object-fit: contain;
 }
 
-.brand__name--short { display: none; }
-
 @media (max-width: 900px) {
   .brand__name--full { display: none; }
-  .brand__name--short { display: block; }
 }
 
 .nav__links{
