@@ -47,3 +47,7 @@ ADMIN_PASSWORD = "Trismegiste"
 [deployment]
 run = ["node", "server.js"]
 deploymentTarget = "autoscale"
+
+[postMerge]
+path = "scripts/post-merge.sh"
+timeoutMs = 60000
