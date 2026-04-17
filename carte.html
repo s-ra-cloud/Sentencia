@@ -9,6 +9,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/sentencia.css">
+<style>
+  .carte-page{padding:48px 0 80px}
+  .carte-wrap{max-width:1440px;margin:0 auto;padding:0 32px}
+  .carte-frame{
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    height:min(82vh,820px);
+    min-height:620px;
+  }
+  .carte-frame iframe{width:100%;height:100%;border:none;display:block;background:#fff}
+  .carte-info{
+    margin-top:32px;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  }
+  .carte-info > div{background:#fff;padding:24px 28px}
+  .carte-info h3{font-size:.85rem;font-family:var(--sans);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .carte-info p{font-size:.92rem;margin:0}
+  .carte-info a{color:var(--accent);border-bottom:1px solid var(--line-strong)}
+  @media (max-width:900px){
+    .carte-info{grid-template-columns:1fr}
+    .carte-frame{height:auto;min-height:0}
+    .carte-frame iframe{height:140vh;min-height:1000px}
+    .carte-wrap{padding:0 20px}
+  }
+</style>
 </head>
 <body data-page="carte">
 <div id="site-header"></div>
@@ -17,43 +46,59 @@
   <div class="container">
     <div class="crumbs"><a href="/">Accueil</a> &nbsp;/&nbsp; Carte interactive</div>
     <h1>Géographie des peines en France</h1>
-    <p>La carte interactive ci-dessous permet d’explorer la distribution territoriale des peines prononcées par les juridictions françaises. C’est l’objet central de Sentencia — tout le reste de la plateforme l’éclaire et le contextualise.</p>
+    <p>Explorez la distribution territoriale des décisions pénales : utilisez les filtres pour choisir une catégorie d’infraction et un indicateur, puis survolez la carte pour comparer les départements.</p>
   </div>
 </section>
 
-<div class="container">
-  <div class="map-layout">
-    <div class="map-frame">
-      <iframe src="/geography-sentencing.html" title="Carte interactive Sentencia" loading="lazy"></iframe>
+<section class="carte-page">
+  <div class="carte-wrap">
+    <div class="carte-frame">
+      <iframe id="mapFrame" src="/geography-sentencing.html#lang=fr" title="Carte interactive Sentencia" loading="lazy"></iframe>
     </div>
-    <aside class="map-side">
-      <div class="side-card">
-        <h3>Comment utiliser la carte</h3>
-        <p>Cliquez sur une juridiction pour afficher ses indicateurs. Comparez plusieurs ressorts en sélectionnant successivement plusieurs zones. Les filtres permettent d’ajuster le périmètre d’infractions et l’horizon temporel.</p>
+
+    <div class="carte-info">
+      <div>
+        <h3>Comment lire la carte</h3>
+        <p>Sélectionnez une catégorie d’infraction puis un indicateur. Les couleurs traduisent la position relative de chaque département dans la distribution nationale. Survolez ou cliquez sur un département pour afficher sa valeur précise.</p>
       </div>
-      <div class="side-card">
-        <h3>Indicateurs disponibles</h3>
-        <ul>
-          <li>Volume de décisions par juridiction</li>
-          <li>Part des peines privatives de liberté</li>
-          <li>Quantum moyen prononcé</li>
-          <li>Comparaison interrégionale</li>
-        </ul>
-      </div>
-      <div class="side-card note">
+      <div>
         <h3>Précautions d’interprétation</h3>
-        <p>Les indicateurs ne sauraient être interprétés isolément. Les écarts observés entre territoires reflètent des facteurs multiples (composition du contentieux, démographie, organisation judiciaire). Sentencia n’est pas un outil prédictif et ne classe pas les juridictions.</p>
-        <p style="margin-top:10px"><a href="/methodologie.html" class="btn btn-link" style="padding:0">Lire la méthodologie complète →</a></p>
+        <p>Les indicateurs sont descriptifs. Ils ne classent pas les juridictions et ne prédisent pas l’issue d’une affaire individuelle. Les écarts territoriaux reflètent une combinaison de facteurs (contentieux, démographie, organisation judiciaire) — voir <a href="/methodologie.html">la méthodologie</a>.</p>
       </div>
-      <div class="side-card">
+      <div>
         <h3>Sources</h3>
-        <p>Données issues notamment du Service statistique du Ministère de la Justice et de partenariats académiques. Le détail des sources et traitements est documenté.</p>
+        <p>Données issues du Service statistique du Ministère de la Justice (système d’information Cassiopée), agrégées au niveau départemental. Les sources et traitements sont documentés dans la <a href="/bibliographie.html">bibliographie</a>.</p>
       </div>
-    </aside>
+    </div>
   </div>
-</div>
+</section>
 
 <div id="site-footer"></div>
 <script src="/sentencia.js"></script>
+<script>
+  // Hide the embedded module's internal header bar so the map sits cleanly inside Sentencia
+  (function(){
+    const f = document.getElementById('mapFrame');
+    if(!f) return;
+    f.addEventListener('load', function(){
+      try{
+        const doc = f.contentDocument;
+        const win = f.contentWindow;
+        if(!doc) return;
+        const style = doc.createElement('style');
+        style.textContent = `
+          .header{display:none !important}
+          body{padding-top:0 !important}
+          .container,.layout,main{padding-top:0 !important;margin-top:0 !important}
+        `;
+        doc.head.appendChild(style);
+        // Force French language inside the embedded module
+        try { win.localStorage.setItem('lang','fr'); } catch(e){}
+        const frBtn = doc.getElementById('langFR');
+        if (frBtn) frBtn.click();
+      }catch(e){}
+    });
+  })();
+</script>
 </body>
 </html>
