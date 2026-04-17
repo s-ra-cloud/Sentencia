@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modèles — Sentencia</title>
+<meta name="description" content="Modèles d'analyse du sentencing : régressions, arbres de choix, apprentissage automatique. Un modèle interactif est en cours de développement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/sentencia.css">
+<style>
+  .model-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:8px}
+  .model-card{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    padding:32px;display:flex;flex-direction:column;gap:14px;position:relative;
+  }
+  .model-card .kicker{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:500}
+  .model-card h3{font-family:var(--serif);font-size:1.25rem;font-weight:500}
+  .model-card p{font-size:.95rem;margin:0}
+  .model-card ul{font-size:.92rem;color:var(--ink-soft);padding-left:18px;margin:4px 0 0}
+  .model-card li{margin-bottom:6px}
+  .model-card .ref{font-size:.82rem;color:var(--muted);font-style:italic;margin-top:auto}
+
+  .status-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:5px 12px;border-radius:999px;font-size:.75rem;
+    letter-spacing:.08em;text-transform:uppercase;font-weight:500;
+    width:fit-content;
+  }
+  .status-pill .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+  .status-established{background:#EEF2EC;color:#3F6B3F}
+  .status-progress{background:#FFF4DA;color:#8A6A1F}
+  .status-future{background:var(--bg-alt);color:var(--ink-soft)}
+
+  .progress-card{
+    border:1.5px dashed var(--gold);background:linear-gradient(180deg,#FFFCEF 0%,#FFFFFF 100%);
+    padding:40px;border-radius:8px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
+    margin:48px 0;
+  }
+  .progress-card h3{font-family:var(--serif);font-size:1.5rem;font-weight:500;margin-bottom:10px}
+  .progress-card p{font-size:1rem;max-width:62ch;margin-bottom:14px}
+  .progress-bar{
+    height:6px;background:var(--bg-alt);border-radius:3px;overflow:hidden;margin-top:14px;max-width:420px;
+  }
+  .progress-bar > span{display:block;height:100%;width:55%;background:var(--gold);border-radius:3px;transition:width .6s}
+  .progress-meta{font-size:.8rem;color:var(--muted);margin-top:8px;letter-spacing:.04em}
+
+  @media (max-width:900px){
+    .model-grid{grid-template-columns:1fr}
+    .progress-card{grid-template-columns:1fr;padding:28px}
+  }
+</style>
+</head>
+<body data-page="modeles">
+<div id="site-header"></div>
+
+<section class="page-header">
+  <div class="container">
+    <div class="crumbs"><a href="/">Accueil</a> &nbsp;/&nbsp; Modèles</div>
+    <h1>Modèles d’analyse du sentencing</h1>
+    <p>Sentencia s’appuie sur plusieurs familles de modèles statistiques et computationnels pour décrire et comparer les pratiques de sentencing. Cette page présente les approches mobilisées et celles en cours de développement.</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Approches mobilisées</span>
+      <h2>Quatre familles de modèles, complémentaires.</h2>
+      <p class="lead">Aucune méthode ne suffit, à elle seule, à décrire la décision pénale. Sentencia combine des approches descriptives, explicatives et exploratoires, en assumant les forces et limites de chacune.</p>
+    </div>
+
+    <div class="model-grid">
+      <article class="model-card">
+        <span class="status-pill status-established"><span class="dot"></span>Approche établie</span>
+        <span class="kicker">Modèle 01</span>
+        <h3>Régressions multivariées</h3>
+        <p>Estimation de l’influence de plusieurs variables (gravité de l’infraction, antécédents, profil du prévenu, juridiction…) sur la décision pénale, à travers des modèles linéaires ou logistiques.</p>
+        <ul>
+          <li>Lecture quantitative des facteurs explicatifs</li>
+          <li>Comparabilité des coefficients entre populations</li>
+          <li>Sensibilité aux variables omises et au choix des contrôles</li>
+        </ul>
+        <span class="ref">Cf. Raoult, S. (2022), <em>Jurimétrie</em> n°1 — comparaison régressions / arbres de choix.</span>
+      </article>
+
+      <article class="model-card">
+        <span class="status-pill status-established"><span class="dot"></span>Approche établie</span>
+        <span class="kicker">Modèle 02</span>
+        <h3>Arbres de choix &amp; modèles d’ensemble</h3>
+        <p>Apprentissage automatique non linéaire (arbres de décision, forêts aléatoires, gradient boosting) pour identifier les configurations de variables qui structurent la prise de décision.</p>
+        <ul>
+          <li>Captent des effets de seuil et d’interaction</li>
+          <li>Révèlent des « profils » de décisions</li>
+          <li>Interprétabilité requise pour un usage public</li>
+        </ul>
+        <span class="ref">Cf. Derbey &amp; Raoult (2018), <em>Faut-il avouer pour sortir de détention provisoire ?</em></span>
+      </article>
+
+      <article class="model-card">
+        <span class="status-pill status-established"><span class="dot"></span>Approche établie</span>
+        <span class="kicker">Modèle 03</span>
+        <h3>Statistiques descriptives territoriales</h3>
+        <p>Indicateurs agrégés au niveau du département ou du ressort, comparés à la distribution nationale. C’est l’approche qui sous-tend la carte interactive de Sentencia.</p>
+        <ul>
+          <li>Lecture immédiate, accessible au grand public</li>
+          <li>Comparaisons inter-juridictions ajustables</li>
+          <li>Ne traduit pas, en soi, des relations causales</li>
+        </ul>
+        <span class="ref">Source : SSMJ — Service statistique du Ministère de la Justice.</span>
+      </article>
+
+      <article class="model-card">
+        <span class="status-pill status-established"><span class="dot"></span>Approche établie</span>
+        <span class="kicker">Modèle 04</span>
+        <h3>Extraction d’information sur décisions</h3>
+        <p>Méthodes de traitement automatique de la langue appliquées aux décisions de justice pour structurer les motivations, les peines et les facteurs cités, dans une perspective descriptive.</p>
+        <ul>
+          <li>Constitution de corpus exploitables</li>
+          <li>Mesure de la stabilité des motivations</li>
+          <li>Limites techniques et théoriques documentées</li>
+        </ul>
+        <span class="ref">Cf. Barnier, Jeandidier &amp; Sayn (2022), <em>Jurimétrie</em> n°1.</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    <div class="progress-card">
+      <div>
+        <span class="status-pill status-progress"><span class="dot"></span>En cours de développement</span>
+        <h3 style="margin-top:14px">Modèle interactif de sentencing</h3>
+        <p>Nous travaillons à un module interactif permettant d’explorer, à partir des données publiques, comment différents facteurs sont associés aux décisions pénales. L’outil sera conçu comme un instrument pédagogique et de recherche — strictement descriptif, jamais prédictif à l’échelle individuelle.</p>
+        <ul style="font-size:.92rem;color:var(--ink-soft);padding-left:18px;margin:6px 0 0">
+          <li>Sélection de variables et visualisation immédiate des associations</li>
+          <li>Comparaison entre territoires, périodes et profils de contentieux</li>
+          <li>Documentation transparente des hypothèses et des limites</li>
+        </ul>
+        <div class="progress-bar" aria-hidden="true"><span></span></div>
+        <div class="progress-meta">Progression du prototype · ouverture publique prévue ultérieurement</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+        <a href="/feuille-de-route.html" class="btn btn-ghost">Voir la feuille de route</a>
+        <a href="/methodologie.html" class="btn btn-link">Lire la méthodologie →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight" style="padding-bottom:96px">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Principes communs</span>
+      <h2>Une éthique de modélisation explicite.</h2>
+    </div>
+    <div class="grid-3">
+      <article class="feature">
+        <span class="num">↳ Transparence</span>
+        <h3>Modèles documentés</h3>
+        <p>Chaque modèle est associé à une fiche méthodologique : variables, périmètre, traitements, limites.</p>
+      </article>
+      <article class="feature">
+        <span class="num">↳ Prudence</span>
+        <h3>Aucun usage prédictif individuel</h3>
+        <p>Sentencia ne fournit pas et ne fournira pas d’outil de prédiction d’issue d’une affaire individuelle.</p>
+      </article>
+      <article class="feature">
+        <span class="num">↳ Reproductibilité</span>
+        <h3>Code et données ouverts</h3>
+        <p>Les méthodes seront publiées sous licences libres dès qu’elles atteignent un niveau de maturité suffisant.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="/sentencia.js"></script>
+</body>
+</html>
