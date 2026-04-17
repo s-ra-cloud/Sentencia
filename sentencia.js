@@ -56,7 +56,7 @@
         <div>
           <h4>Projet</h4>
           <a href="/mentions-legales.html">Mentions & éthique</a>
-          <a href="mailto:contact@sentencia.fr">Contact</a>
+          <a href="mailto:sacha.raoult@univ-amu.fr">Contact</a>
           <a href="https://github.com/" target="_blank" rel="noopener">Code source (à venir)</a>
         </div>
       </div>
