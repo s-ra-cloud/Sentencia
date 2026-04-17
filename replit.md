@@ -122,3 +122,17 @@ Preferred communication style: Simple, everyday language.
 ### Static Assets Required
 - `hero.mp4`: Hero section background video
 - Member photos referenced in members data (expected in static directory)
+## Sentencia (April 2026)
+
+The root site (`index.html`) has been replaced with **Sentencia**, a French-language public-interest platform dedicated exclusively to the interactive sentencing geography module. The previous Machina Research Network site is preserved at `/machina.html` (admin still at `/admin.html`).
+
+### Sentencia file structure
+- `index.html` – Landing page (hero, mission, what the map allows, audiences, values, roadmap preview, partners, resources)
+- `carte.html` – Central map page; iframes the existing `geography-sentencing.html` module with side panels (usage, indicators, interpretation, sources)
+- `methodologie.html`, `feuille-de-route.html`, `faq.html`, `presse.html`, `bibliographie.html`, `mentions-legales.html`
+- `sentencia.css` – Shared design system (sober/institutional, serif headlines + Inter body, navy/gold accents)
+- `sentencia.js` – Injects shared `<header>` and `<footer>` into every page (slot pattern: `<div id="site-header">` / `<div id="site-footer">`)
+- `sentencia-assets/` – Hero illustration and downloadable bibliography PDFs (served via Express static)
+
+### Adding bibliography PDFs
+Drop the file into `sentencia-assets/pdfs/` and add a new `<a class="card" href="/sentencia-assets/pdfs/FILE.pdf">` block under the appropriate category in `bibliographie.html`.

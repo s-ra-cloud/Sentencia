@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carte interactive — Sentencia</title>
+<meta name="description" content="Carte interactive de la géographie des peines en France — explorer, comparer et interpréter les pratiques de sentencing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/sentencia.css">
+</head>
+<body data-page="carte">
+<div id="site-header"></div>
+
+<section class="page-header">
+  <div class="container">
+    <div class="crumbs"><a href="/">Accueil</a> &nbsp;/&nbsp; Carte interactive</div>
+    <h1>Géographie des peines en France</h1>
+    <p>La carte interactive ci-dessous permet d’explorer la distribution territoriale des peines prononcées par les juridictions françaises. C’est l’objet central de Sentencia — tout le reste de la plateforme l’éclaire et le contextualise.</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="map-layout">
+    <div class="map-frame">
+      <iframe src="/geography-sentencing.html" title="Carte interactive Sentencia" loading="lazy"></iframe>
+    </div>
+    <aside class="map-side">
+      <div class="side-card">
+        <h3>Comment utiliser la carte</h3>
+        <p>Cliquez sur une juridiction pour afficher ses indicateurs. Comparez plusieurs ressorts en sélectionnant successivement plusieurs zones. Les filtres permettent d’ajuster le périmètre d’infractions et l’horizon temporel.</p>
+      </div>
+      <div class="side-card">
+        <h3>Indicateurs disponibles</h3>
+        <ul>
+          <li>Volume de décisions par juridiction</li>
+          <li>Part des peines privatives de liberté</li>
+          <li>Quantum moyen prononcé</li>
+          <li>Comparaison interrégionale</li>
+        </ul>
+      </div>
+      <div class="side-card note">
+        <h3>Précautions d’interprétation</h3>
+        <p>Les indicateurs ne sauraient être interprétés isolément. Les écarts observés entre territoires reflètent des facteurs multiples (composition du contentieux, démographie, organisation judiciaire). Sentencia n’est pas un outil prédictif et ne classe pas les juridictions.</p>
+        <p style="margin-top:10px"><a href="/methodologie.html" class="btn btn-link" style="padding:0">Lire la méthodologie complète →</a></p>
+      </div>
+      <div class="side-card">
+        <h3>Sources</h3>
+        <p>Données issues notamment du Service statistique du Ministère de la Justice et de partenariats académiques. Le détail des sources et traitements est documenté.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+<script src="/sentencia.js"></script>
+</body>
+</html>
