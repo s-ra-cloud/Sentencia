@@ -10,6 +10,107 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/sentencia.css">
 <style>
+  .beta-banner{
+    background:#EBF2FF;border-bottom:1px solid #C1D6F5;
+    padding:13px 32px;display:flex;align-items:flex-start;gap:12px;
+  }
+  .beta-banner .icon{flex-shrink:0;width:18px;height:18px;margin-top:1px;color:#1F5FA6}
+  .beta-banner p{font-size:.92rem;color:#1A3F6F;margin:0}
+  .beta-banner strong{font-weight:600}
+  .beta-banner a{color:#1F5FA6;text-decoration:underline;text-underline-offset:2px}
+
+  /* Prototype */
+  .proto-wrap{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    display:grid;grid-template-columns:minmax(320px,380px) 1fr;gap:0;
+    overflow:hidden;margin-top:24px;
+  }
+  .proto-controls{
+    padding:32px;border-right:1px solid var(--line);background:#FAF8F3;
+    display:flex;flex-direction:column;gap:22px;
+  }
+  .proto-section-title{
+    font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin-bottom:10px;
+  }
+  .proto-field{display:flex;flex-direction:column;gap:6px}
+  .proto-field label{font-size:.85rem;font-weight:500;color:var(--ink)}
+  .proto-field select,.proto-field .seg{
+    font-family:var(--sans);font-size:.92rem;
+    padding:9px 12px;border:1px solid var(--line-strong);
+    border-radius:6px;background:#fff;color:var(--ink);
+    appearance:none;cursor:pointer;
+  }
+  .proto-field select:focus{outline:2px solid var(--gold);outline-offset:1px}
+  .seg{display:flex;padding:3px;gap:3px;background:var(--bg-alt);border:1px solid var(--line)}
+  .seg button{
+    flex:1;background:transparent;border:none;padding:7px 10px;
+    font:inherit;color:var(--ink-soft);border-radius:4px;cursor:pointer;
+    font-size:.88rem;
+  }
+  .seg button.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.06);font-weight:500}
+
+  .locked-list{
+    display:flex;flex-direction:column;gap:8px;margin-top:4px;
+  }
+  .locked-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:10px 12px;background:#fff;border:1px dashed var(--line);
+    border-radius:6px;color:var(--muted);font-size:.86rem;
+  }
+  .locked-row .lbl{display:flex;align-items:center;gap:8px}
+  .locked-row svg{width:13px;height:13px;color:var(--muted)}
+  .locked-row .pill{
+    font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--muted);background:var(--bg-alt);
+    padding:3px 8px;border-radius:999px;font-weight:500;
+  }
+
+  .proto-output{padding:32px;display:flex;flex-direction:column;gap:20px;background:#fff}
+  .proto-summary{
+    font-size:.92rem;color:var(--ink-soft);
+    padding:14px 16px;background:var(--bg-alt);border-radius:6px;
+    border-left:3px solid var(--gold);
+  }
+  .proto-summary strong{color:var(--ink);font-weight:600}
+  .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .metric{
+    border:1px solid var(--line);border-radius:6px;padding:18px 20px;
+    background:#fff;display:flex;flex-direction:column;gap:6px;
+  }
+  .metric .label{
+    font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:500;
+  }
+  .metric .val{
+    font-family:var(--serif);font-size:1.7rem;font-weight:500;color:var(--ink);
+    line-height:1.1;
+  }
+  .metric .unit{font-size:.85rem;color:var(--muted);font-family:var(--sans);margin-left:4px}
+  .metric .hint{font-size:.78rem;color:var(--muted)}
+  .metric.placeholder{background:repeating-linear-gradient(135deg,#FAF8F3 0 8px,#fff 8px 16px);border-style:dashed}
+  .metric.placeholder .val{color:var(--muted);font-family:var(--sans);font-size:2rem}
+
+  .proto-context{
+    border-top:1px solid var(--line);padding-top:16px;
+    font-size:.86rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:6px;
+  }
+  .proto-context .ctx-row{display:flex;justify-content:space-between;gap:12px}
+  .proto-context .ctx-row span:last-child{color:var(--ink);font-weight:500}
+
+  .ethics-note{
+    font-size:.82rem;color:var(--muted);font-style:italic;
+    padding:14px 16px;border:1px solid var(--line);border-radius:6px;
+    background:#FFFCEF;
+  }
+
+  @media (max-width:900px){
+    .proto-wrap{grid-template-columns:1fr}
+    .proto-controls{border-right:none;border-bottom:1px solid var(--line)}
+    .metric-grid{grid-template-columns:1fr}
+  }
+
   .model-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:8px}
   .model-card{
     background:#fff;border:1px solid var(--line);border-radius:var(--radius);
@@ -55,11 +156,93 @@
 <body data-page="modeles">
 <div id="site-header"></div>
 
+<div class="beta-banner" role="note" aria-label="Version bêta">
+  <svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+    <circle cx="10" cy="10" r="8.5"/>
+    <path d="M10 9v4.5M10 6.5v.5" stroke-linecap="round"/>
+  </svg>
+  <p><strong>Version bêta.</strong> Ce prototype est dérivé des données actuellement publiées sur la carte. Les variables disponibles, les indicateurs statistiques et la précision du modèle évolueront au fil des prochaines versions. Pour toute incohérence ou suggestion : <a href="mailto:sacha.raoult@univ-amu.fr">sacha.raoult@univ-amu.fr</a>.</p>
+</div>
+
 <section class="page-header">
   <div class="container">
     <div class="crumbs"><a href="/">Accueil</a> &nbsp;/&nbsp; Modèles</div>
     <h1>Modèles d’analyse du sentencing</h1>
     <p>Sentencia s’appuie sur plusieurs familles de modèles statistiques et computationnels pour décrire et comparer les pratiques de sentencing. Cette page présente les approches mobilisées et celles en cours de développement.</p>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Prototype interactif</span>
+      <h2>Premier modèle exploratoire — données de la carte.</h2>
+      <p class="lead">Ce module est un prototype de modèle dérivé directement des données publiées sur la carte. Il permet de visualiser, à titre <strong>strictement descriptif</strong>, les indicateurs observés pour un département, une catégorie d’infraction et un statut de récidive. Il ne constitue en aucun cas un outil de prédiction d’une décision pénale individuelle.</p>
+    </div>
+
+    <div class="proto-wrap">
+      <div class="proto-controls">
+        <div>
+          <div class="proto-section-title">Variables actives</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="proto-field">
+              <label for="proto-dept">Département</label>
+              <select id="proto-dept" aria-label="Département"><option>Chargement…</option></select>
+            </div>
+            <div class="proto-field">
+              <label for="proto-offense">Catégorie d’infraction</label>
+              <select id="proto-offense" aria-label="Catégorie d’infraction"></select>
+            </div>
+            <div class="proto-field">
+              <label>Statut de récidive</label>
+              <div class="seg" id="proto-recidive" role="tablist">
+                <button type="button" class="active" data-val="primaire" role="tab" aria-selected="true">Primaire</button>
+                <button type="button" data-val="recidive" role="tab" aria-selected="false">Récidive légale</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="proto-section-title">Variables prévues — verrouillées</div>
+          <div class="locked-list" aria-label="Variables non disponibles dans cette version">
+            <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Garanties de représentation</span><span class="pill">v2</span></div>
+            <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Âge du prévenu</span><span class="pill">v2</span></div>
+            <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Genre</span><span class="pill">v2</span></div>
+            <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Antécédents judiciaires</span><span class="pill">v2</span></div>
+            <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Profession &amp; situation</span><span class="pill">v3</span></div>
+            <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Type de tribunal</span><span class="pill">v3</span></div>
+            <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Mode de comparution</span><span class="pill">v3</span></div>
+            <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Présence d’un avocat</span><span class="pill">v3</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proto-output">
+        <div class="proto-summary" id="proto-summary">Sélectionnez un département et une infraction pour afficher les indicateurs observés.</div>
+
+        <div class="metric-grid">
+          <div class="metric"><span class="label">Peine moyenne (département, toutes infractions)</span><span class="val"><span id="m-avg-sent">—</span><span class="unit">mois</span></span><span class="hint">Durée moyenne des peines d’emprisonnement ferme prononcées dans le département.</span></div>
+          <div class="metric"><span class="label">Durée moyenne de la peine (infraction)</span><span class="val"><span id="m-avg-len">—</span><span class="unit">mois</span></span><span class="hint">Pour la catégorie d’infraction sélectionnée, dans ce département.</span></div>
+          <div class="metric"><span class="label">Probabilité de prison ferme (infraction)</span><span class="val"><span id="m-prob">—</span><span class="unit">%</span></span><span class="hint">Part des condamnations donnant lieu à une peine d’emprisonnement ferme.</span></div>
+          <div class="metric"><span class="label">Taux d’emprisonnement ferme (département)</span><span class="val"><span id="m-share">—</span><span class="unit">%</span></span><span class="hint">Part globale des condamnations menant à une peine ferme dans le département.</span></div>
+          <div class="metric placeholder"><span class="label">Écart-type de la peine</span><span class="val">?</span><span class="hint">Indicateur de dispersion — disponible dans une version ultérieure.</span></div>
+          <div class="metric placeholder"><span class="label">Taux d’erreur du modèle</span><span class="val">?</span><span class="hint">Indicateur de fiabilité — disponible dans une version ultérieure.</span></div>
+        </div>
+
+        <div class="proto-context">
+          <div class="ctx-row"><span>Taux de récidive légale observé (infraction × département)</span><span id="ctx-rec">—</span></div>
+          <div class="ctx-row"><span>Nombre d’affaires poursuivies / 100 000 habitants</span><span id="ctx-prosec">—</span></div>
+          <div class="ctx-row"><span>Sévérité résiduelle (z-score, vs national)</span><span id="ctx-sev">—</span></div>
+          <div id="ctx-recidive-extra" style="display:none;flex-direction:column;gap:6px;border-top:1px dashed var(--line);margin-top:6px;padding-top:10px">
+            <div class="ctx-row"><span>Résidu — taux d’emprisonnement (récidive, spécifique)</span><span id="ctx-resid-rate">—</span></div>
+            <div class="ctx-row"><span>Résidu — durée d’emprisonnement (récidive, spécifique)</span><span id="ctx-resid-len">—</span></div>
+          </div>
+        </div>
+
+        <div class="ethics-note">Ce prototype est <strong>strictement descriptif</strong> et fondé sur des moyennes départementales agrégées (source : SSMJ). Toutes les valeurs principales sont des lectures directes du jeu de données publié sur la carte ; aucune transformation n’est appliquée. Le sélecteur de récidive révèle les indicateurs résiduels observés dans les données — il ne génère aucune prédiction de peine et ne reflète pas la décision attendue dans une affaire individuelle.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -178,5 +361,124 @@
 
 <div id="site-footer"></div>
 <script src="/sentencia.js"></script>
+<script>
+(function(){
+  const OFFENSES = [
+    {key:"1. Conduite avec alcool ou stupéfiants", short:"Conduite alcool / stupéfiants"},
+    {key:"2. Vols aggravés", short:"Vols aggravés"},
+    {key:"3. Vols simples", short:"Vols simples"},
+    {key:"4. Infractions à la police des étrangers", short:"Police des étrangers"},
+    {key:"5. Infractions à la législation sur les stupéfiants", short:"Législation stupéfiants"},
+    {key:"6. Violences sexuelles", short:"Violences sexuelles"},
+    {key:"8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique", short:"Outrage & rébellion"},
+    {key:"VIF", short:"Violences intra-familiales"}
+  ];
+
+  const fNum = s => (!s||s==='NA'||s.trim()==='') ? null : parseFloat(s.replace(',','.'));
+  const fmt = (v,d=1) => v==null||isNaN(v) ? '—' : v.toLocaleString('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d});
+
+  let rows = []; // {dept, fields:{}}
+  let recidive = 'primaire';
+
+  const $dept = document.getElementById('proto-dept');
+  const $off  = document.getElementById('proto-offense');
+  const $sum  = document.getElementById('proto-summary');
+
+  // populate offense dropdown immediately
+  $off.innerHTML = OFFENSES.map(o=>`<option value="${o.key}">${o.short}</option>`).join('');
+
+  fetch('/data/VIF.csv').then(r=>r.text()).then(text=>{
+    const lines = text.trim().split('\n').filter(l=>l.replace(/;/g,'').trim()!=='');
+    if(lines.length<2) return;
+    const headers = lines[0].split(';').map(h=>h.replace(/^\uFEFF/,'').trim());
+    rows = lines.slice(1).map(line=>{
+      const cells = line.split(';');
+      const o = {};
+      headers.forEach((h,i)=>{ o[h]=cells[i]!==undefined?cells[i]:''; });
+      return o;
+    }).filter(r => r['Département'] && r['Département'].trim());
+
+    // sort dept by name
+    rows.sort((a,b)=>a['Département'].localeCompare(b['Département'],'fr'));
+    $dept.innerHTML = rows.map((r,i)=>`<option value="${i}">${r['Département']}</option>`).join('');
+    update();
+  }).catch(e=>{
+    $sum.textContent = "Impossible de charger les données pour le moment.";
+  });
+
+  function get(row, prefix, offenseKey){
+    const col = `${prefix} (${offenseKey})`;
+    return fNum(row[col]);
+  }
+
+  function update(){
+    if(!rows.length) return;
+    const row = rows[parseInt($dept.value,10)||0];
+    const off = $off.value;
+    const offShort = (OFFENSES.find(o=>o.key===off)||{}).short || off;
+    const isRec = recidive==='recidive';
+
+    // Base values from CSV
+    const avgSent   = fNum(row['Durée moy. emprisonnement ferme']);          // dept overall (mois)
+    const avgLen    = get(row, 'Durée moy. emp. ferme', off);                 // offense × dept (mois)
+    const probPrison= get(row, 'Taux emp. ferme / conda', off);              // % custodial for offense
+    const shareGlob = fNum(row['Taux emprisonnement ferme global']);          // dept-wide %
+    const recRate   = get(row, 'Taux récidive légale', off);                  // %
+    const prosec    = get(row, 'Taux poursuivis / 100k', off);
+    const sevResid  = get(row, 'Sévérité résiduelle', off);
+
+    // The four headline metrics are *direct* readouts from VIF.csv — no transformation.
+    // The recidivism selector does NOT modify them: it would be pseudo-predictive.
+    // Instead, when "récidive légale" is selected, we surface in the contextual area
+    // the residual indicators observed in the data (Taux emp. résiduel récidive
+    // spécifique, Durée rés. récidive spécifique), which describe how this dept
+    // departs from the national pattern after accounting for legal recidivism.
+    document.getElementById('m-avg-sent').textContent = fmt(avgSent,1);
+    document.getElementById('m-avg-len').textContent  = fmt(avgLen,1);
+    document.getElementById('m-prob').textContent     = fmt(probPrison,1);
+    document.getElementById('m-share').textContent    = fmt(shareGlob,1);
+
+    // Contextual indicators
+    const ctxRec    = document.getElementById('ctx-rec');
+    const ctxProsec = document.getElementById('ctx-prosec');
+    const ctxSev    = document.getElementById('ctx-sev');
+    ctxRec.textContent    = recRate!=null ? fmt(recRate,1)+' %' : '—';
+    ctxProsec.textContent = prosec!=null ? fmt(prosec,1) : '—';
+    ctxSev.textContent    = sevResid!=null ? (sevResid>=0?'+':'')+fmt(sevResid,2) : '—';
+
+    // Toggle extra residual rows when récidive is selected
+    const residRate = get(row, 'Taux emp. résiduel récidive spécifique', off);
+    const residLen  = get(row, 'Durée rés. récidive spécifique', off);
+    const extra = document.getElementById('ctx-recidive-extra');
+    if(isRec){
+      extra.style.display = '';
+      document.getElementById('ctx-resid-rate').textContent =
+        residRate!=null ? (residRate>=0?'+':'')+fmt(residRate,2) : '—';
+      document.getElementById('ctx-resid-len').textContent =
+        residLen !=null ? (residLen >=0?'+':'')+fmt(residLen,2)+' mois' : '—';
+    } else {
+      extra.style.display = 'none';
+    }
+
+    const recNote = isRec
+      ? ' Les indicateurs résiduels affichés ci-dessous décrivent l’écart observé dans la régression locale liée à la récidive légale ; aucun ajustement n’est appliqué aux quatre indicateurs principaux.'
+      : '';
+    $sum.innerHTML = `Indicateurs observés pour <strong>${row['Département']}</strong> · <strong>${offShort}</strong> · statut <strong>${isRec?'récidive légale':'primaire'}</strong>.${recNote}`;
+  }
+
+  $dept.addEventListener('change', update);
+  $off.addEventListener('change', update);
+  document.querySelectorAll('#proto-recidive button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#proto-recidive button').forEach(b=>{
+        b.classList.remove('active'); b.setAttribute('aria-selected','false');
+      });
+      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+      recidive = btn.dataset.val;
+      update();
+    });
+  });
+})();
+</script>
 </body>
 </html>
