@@ -8,46 +8,225 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://d3js.org/d3.v7.min.js"></script>
 <link rel="stylesheet" href="/sentencia.css">
 <style>
+  /* ── Beta banner ── */
   .beta-banner{
     background:#EBF2FF;border-bottom:1px solid #C1D6F5;
     padding:13px 32px;display:flex;align-items:flex-start;gap:12px;
   }
-  .beta-banner .icon{
-    flex-shrink:0;width:18px;height:18px;margin-top:1px;
-    color:#1F5FA6;
-  }
+  .beta-banner .icon{flex-shrink:0;width:18px;height:18px;margin-top:1px;color:#1F5FA6}
   .beta-banner p{font-size:.92rem;color:#1A3F6F;margin:0}
   .beta-banner strong{font-weight:600}
   .beta-banner a{color:#1F5FA6;text-decoration:underline;text-underline-offset:2px}
 
-  .carte-page{padding:0 0 80px}
-  .carte-wrap{max-width:100%;margin:0;padding:0}
-  .carte-frame{
-    width:100%;
-    height:min(88vh,900px);
-    min-height:640px;
-    overflow:hidden;
-    border-top:1px solid var(--line);
-    border-bottom:1px solid var(--line);
-  }
-  .carte-frame iframe{width:100%;height:100%;border:none;display:block;background:#fff}
+  /* ── Info cards below map ── */
   .carte-info{
     max-width:var(--max);
-    margin:40px auto 0;
+    margin:40px auto 80px;
     padding:0 32px;
     display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
     background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;
   }
-  .carte-info > div{background:#fff;padding:24px 28px}
+  .carte-info > div{background:var(--bg);padding:24px 28px}
   .carte-info h3{font-size:.85rem;font-family:var(--sans);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
   .carte-info p{font-size:.92rem;margin:0}
   .carte-info a{color:var(--accent);border-bottom:1px solid var(--line-strong)}
-  @media (max-width:900px){
-    .carte-info{grid-template-columns:1fr;margin:24px 16px 0}
-    .carte-frame{height:auto;min-height:0}
-    .carte-frame iframe{height:140vh;min-height:1000px}
+
+  /* ── Map CSS (from geography-sentencing.html, adapted) ── */
+
+    :root {
+      --bg: #FAFAF6;
+      --card-bg: #ffffff;
+      --text: #1a1a1a;
+      --text-muted: #666666;
+      --accent: #2563eb;
+      --border: #e5e5e5;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    .main {
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      height: min(88vh, 900px);
+    }
+    
+    .sidebar {
+      background: var(--card-bg);
+      border-right: 1px solid var(--border);
+      padding: 1rem 1.25rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .sidebar__content {
+      flex: 1;
+      overflow-y: auto;
+    }
+    
+    .sidebar__title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    
+    .sidebar__section {
+      margin-bottom: 0.5rem;
+    }
+    
+    .sidebar__heading {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+    
+    .sidebar__text {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    
+    .sidebar__select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.8rem;
+      background: white;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+    
+    .sidebar__select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    
+    .mapContainer {
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    #map {
+      background: white;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .tooltip {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 6px;
+      pointer-events: none;
+      opacity: 0;
+      font-size: 0.875rem;
+      max-width: 280px;
+      z-index: 1000;
+    }
+    
+    .tooltip__name {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    
+    .tooltip__value {
+      color: #ccc;
+    }
+    
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: auto;
+      padding-top: 1rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+    
+    .legend__bar {
+      width: 120px;
+      height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    
+    .legend__label {
+      font-size: 0.65rem;
+    }
+    
+    .sidebar__controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    
+    .sidebar__btn {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: white;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .sidebar__btn:hover {
+      border-color: var(--text);
+    }
+    
+    .sidebar__btn.active {
+      background: var(--text);
+      color: white;
+      border-color: var(--text);
+    }
+    
+    @media (max-width: 900px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+  
+  /* ── Sentencia overrides for the map embed ── */
+  .main{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .sidebar{background:var(--bg)}
+  .sidebar__select{background:var(--bg)}
+  .sidebar__btn{background:var(--bg)}
+
+  @media(max-width:900px){
+    .carte-info{grid-template-columns:1fr;margin:24px 16px 60px}
+    .main{height:auto !important}
+    .sidebar{max-height:50vh}
   }
 </style>
 </head>
@@ -59,64 +238,887 @@
     <circle cx="10" cy="10" r="8.5"/>
     <path d="M10 9v4.5M10 6.5v.5" stroke-linecap="round"/>
   </svg>
-  <p><strong>Version bêta.</strong> Cette carte est en cours de développement. Si vous constatez une valeur incohérente, un indicateur erroné ou un problème d'affichage, merci de nous le signaler à <a href="mailto:sacha.raoult@univ-amu.fr">sacha.raoult@univ-amu.fr</a> en précisant le département et l'indicateur concernés. Votre retour est précieux.</p>
+  <p><strong>Version bêta.</strong> Cette carte est en cours de développement. Si vous constatez une valeur incohérente, un indicateur erroné ou un problème d’affichage, merci de nous le signaler à <a href="mailto:sacha.raoult@univ-amu.fr">sacha.raoult@univ-amu.fr</a> en précisant le département et l’indicateur concernés. Votre retour est précieux.</p>
 </div>
 
 <section class="page-header">
   <div class="container">
     <div class="crumbs"><a href="/">Accueil</a> &nbsp;/&nbsp; Carte interactive</div>
     <h1>Géographie des peines en France</h1>
-    <p>Explorez la distribution territoriale des décisions pénales : utilisez les filtres pour choisir une catégorie d’infraction et un indicateur, puis survolez la carte pour comparer les départements.</p>
+    <p>Explorez la distribution territoriale des décisions pénales : utilisez les filtres pour choisir une catégorie d’infraction et un indicateur, puis survolez la carte pour comparer les départements.</p>
   </div>
 </section>
 
-<section class="carte-page">
-  <div class="carte-frame">
-    <iframe id="mapFrame" src="/geography-sentencing.html#lang=fr" title="Carte interactive Sentencia" loading="lazy"></iframe>
+<!-- ══ Integrated map (no iframe) ══ -->
+<main class="main">
+<aside class="sidebar">
+      <h1 class="sidebar__title" data-i18n="geo_title">The Geography of Sentencing in France</h1>
+      
+      <div class="sidebar__section">
+        <h2 class="sidebar__heading" data-i18n="geo_about_heading">About This Map</h2>
+        <p class="sidebar__text" data-i18n="geo_about_text">This map represents judicial outcomes at the departmental level, not crime prevalence or reported offences. The visualization uses administrative sentencing data aggregated by department, with colors indicating relative sentencing severity within the national distribution. This visualization is based exclusively on data aggregated at the departmental level. It cannot in any way be used to identify or evaluate an individual judge.</p>
+      </div>
+      
+      <div class="sidebar__section">
+        <h2 class="sidebar__heading" data-i18n="geo_data_heading">Data Sources</h2>
+        <p class="sidebar__text" data-i18n="geo_data_text">The judicial data come from the criminal litigation mapping produced by the Statistical Service of the Ministry of Justice, based on the Cassiopée information system. The data cover convictions handed down by first-instance criminal courts for adult defendants.</p>
+      </div>
+      
+      <div class="sidebar__section">
+        <h2 class="sidebar__heading" data-i18n="geo_offence_heading">Offence Category</h2>
+        <select class="sidebar__select" id="offenceSelect">
+          <option value="general">General Information</option>
+          <option value="cat1">Driving under Alcohol/Drugs</option>
+          <option value="cat2">Aggravated Theft</option>
+          <option value="cat3">Simple Theft</option>
+          <option value="cat4">Immigration Offences</option>
+          <option value="cat5">Drug Offences</option>
+          <option value="cat6">Sexual Violence</option>
+          <option value="ipv">Intimate Partner Violence (IPV)</option>
+          <option value="cat8">Contempt &amp; Violence against Authority</option>
+        </select>
+      </div>
+      
+      <div class="sidebar__section">
+        <h2 class="sidebar__heading" data-i18n="geo_indicator_heading">Indicator</h2>
+        <select class="sidebar__select" id="indicatorSelect">
+        </select>
+        <p class="indicator-description" id="indicatorDescription" style="margin-top:8px;font-size:0.85rem;color:#666;line-height:1.4;"></p>
+        <p class="indicator-warning" id="indicatorWarning" style="margin-top:6px;font-size:0.8rem;color:#c0392b;line-height:1.4;font-style:italic;display:none;"></p>
+      </div>
+      
+      <div class="sidebar__section">
+        <h2 class="sidebar__heading" data-i18n="geo_colormode_heading">Color Mode</h2>
+        <div class="sidebar__controls">
+          <button class="sidebar__btn active" id="colorMode" data-i18n="colormode_color">Color</button>
+          <button class="sidebar__btn" id="bwMode" data-i18n="colormode_bw">Black & White</button>
+        </div>
+      </div>
+      
+      <div class="sidebar__controls">
+        <button class="sidebar__btn" id="exportBtn" data-i18n="export_btn">Export Image</button>
+        <button class="sidebar__btn" id="downloadDataBtn" data-i18n="download_data_btn">Download All Data</button>
+      </div>
+      
+      <div class="legend">
+        <span class="legend__label" id="legendLabelLow">Lower severity</span>
+        <div class="legend__bar" id="legendBar"></div>
+        <span class="legend__label" id="legendLabelHigh">Higher severity</span>
+      </div>
+    </aside>
+  <div class="mapContainer">
+    <svg id="map"></svg>
   </div>
+</main>
 
-  <div class="carte-info">
-    <div>
-      <h3>Comment lire la carte</h3>
-      <p>Sélectionnez une catégorie d’infraction puis un indicateur. Les couleurs traduisent la position relative de chaque département dans la distribution nationale. Survolez ou cliquez sur un département pour afficher sa valeur précise.</p>
-    </div>
-    <div>
-      <h3>Précautions d’interprétation</h3>
-      <p>Les indicateurs sont descriptifs. Ils ne classent pas les juridictions et ne prédisent pas l’issue d’une affaire individuelle. Les écarts territoriaux reflètent une combinaison de facteurs (contentieux, démographie, organisation judiciaire) — voir <a href="/methodologie.html">la méthodologie</a>.</p>
-    </div>
-    <div>
-      <h3>Sources</h3>
-      <p>Données issues du Service statistique du Ministère de la Justice (système d’information Cassiopée), agrégées au niveau départemental. Les sources et traitements sont documentés dans la <a href="/bibliographie.html">bibliographie</a>.</p>
-    </div>
+<div id="tooltip" class="tooltip"></div>
+
+<div class="carte-info">
+  <div>
+    <h3>Comment lire la carte</h3>
+    <p>Sélectionnez une catégorie d’infraction puis un indicateur. Les couleurs traduisent la position relative de chaque département dans la distribution nationale. Survolez un département pour afficher sa valeur précise.</p>
   </div>
-</section>
+  <div>
+    <h3>Précautions d’interprétation</h3>
+    <p>Les indicateurs sont descriptifs. Ils ne classent pas les juridictions et ne prédisent pas l’issue d’une affaire individuelle. Les écarts territoriaux reflètent une combinaison de facteurs — voir <a href="/methodologie.html">la méthodologie</a>.</p>
+  </div>
+  <div>
+    <h3>Sources</h3>
+    <p>Données issues du Service statistique du Ministère de la Justice (système d’information Cassiopée), agrégées au niveau départemental. Sources et traitements documentés dans la <a href="/bibliographie.html">bibliographie</a>.</p>
+  </div>
+</div>
 
 <div id="site-footer"></div>
 <script src="/sentencia.js"></script>
 <script>
-  // Hide the embedded module's internal header bar so the map sits cleanly inside Sentencia
-  (function(){
-    const f = document.getElementById('mapFrame');
-    if(!f) return;
-    f.addEventListener('load', function(){
-      try{
-        const doc = f.contentDocument;
-        const win = f.contentWindow;
-        if(!doc) return;
-        const style = doc.createElement('style');
-        style.textContent = `
-          .header{display:none !important}
-          body{padding-top:0 !important}
-          .container,.layout,main{padding-top:0 !important;margin-top:0 !important}
-        `;
-        doc.head.appendChild(style);
-        // Force French language inside the embedded module
-        try { win.localStorage.setItem('lang','fr'); } catch(e){}
-        const frBtn = doc.getElementById('langFR');
-        if (frBtn) frBtn.click();
-      }catch(e){}
+
+    const I18N = {
+      en: {
+        back_to_main: 'Back to Main Site',
+        geo_title: 'The Geography of Sentencing in France',
+        geo_about_heading: 'About This Map',
+        geo_about_text: 'This map represents judicial outcomes at the departmental level, not crime prevalence or reported offences. The visualization uses administrative sentencing data aggregated by department, with colors indicating relative sentencing severity within the national distribution. This visualization is based exclusively on data aggregated at the departmental level. It cannot in any way be used to identify or evaluate an individual judge.',
+        geo_methodology_heading: 'Methodology',
+        geo_methodology_text: 'The severity indicator combines two central dimensions of punishment: the use of immediate custodial sentences and the average length of prison terms when incarceration is imposed. Where relevant, the indicator corrects for legally expected structural factors such as recidivism to better capture residual territorial differences in sentencing practices.',
+        geo_data_heading: 'Data Sources',
+        geo_data_text: 'The judicial data come from the criminal litigation mapping produced by the Statistical Service of the Ministry of Justice, based on the Cassiopée information system. The data cover convictions handed down by first-instance criminal courts for adult defendants.',
+        geo_offence_heading: 'Offence Category',
+        geo_indicator_heading: 'Indicator',
+        legend_low: 'Lower severity',
+        legend_high: 'Higher severity',
+        legend_lower: 'Lower',
+        legend_higher: 'Higher',
+        legend_shorter: 'Shorter sentences',
+        legend_longer: 'Longer sentences',
+        legend_left: 'Left',
+        legend_right: 'Right',
+        legend_fewer: 'Fewer prosecutions',
+        legend_more: 'More prosecutions',
+        opt_general: 'General Information',
+        opt_cat1: 'Driving under Alcohol/Drugs',
+        opt_cat2: 'Aggravated Theft',
+        opt_cat3: 'Simple Theft',
+        opt_cat4: 'Immigration Offences',
+        opt_cat5: 'Drug Offences',
+        opt_cat6: 'Sexual Violence',
+        opt_ipv: 'Intimate Partner Violence (IPV)',
+        opt_cat8: 'Contempt & Violence against Authority',
+        geo_colormode_heading: 'Color Mode',
+        colormode_color: 'Color',
+        colormode_bw: 'Black & White',
+        export_btn: 'Export Image',
+        download_data_btn: 'Download All Data'
+      },
+      fr: {
+        back_to_main: 'Retour au site principal',
+        geo_title: 'La Géographie des Condamnations en France',
+        geo_about_heading: 'À propos de cette carte',
+        geo_about_text: 'Cette carte représente les résultats judiciaires au niveau départemental, et non la prévalence de la criminalité ou les infractions signalées. La visualisation utilise des données administratives de condamnation agrégées par département, les couleurs indiquant la sévérité relative des peines au sein de la distribution nationale. Cette visualisation repose exclusivement sur des données agrégées au niveau départemental. Elle ne permet en aucun cas d\'identifier ou d\'évaluer un magistrat individuellement.',
+        geo_methodology_heading: 'Méthodologie',
+        geo_methodology_text: 'L\'indicateur de sévérité combine deux dimensions centrales de la peine : le recours aux peines d\'emprisonnement ferme et la durée moyenne des peines de prison lorsque l\'incarcération est prononcée. Le cas échéant, l\'indicateur corrige les facteurs structurels juridiquement attendus, comme la récidive, afin de mieux saisir les différences territoriales résiduelles dans les pratiques de condamnation.',
+        geo_data_heading: 'Sources des données',
+        geo_data_text: 'Les données judiciaires proviennent de la cartographie du contentieux pénal produite par le Service statistique du ministère de la Justice, à partir du système d\'information Cassiopée. Les données couvrent les condamnations prononcées par les juridictions pénales de première instance pour les prévenus majeurs.',
+        geo_offence_heading: 'Catégorie d\'infraction',
+        geo_indicator_heading: 'Indicateur',
+        legend_low: 'Sévérité moindre',
+        legend_high: 'Sévérité plus élevée',
+        legend_lower: 'Moins élevé',
+        legend_higher: 'Plus élevé',
+        legend_shorter: 'Peines plus courtes',
+        legend_longer: 'Peines plus longues',
+        legend_left: 'Gauche',
+        legend_right: 'Droite',
+        legend_fewer: 'Moins de poursuites',
+        legend_more: 'Plus de poursuites',
+        opt_general: 'Informations générales',
+        opt_cat1: 'Conduite avec alcool ou stupéfiants',
+        opt_cat2: 'Vols aggravés',
+        opt_cat3: 'Vols simples',
+        opt_cat4: 'Infractions à la police des étrangers',
+        opt_cat5: 'Infractions à la législation sur les stupéfiants',
+        opt_cat6: 'Violences sexuelles',
+        opt_ipv: 'Violences conjugales (VIF)',
+        opt_cat8: 'Outrage, rébellion et violences sur dépositaires de l\'autorité publique',
+        geo_colormode_heading: 'Mode couleur',
+        colormode_color: 'Couleur',
+        colormode_bw: 'Noir & Blanc',
+        export_btn: 'Exporter l\'image',
+        download_data_btn: 'Télécharger toutes les données'
+      }
+    };
+
+    let currentLang = 'fr';
+
+    const DEPT_NAME_TO_CODE = {
+      "AIN":"01","AISNE":"02","ALLIER":"03","ALPES-DE-HAUTE-PROVENCE":"04",
+      "HAUTES-ALPES":"05","ALPES-MARITIMES":"06","ARDECHE":"07","ARDENNES":"08",
+      "ARIEGE":"09","AUBE":"10","AUDE":"11","AVEYRON":"12","BOUCHES-DU-RHONE":"13",
+      "CALVADOS":"14","CANTAL":"15","CHARENTE":"16","CHARENTE-MARITIME":"17",
+      "CHER":"18","CORREZE":"19","COTE-D'OR":"21","COTES-D'ARMOR":"22",
+      "CREUSE":"23","DORDOGNE":"24","DOUBS":"25","DROME":"26","EURE":"27",
+      "EURE-ET-LOIR":"28","FINISTERE":"29","CORSE-DU-SUD":"2A","HAUTE-CORSE":"2B",
+      "GARD":"30","HAUTE-GARONNE":"31","GERS":"32","GIRONDE":"33","HERAULT":"34",
+      "ILLE-ET-VILAINE":"35","INDRE":"36","INDRE-ET-LOIRE":"37","ISERE":"38",
+      "JURA":"39","LANDES":"40","LOIR-ET-CHER":"41","LOIRE":"42","HAUTE-LOIRE":"43",
+      "LOIRE-ATLANTIQUE":"44","LOIRET":"45","LOT":"46","LOT-ET-GARONNE":"47",
+      "LOZERE":"48","MAINE-ET-LOIRE":"49","MANCHE":"50","MARNE":"51",
+      "HAUTE-MARNE":"52","MAYENNE":"53","MEURTHE-ET-MOSELLE":"54","MEUSE":"55",
+      "MORBIHAN":"56","MOSELLE":"57","NIEVRE":"58","NORD":"59","OISE":"60",
+      "ORNE":"61","PAS-DE-CALAIS":"62","PUY-DE-DOME":"63",
+      "PYRENEES-ATLANTIQUES":"64","HAUTES-PYRENEES":"65",
+      "PYRENEES-ORIENTALES":"66","BAS-RHIN":"67","HAUT-RHIN":"68","RHONE":"69",
+      "HAUTE-SAONE":"70","SAONE-ET-LOIRE":"71","SARTHE":"72","SAVOIE":"73",
+      "HAUTE-SAVOIE":"74","PARIS":"75","SEINE-MARITIME":"76","SEINE-ET-MARNE":"77",
+      "YVELINES":"78","DEUX-SEVRES":"79","SOMME":"80","TARN":"81",
+      "TARN-ET-GARONNE":"82","VAR":"83","VAUCLUSE":"84","VENDEE":"85",
+      "VIENNE":"86","HAUTE-VIENNE":"87","VOSGES":"88","YONNE":"89",
+      "TERRITOIRE DE BELFORT":"90","ESSONNE":"91","HAUTS-DE-SEINE":"92",
+      "SEINE-SAINT-DENIS":"93","VAL-DE-MARNE":"94","VAL-D'OISE":"95"
+    };
+
+    const EXCLUDED_COLUMNS = new Set([
+      "\uFEFFDépartement", "Département", "Latitude", "Longitude"
+    ]);
+
+    const COLUMN_TRANSLATIONS = {
+      "Chômage": { en: "Unemployment Rate", fr: "Chômage" },
+      "Couleur politique": { en: "Political Leaning", fr: "Couleur politique" },
+      "Population": { en: "Population (2023)", fr: "Population (2023)" },
+      "Durée moy. emprisonnement ferme": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emprisonnement ferme (mois)" },
+      "Taux poursuivis / 100k (VIF)": { en: "Cases Referred to Prosecutor / 100k pop.", fr: "Affaires au parquet / 100k hab." },
+      "Durée moy. emp. ferme (VIF)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Taux poursuivis / 100k (1. Conduite avec alcool ou stupéfiants)": { en: "Cases Referred to Prosecutor / 100k pop.", fr: "Affaires au parquet / 100k hab." },
+      "Taux poursuivis / 100k (2. Vols aggravés)": { en: "Cases Referred to Prosecutor / 100k pop.", fr: "Affaires au parquet / 100k hab." },
+      "Taux poursuivis / 100k (3. Vols simples)": { en: "Cases Referred to Prosecutor / 100k pop.", fr: "Affaires au parquet / 100k hab." },
+      "Taux poursuivis / 100k (4. Infractions à la police des étrangers)": { en: "Cases Referred to Prosecutor / 100k pop.", fr: "Affaires au parquet / 100k hab." },
+      "Taux poursuivis / 100k (5. Infractions à la législation sur les stupéfiants)": { en: "Cases Referred to Prosecutor / 100k pop.", fr: "Affaires au parquet / 100k hab." },
+      "Taux poursuivis / 100k (6. Violences sexuelles)": { en: "Cases Referred to Prosecutor / 100k pop.", fr: "Affaires au parquet / 100k hab." },
+      "Taux poursuivis / 100k (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Cases Referred to Prosecutor / 100k pop.", fr: "Affaires au parquet / 100k hab." },
+      "Durée moy. emp. ferme (1. Conduite avec alcool ou stupéfiants)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (2. Vols aggravés)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (3. Vols simples)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (4. Infractions à la police des étrangers)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (5. Infractions à la législation sur les stupéfiants)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (6. Violences sexuelles)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Durée moy. emp. ferme (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
+      "Sévérité résiduelle (1. Conduite avec alcool ou stupéfiants)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (2. Vols aggravés)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (3. Vols simples)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (4. Infractions à la police des étrangers)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (5. Infractions à la législation sur les stupéfiants)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (6. Violences sexuelles)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Sévérité résiduelle (VIF)": { en: "Relative Crime-Specific Severity", fr: "Longueurs moyennes de peines spécifiques" },
+      "Taux récidive légale (1. Conduite avec alcool ou stupéfiants)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (2. Vols aggravés)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (3. Vols simples)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (4. Infractions à la police des étrangers)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (5. Infractions à la législation sur les stupéfiants)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (6. Violences sexuelles)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (VIF)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux récidive légale (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Legal Recidivism Rate (%)", fr: "Taux de récidive légale (%)" },
+      "Taux emprisonnement ferme global": { en: "Overall Imprisonment Rate (%)", fr: "Taux d'emprisonnement ferme global (%)" },
+      "Taux emp. ferme / conda (1. Conduite avec alcool ou stupéfiants)": { en: "Imprisonment Rate per Conviction (%)", fr: "Taux d'emp. ferme / condamnation (%)" },
+      "Taux emp. ferme / conda (2. Vols aggravés)": { en: "Imprisonment Rate per Conviction (%)", fr: "Taux d'emp. ferme / condamnation (%)" },
+      "Taux emp. ferme / conda (3. Vols simples)": { en: "Imprisonment Rate per Conviction (%)", fr: "Taux d'emp. ferme / condamnation (%)" },
+      "Taux emp. ferme / conda (4. Infractions à la police des étrangers)": { en: "Imprisonment Rate per Conviction (%)", fr: "Taux d'emp. ferme / condamnation (%)" },
+      "Taux emp. ferme / conda (5. Infractions à la législation sur les stupéfiants)": { en: "Imprisonment Rate per Conviction (%)", fr: "Taux d'emp. ferme / condamnation (%)" },
+      "Taux emp. ferme / conda (6. Violences sexuelles)": { en: "Imprisonment Rate per Conviction (%)", fr: "Taux d'emp. ferme / condamnation (%)" },
+      "Taux emp. ferme / conda (VIF)": { en: "Imprisonment Rate per Conviction (%)", fr: "Taux d'emp. ferme / condamnation (%)" },
+      "Taux emp. ferme / conda (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Imprisonment Rate per Conviction (%)", fr: "Taux d'emp. ferme / condamnation (%)" },
+      "Taux emp. ferme spécifique (1. Conduite avec alcool ou stupéfiants)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
+      "Taux emp. ferme spécifique (2. Vols aggravés)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
+      "Taux emp. ferme spécifique (3. Vols simples)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
+      "Taux emp. ferme spécifique (4. Infractions à la police des étrangers)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
+      "Taux emp. ferme spécifique (5. Infractions à la législation sur les stupéfiants)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
+      "Taux emp. ferme spécifique (6. Violences sexuelles)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
+      "Taux emp. ferme spécifique (VIF)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
+      "Taux emp. ferme spécifique (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Relative Crime-Specific Imprisonment Rate", fr: "Taux d'emp. ferme spécifique" },
+      "Taux emp. résiduel récidive (1. Conduite avec alcool ou stupéfiants)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (2. Vols aggravés)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (3. Vols simples)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (4. Infractions à la police des étrangers)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (5. Infractions à la législation sur les stupéfiants)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (6. Violences sexuelles)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (VIF)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel (adj. récidive)" },
+      "Taux emp. résiduel récidive global": { en: "Overall Residual Imprisonment Rate (adj. for recidivism)", fr: "Taux d'emp. résiduel global (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (1. Conduite avec alcool ou stupéfiants)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (2. Vols aggravés)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (3. Vols simples)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (4. Infractions à la police des étrangers)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (5. Infractions à la législation sur les stupéfiants)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (6. Violences sexuelles)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (VIF)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Taux emp. résiduel récidive spécifique (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Crime-Specific Residual Imprisonment (adj. for recidivism)", fr: "Taux d'emp. résiduel spécifique (adj. récidive)" },
+      "Durée rés. récidive (1. Conduite avec alcool ou stupéfiants)": { en: "Residual Sentence Duration (adj. for recidivism)", fr: "Durée rés. (adj. récidive)" },
+      "Durée rés. récidive (2. Vols aggravés)": { en: "Residual Sentence Duration (adj. for recidivism)", fr: "Durée rés. (adj. récidive)" },
+      "Durée rés. récidive (3. Vols simples)": { en: "Residual Sentence Duration (adj. for recidivism)", fr: "Durée rés. (adj. récidive)" },
+      "Durée rés. récidive (4. Infractions à la police des étrangers)": { en: "Residual Sentence Duration (adj. for recidivism)", fr: "Durée rés. (adj. récidive)" },
+      "Durée rés. récidive (5. Infractions à la législation sur les stupéfiants)": { en: "Residual Sentence Duration (adj. for recidivism)", fr: "Durée rés. (adj. récidive)" },
+      "Durée rés. récidive (6. Violences sexuelles)": { en: "Residual Sentence Duration (adj. for recidivism)", fr: "Durée rés. (adj. récidive)" },
+      "Durée rés. récidive (VIF)": { en: "Residual Sentence Duration (adj. for recidivism)", fr: "Durée rés. (adj. récidive)" },
+      "Durée rés. récidive (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Residual Sentence Duration (adj. for recidivism)", fr: "Durée rés. (adj. récidive)" },
+      "Durée rés. récidive global": { en: "Overall Residual Sentence Duration (adj. for recidivism)", fr: "Durée rés. globale (adj. récidive)" },
+      "Durée rés. récidive spécifique (1. Conduite avec alcool ou stupéfiants)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
+      "Durée rés. récidive spécifique (2. Vols aggravés)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
+      "Durée rés. récidive spécifique (3. Vols simples)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
+      "Durée rés. récidive spécifique (4. Infractions à la police des étrangers)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
+      "Durée rés. récidive spécifique (5. Infractions à la législation sur les stupéfiants)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
+      "Durée rés. récidive spécifique (6. Violences sexuelles)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
+      "Durée rés. récidive spécifique (VIF)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
+      "Durée rés. récidive spécifique (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Crime-Specific Residual Duration (adj. for recidivism)", fr: "Durée rés. spécifique (adj. récidive)" },
+      "Sévérité combinée (1. Conduite avec alcool ou stupéfiants)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (2. Vols aggravés)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (3. Vols simples)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (4. Infractions à la police des étrangers)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (5. Infractions à la législation sur les stupéfiants)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (6. Violences sexuelles)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (VIF)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée (adj. récidive)" },
+      "Sévérité combinée globale": { en: "Overall Combined Severity Index (adj. for recidivism)", fr: "Sévérité combinée globale (adj. récidive)" },
+      "Sévérité combinée spécifique (1. Conduite avec alcool ou stupéfiants)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (2. Vols aggravés)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (3. Vols simples)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (4. Infractions à la police des étrangers)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (5. Infractions à la législation sur les stupéfiants)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (6. Violences sexuelles)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (VIF)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" },
+      "Sévérité combinée spécifique (8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique)": { en: "Crime-Specific Combined Severity (adj. for recidivism)", fr: "Sévérité combinée spécifique (adj. récidive)" }
+    };
+
+    const RECIDIVISM_REGRESSION = {
+      '1': { a: 0.338, b: 0.8, r2: 0.377 },
+      '2': { a: 0.437, b: 34.56, r2: 0.101 },
+      '3': { a: 0.528, b: 9.22, r2: 0.259 },
+      '4': { a: 2.112, b: 23.69, r2: 0.181 },
+      '5': { a: 0.848, b: 13.42, r2: 0.284 },
+      '6': { a: 1.108, b: 33.14, r2: 0.025 },
+      '7': { a: 0.314, b: 9.46, r2: 0.014 },
+      '8': { a: 0.486, b: 9.85, r2: 0.155 }
+    };
+
+    const DURATION_RECIDIVISM_REGRESSION = {
+      '1': { a: -0.053, b: 8.16, r2: 0.08 },
+      '2': { a: -0.024, b: 13.75, r2: 0.002 },
+      '3': { a: -0.004, b: 5.78, r2: 0.001 },
+      '4': { a: -0.136, b: 10.97, r2: 0.014 },
+      '5': { a: -0.086, b: 18.05, r2: 0.015 },
+      '6': { a: 0.009, b: 35.38, r2: 0.0 },
+      '7': { a: -0.035, b: 14.67, r2: 0.004 },
+      '8': { a: 0.004, b: 5.62, r2: 0.0 }
+    };
+
+    const INDICATOR_DESCRIPTIONS = {
+      en: {
+        'Chômage': 'Unemployment rate in the department, expressed as a percentage of the active population.',
+        'Couleur politique': 'Political leaning of the department based on recent election results.',
+        'Population': 'Total population of the department (2023 census data).',
+        'Durée moy. emprisonnement ferme': 'Average duration of immediate prison sentences handed down in this department, in months, across all crime categories. Calculated as the weighted mean of sentence durations across all tribunals in the department, weighted by the number of prison sentences at each tribunal.',
+        'taux_poursuivis': 'Number of cases referred to the public prosecutor per 100,000 inhabitants for this crime category. Calculated by dividing the total number of cases that arrived at the prosecutor\u2019s office (parquet) for this offence in the department by its population, then multiplying by 100,000.',
+        'duree_emp': 'Average duration of immediate prison sentences for this specific crime category, in months. Calculated as the weighted mean across all tribunals in the department, where each tribunal\u2019s average duration is weighted by its number of prison sentences. This ensures tribunals handling more cases contribute more to the departmental average.',
+        'severite_residuelle': 'Measures whether a department punishes this specific crime relatively more or less severely than its general sentencing pattern. Calculation: (1) For each department and each crime, the average sentence duration is converted to a z-score (number of standard deviations from the national mean). (2) The department\u2019s overall z-score (across all crimes, weighted by number of convictions) is subtracted. The result is the \u201cresidual\u201d: a positive value means this crime is punished with longer sentences than the department\u2019s general pattern would suggest. A negative value means relatively shorter sentences. A value near zero means consistency with the department\u2019s general severity.',
+        'recidive_legale': 'Legal recidivism rate: percentage of convicted offenders who were in a state of "legal recidivism" (r\u00e9cidive l\u00e9gale). In French criminal law, legal recidivism is a specific legal status \u2014 it applies when a person commits a new offence of a similar nature within a defined time period after a prior definitive conviction. Unlike general reoffending, legal recidivism is a formal aggravating circumstance that can double the maximum sentence. This indicator shows the share of convictions in which the offender held this status.',
+        'Taux emprisonnement ferme global': 'Overall imprisonment rate: percentage of all convictions in this department that resulted in an immediate prison sentence, across all crime categories combined. Calculated by summing all immediate prison sentences (NB_EMP_F) across all tribunals and all crime categories, then dividing by the total number of convictions (NB_CONDA) at the department level.',
+        'taux_emp_conda': 'Imprisonment rate per conviction for this specific crime: percentage of convictions that resulted in an immediate prison sentence. Calculated by summing immediate prison sentences (NB_EMP_F) for this crime category across all tribunals in the department, then dividing by the total convictions (NB_CONDA) for this crime in the department.',
+        'taux_emp_specifique': 'Measures whether this department uses prison more or less for this specific crime, relative to its general imprisonment rate. Calculation: (1) For each department and each crime, the imprisonment rate per conviction is converted to a z-score (number of standard deviations from the national mean). (2) The department\u2019s overall imprisonment z-score (weighted across all crimes by number of convictions) is subtracted. The result is the \u201cresidual\u201d: a positive value means the department uses prison more for this crime than its general pattern would suggest. A negative value means it imprisons less. Near zero means consistency with its general imprisonment rate.',
+        'default': ''
+      },
+      fr: {
+        'Ch\u00f4mage': 'Taux de ch\u00f4mage dans le d\u00e9partement, exprim\u00e9 en pourcentage de la population active.',
+        'Couleur politique': 'Tendance politique du d\u00e9partement bas\u00e9e sur les r\u00e9sultats des \u00e9lections r\u00e9centes.',
+        'Population': 'Population totale du d\u00e9partement (donn\u00e9es du recensement 2023).',
+        'Dur\u00e9e moy. emprisonnement ferme': 'Dur\u00e9e moyenne des peines d\u2019emprisonnement ferme prononc\u00e9es dans ce d\u00e9partement, en mois, toutes cat\u00e9gories d\u2019infractions confondues. Calcul\u00e9e comme la moyenne pond\u00e9r\u00e9e des dur\u00e9es de peine de l\u2019ensemble des tribunaux du d\u00e9partement, pond\u00e9r\u00e9e par le nombre de peines d\u2019emprisonnement ferme prononc\u00e9es dans chaque tribunal.',
+        'taux_poursuivis': 'Nombre d\u2019affaires arriv\u00e9es au parquet pour 100\u202f000 habitants pour cette cat\u00e9gorie d\u2019infraction. Calcul\u00e9 en divisant le nombre total d\u2019affaires parvenues au parquet pour cette infraction dans le d\u00e9partement par sa population, puis en multipliant par 100\u202f000.',
+        'duree_emp': 'Dur\u00e9e moyenne des peines d\u2019emprisonnement ferme pour cette cat\u00e9gorie d\u2019infraction sp\u00e9cifique, en mois. Calcul\u00e9e comme la moyenne pond\u00e9r\u00e9e sur l\u2019ensemble des tribunaux du d\u00e9partement, o\u00f9 la dur\u00e9e moyenne de chaque tribunal est pond\u00e9r\u00e9e par son nombre de peines d\u2019emprisonnement ferme. Ainsi, les tribunaux traitant davantage d\u2019affaires contribuent proportionnellement plus \u00e0 la moyenne d\u00e9partementale.',
+        'severite_residuelle': 'Mesure si un d\u00e9partement punit cette infraction sp\u00e9cifique relativement plus ou moins s\u00e9v\u00e8rement que ce que son profil g\u00e9n\u00e9ral de condamnation laisserait supposer. Calcul : (1) Pour chaque d\u00e9partement et chaque infraction, la dur\u00e9e moyenne de peine est convertie en z-score (nombre d\u2019\u00e9carts-types par rapport \u00e0 la moyenne nationale). (2) On soustrait le z-score global du d\u00e9partement (calcul\u00e9 sur l\u2019ensemble des infractions, pond\u00e9r\u00e9 par le nombre de condamnations). Le r\u00e9sultat est le \u00ab r\u00e9sidu \u00bb : une valeur positive signifie que cette infraction est punie par des peines plus longues que le profil g\u00e9n\u00e9ral du d\u00e9partement ne le laisserait supposer. Une valeur n\u00e9gative signifie des peines relativement plus courtes. Une valeur proche de z\u00e9ro signifie une coh\u00e9rence avec la s\u00e9v\u00e9rit\u00e9 g\u00e9n\u00e9rale du d\u00e9partement.',
+        'recidive_legale': 'Taux de r\u00e9cidive l\u00e9gale : pourcentage de condamn\u00e9s en \u00e9tat de r\u00e9cidive l\u00e9gale. En droit p\u00e9nal fran\u00e7ais, la r\u00e9cidive l\u00e9gale est un statut juridique pr\u00e9cis \u2014 elle s\u2019applique lorsqu\u2019une personne commet une nouvelle infraction de m\u00eame nature dans un d\u00e9lai d\u00e9fini apr\u00e8s une condamnation d\u00e9finitive ant\u00e9rieure. Contrairement \u00e0 la simple r\u00e9it\u00e9ration, la r\u00e9cidive l\u00e9gale est une circonstance aggravante formelle qui peut entra\u00eener le doublement du maximum de la peine encourue. Cet indicateur montre la part des condamnations dans lesquelles le pr\u00e9venu avait ce statut.',
+        'Taux emprisonnement ferme global': 'Taux d\u2019emprisonnement ferme global : pourcentage de l\u2019ensemble des condamnations du d\u00e9partement ayant donn\u00e9 lieu \u00e0 une peine d\u2019emprisonnement ferme, toutes cat\u00e9gories d\u2019infractions confondues. Calcul\u00e9 en sommant toutes les peines d\u2019emprisonnement ferme (NB_EMP_F) de tous les tribunaux et toutes les cat\u00e9gories, puis en divisant par le nombre total de condamnations (NB_CONDA) au niveau d\u00e9partemental.',
+        'taux_emp_conda': 'Taux d\u2019emprisonnement ferme par condamnation pour cette infraction sp\u00e9cifique : pourcentage des condamnations ayant donn\u00e9 lieu \u00e0 une peine d\u2019emprisonnement ferme. Calcul\u00e9 en sommant les peines d\u2019emprisonnement ferme (NB_EMP_F) pour cette cat\u00e9gorie d\u2019infraction dans l\u2019ensemble des tribunaux du d\u00e9partement, puis en divisant par le total des condamnations (NB_CONDA) pour cette infraction dans le d\u00e9partement.',
+        'taux_emp_specifique': 'Mesure si ce d\u00e9partement recourt \u00e0 l\u2019emprisonnement plus ou moins pour cette infraction, par rapport \u00e0 son taux d\u2019emprisonnement g\u00e9n\u00e9ral. Calcul : (1) Pour chaque d\u00e9partement et chaque infraction, le taux d\u2019emprisonnement par condamnation est converti en z-score (nombre d\u2019\u00e9carts-types par rapport \u00e0 la moyenne nationale). (2) On soustrait le z-score global d\u2019emprisonnement du d\u00e9partement (pond\u00e9r\u00e9 sur l\u2019ensemble des infractions par le nombre de condamnations). Le r\u00e9sultat est le \u00ab r\u00e9sidu \u00bb : une valeur positive signifie que le d\u00e9partement emprisonne davantage pour cette infraction que son profil g\u00e9n\u00e9ral ne le laisserait supposer. Une valeur n\u00e9gative signifie un moindre recours \u00e0 l\u2019emprisonnement. Une valeur proche de z\u00e9ro signifie une coh\u00e9rence avec le taux d\u2019emprisonnement g\u00e9n\u00e9ral.',
+        'default': ''
+      }
+    };
+
+    function getIndicatorDescription(colName, lang) {
+      const descs = INDICATOR_DESCRIPTIONS[lang] || INDICATOR_DESCRIPTIONS['en'];
+      if (descs[colName]) return descs[colName];
+      if (colName.startsWith('Sévérité résiduelle')) return descs['severite_residuelle'];
+      if (colName.startsWith('Taux récidive légale')) return descs['recidive_legale'];
+      if (colName.startsWith('Taux emp. ferme / conda')) return descs['taux_emp_conda'];
+      if (colName.startsWith('Taux emp. ferme spécifique')) return descs['taux_emp_specifique'];
+      if (colName.startsWith('Taux emp. résiduel récidive')) {
+        const catNum = colName.includes('(VIF)') ? '7' :
+          (colName.match(/\((\d+)\./) || [])[1];
+        const reg = catNum ? RECIDIVISM_REGRESSION[catNum] : null;
+        if (reg) {
+          const sign = reg.b >= 0 ? '+' : '';
+          const eq = `${reg.a} \u00d7 taux_r\u00e9cidive ${sign} ${reg.b}`;
+          if (lang === 'fr') {
+            return `Taux d\u2019emprisonnement r\u00e9siduel apr\u00e8s prise en compte de la r\u00e9cidive l\u00e9gale.\n\n\u00c9tapes du calcul :\n(1) On r\u00e9unit, pour chaque d\u00e9partement, le taux d\u2019emprisonnement ferme par condamnation (pour cette infraction) et le taux de r\u00e9cidive l\u00e9gale correspondant.\n(2) On estime par r\u00e9gression lin\u00e9aire (moindres carr\u00e9s ordinaires) sur les 96 d\u00e9partements la relation entre taux de r\u00e9cidive et taux d\u2019emprisonnement : taux attendu = ${eq} (R\u00b2 = ${reg.r2}).\n(3) Pour chaque d\u00e9partement, le r\u00e9sidu = taux observ\u00e9 \u2212 taux attendu.\n\nInterpr\u00e9tation : une valeur positive signifie que le d\u00e9partement emprisonne davantage que ce que son taux de r\u00e9cidive l\u00e9gale laisserait pr\u00e9dire. Une valeur n\u00e9gative signifie qu\u2019il emprisonne moins. Une valeur proche de z\u00e9ro signifie que le taux d\u2019emprisonnement est conforme \u00e0 ce que la r\u00e9cidive pr\u00e9dit.`;
+          } else {
+            const eqEn = `${reg.a} \u00d7 recidivism_rate ${sign} ${reg.b}`;
+            return `Residual imprisonment rate after accounting for legal recidivism.\n\nCalculation steps:\n(1) For each department, collect the imprisonment rate per conviction (for this crime) and the corresponding legal recidivism rate.\n(2) Run an ordinary least squares linear regression across all 96 departments to estimate the relationship between recidivism rate and imprisonment rate: expected rate = ${eqEn} (R\u00b2 = ${reg.r2}).\n(3) For each department, residual = observed rate \u2212 expected rate.\n\nInterpretation: a positive value means the department imprisons more than its recidivism rate would predict. A negative value means it imprisons less. A value near zero means the imprisonment rate is consistent with what recidivism predicts.`;
+          }
+        }
+      }
+      if (colName === 'Taux emp. résiduel récidive global') {
+        if (lang === 'fr') {
+          return "Taux d\u2019emprisonnement r\u00e9siduel global apr\u00e8s prise en compte de la r\u00e9cidive l\u00e9gale.\n\n\u00c9tapes du calcul :\n(1) Pour chaque cat\u00e9gorie d\u2019infraction, on calcule le taux d\u2019emprisonnement r\u00e9siduel (adj. r\u00e9cidive) comme d\u00e9crit ci-dessus.\n(2) Pour chaque d\u00e9partement, on fait la moyenne pond\u00e9r\u00e9e de ces r\u00e9siduels sur toutes les cat\u00e9gories, en utilisant le nombre de condamnations par cat\u00e9gorie comme poids.\n\nInterpr\u00e9tation : une valeur positive signifie que le d\u00e9partement emprisonne globalement plus que ce que ses taux de r\u00e9cidive laisseraient pr\u00e9dire, toutes infractions confondues. Une valeur n\u00e9gative signifie l\u2019inverse.";
+        } else {
+          return "Overall residual imprisonment rate after accounting for legal recidivism.\n\nCalculation steps:\n(1) For each crime category, compute the residual imprisonment rate (adj. for recidivism) as described above.\n(2) For each department, take the weighted average of these residuals across all crime categories, using the number of convictions per category as weights.\n\nInterpretation: a positive value means the department imprisons more overall than what its recidivism rates would predict, across all crimes. A negative value means the opposite.";
+        }
+      }
+      if (colName.startsWith('Taux emp. résiduel récidive spécifique')) {
+        if (lang === 'fr') {
+          return "\u00c9cart entre la s\u00e9v\u00e9rit\u00e9 r\u00e9siduelle (taux d\u2019emprisonnement apr\u00e8s ajustement r\u00e9cidive) pour cette infraction et la tendance g\u00e9n\u00e9rale du d\u00e9partement.\n\n\u00c9tapes du calcul :\n(1) On prend le taux d\u2019emprisonnement r\u00e9siduel (adj. r\u00e9cidive) pour cette infraction et on le convertit en z-score : z = (r\u00e9sidu \u2212 moyenne nationale des r\u00e9sidus) / \u00e9cart-type national.\n(2) On prend le taux d\u2019emprisonnement r\u00e9siduel global du d\u00e9partement et on le convertit aussi en z-score.\n(3) Indicateur sp\u00e9cifique = z-score de l\u2019infraction \u2212 z-score global.\n\nInterpr\u00e9tation : une valeur positive indique que le d\u00e9partement est particuli\u00e8rement s\u00e9v\u00e8re pour cette infraction sp\u00e9cifique, au-del\u00e0 de sa tendance g\u00e9n\u00e9rale. Une valeur n\u00e9gative signifie qu\u2019il est relativement plus cl\u00e9ment pour cette infraction.";
+        } else {
+          return "Gap between the residual severity (imprisonment rate after recidivism adjustment) for this crime and the department\u2019s general tendency.\n\nCalculation steps:\n(1) Take the residual imprisonment rate (adj. for recidivism) for this crime and convert it to a z-score: z = (residual \u2212 national mean of residuals) / national standard deviation.\n(2) Take the department\u2019s overall residual imprisonment rate and convert it to a z-score as well.\n(3) Crime-specific indicator = crime z-score \u2212 overall z-score.\n\nInterpretation: a positive value indicates the department is particularly severe for this specific crime, beyond its general tendency. A negative value means it is relatively more lenient for this crime.";
+        }
+      }
+      if (colName.startsWith('Durée rés. récidive (')) {
+        const catNum = colName.includes('(VIF)') ? '7' :
+          (colName.match(/\((\d+)\./) || [])[1];
+        const reg = catNum ? DURATION_RECIDIVISM_REGRESSION[catNum] : null;
+        if (reg) {
+          const sign = reg.b >= 0 ? '+' : '';
+          const eqFr = `${reg.a} \u00d7 taux_r\u00e9cidive ${sign} ${reg.b}`;
+          const eqEn = `${reg.a} \u00d7 recidivism_rate ${sign} ${reg.b}`;
+          if (lang === 'fr') {
+            return `Dur\u00e9e r\u00e9siduelle de l\u2019emprisonnement ferme apr\u00e8s prise en compte de la r\u00e9cidive l\u00e9gale.\n\n\u00c9tapes du calcul :\n(1) On r\u00e9unit, pour chaque d\u00e9partement, la dur\u00e9e moyenne d\u2019emprisonnement ferme (pour cette infraction) et le taux de r\u00e9cidive l\u00e9gale correspondant.\n(2) On estime par r\u00e9gression lin\u00e9aire (moindres carr\u00e9s ordinaires) sur les 96 d\u00e9partements la relation entre taux de r\u00e9cidive et dur\u00e9e de peine : dur\u00e9e attendue = ${eqFr} (R\u00b2 = ${reg.r2}).\n(3) Pour chaque d\u00e9partement, le r\u00e9sidu = dur\u00e9e observ\u00e9e \u2212 dur\u00e9e attendue (en mois).\n\nInterpr\u00e9tation : une valeur positive signifie que le d\u00e9partement prononce des peines plus longues que ce que son taux de r\u00e9cidive l\u00e9gale laisserait pr\u00e9dire. Une valeur n\u00e9gative signifie des peines plus courtes.`;
+          } else {
+            return `Residual prison sentence duration after accounting for legal recidivism.\n\nCalculation steps:\n(1) For each department, collect the average prison sentence duration (for this crime) and the corresponding legal recidivism rate.\n(2) Run an ordinary least squares linear regression across all 96 departments to estimate the relationship between recidivism rate and sentence duration: expected duration = ${eqEn} (R\u00b2 = ${reg.r2}).\n(3) For each department, residual = observed duration \u2212 expected duration (in months).\n\nInterpretation: a positive value means the department sentences to longer terms than its recidivism rate would predict. A negative value means shorter sentences.`;
+          }
+        }
+      }
+      if (colName === 'Durée rés. récidive global') {
+        if (lang === 'fr') {
+          return "Dur\u00e9e r\u00e9siduelle globale de l\u2019emprisonnement ferme apr\u00e8s prise en compte de la r\u00e9cidive l\u00e9gale.\n\n\u00c9tapes du calcul :\n(1) Pour chaque cat\u00e9gorie d\u2019infraction, on calcule la dur\u00e9e r\u00e9siduelle (adj. r\u00e9cidive) comme d\u00e9crit ci-dessus.\n(2) Pour chaque d\u00e9partement, on fait la moyenne pond\u00e9r\u00e9e de ces r\u00e9siduels sur toutes les cat\u00e9gories, en utilisant le nombre de condamnations par cat\u00e9gorie comme poids.\n\nInterpr\u00e9tation : une valeur positive signifie que le d\u00e9partement prononce globalement des peines plus longues que ce que ses taux de r\u00e9cidive laisseraient pr\u00e9dire. Une valeur n\u00e9gative signifie des peines plus courtes.";
+        } else {
+          return "Overall residual prison sentence duration after accounting for legal recidivism.\n\nCalculation steps:\n(1) For each crime category, compute the residual sentence duration (adj. for recidivism) as described above.\n(2) For each department, take the weighted average of these residuals across all crime categories, using the number of convictions per category as weights.\n\nInterpretation: a positive value means the department sentences to longer terms overall than what its recidivism rates would predict. A negative value means shorter sentences.";
+        }
+      }
+      if (colName.startsWith('Durée rés. récidive spécifique')) {
+        if (lang === 'fr') {
+          return "\u00c9cart entre la dur\u00e9e r\u00e9siduelle (apr\u00e8s ajustement r\u00e9cidive) pour cette infraction et la tendance g\u00e9n\u00e9rale du d\u00e9partement.\n\n\u00c9tapes du calcul :\n(1) On prend la dur\u00e9e r\u00e9siduelle (adj. r\u00e9cidive) pour cette infraction et on la convertit en z-score : z = (r\u00e9sidu \u2212 moyenne nationale des r\u00e9sidus) / \u00e9cart-type national.\n(2) On prend la dur\u00e9e r\u00e9siduelle globale du d\u00e9partement et on la convertit aussi en z-score.\n(3) Indicateur sp\u00e9cifique = z-score de l\u2019infraction \u2212 z-score global.\n\nInterpr\u00e9tation : une valeur positive indique que le d\u00e9partement prononce des peines particuli\u00e8rement longues pour cette infraction sp\u00e9cifique, au-del\u00e0 de sa tendance g\u00e9n\u00e9rale. Une valeur n\u00e9gative signifie des peines relativement plus courtes pour cette infraction.";
+        } else {
+          return "Gap between the residual duration (after recidivism adjustment) for this crime and the department\u2019s general tendency.\n\nCalculation steps:\n(1) Take the residual duration (adj. for recidivism) for this crime and convert it to a z-score: z = (residual \u2212 national mean of residuals) / national standard deviation.\n(2) Take the department\u2019s overall residual duration and convert it to a z-score as well.\n(3) Crime-specific indicator = crime z-score \u2212 overall z-score.\n\nInterpretation: a positive value indicates the department sentences to particularly long terms for this specific crime, beyond its general tendency. A negative value means relatively shorter sentences for this crime.";
+        }
+      }
+      if (colName.includes('Taux') && colName.includes('100')) return descs['taux_poursuivis'];
+      if (colName.includes('Durée moy. emp. ferme')) return descs['duree_emp'];
+      if (colName.includes('Durée moyenne des peines')) return descs['duree_emp'];
+      if (colName.startsWith('Sévérité combinée (')) {
+        if (lang === 'fr') {
+          return "Indice de s\u00e9v\u00e9rit\u00e9 combin\u00e9 apr\u00e8s prise en compte de la r\u00e9cidive l\u00e9gale.\n\n\u00c9tapes du calcul :\n(1) On calcule le taux d\u2019emprisonnement r\u00e9siduel (adj. r\u00e9cidive) pour cette infraction et on le convertit en z-score.\n(2) On calcule la dur\u00e9e r\u00e9siduelle (adj. r\u00e9cidive) pour cette infraction et on la convertit en z-score.\n(3) S\u00e9v\u00e9rit\u00e9 combin\u00e9e = z-score du taux d\u2019emprisonnement r\u00e9siduel + z-score de la dur\u00e9e r\u00e9siduelle.\n\nInterpr\u00e9tation : cet indice combine la propension \u00e0 emprisonner et la longueur des peines, au-del\u00e0 de ce que le taux de r\u00e9cidive pr\u00e9dit. Une valeur positive signifie une s\u00e9v\u00e9rit\u00e9 sup\u00e9rieure \u00e0 la moyenne nationale. Une valeur n\u00e9gative signifie une s\u00e9v\u00e9rit\u00e9 inf\u00e9rieure.";
+        } else {
+          return "Combined severity index after accounting for legal recidivism.\n\nCalculation steps:\n(1) Compute the residual imprisonment rate (adj. for recidivism) for this crime and convert it to a z-score.\n(2) Compute the residual sentence duration (adj. for recidivism) for this crime and convert it to a z-score.\n(3) Combined severity = z-score of residual imprisonment rate + z-score of residual duration.\n\nInterpretation: this index combines both the propensity to imprison and the length of sentences, beyond what the recidivism rate predicts. A positive value means overall severity above the national average. A negative value means below.";
+        }
+      }
+      if (colName === 'Sévérité combinée globale') {
+        if (lang === 'fr') {
+          return "Indice de s\u00e9v\u00e9rit\u00e9 combin\u00e9 global apr\u00e8s prise en compte de la r\u00e9cidive l\u00e9gale.\n\n\u00c9tapes du calcul :\n(1) On calcule le taux d\u2019emprisonnement r\u00e9siduel global (moyenne pond\u00e9r\u00e9e sur toutes les infractions) et on le convertit en z-score.\n(2) On calcule la dur\u00e9e r\u00e9siduelle globale (moyenne pond\u00e9r\u00e9e sur toutes les infractions) et on la convertit en z-score.\n(3) S\u00e9v\u00e9rit\u00e9 combin\u00e9e globale = z-score du taux r\u00e9siduel global + z-score de la dur\u00e9e r\u00e9siduelle globale.\n\nInterpr\u00e9tation : synth\u00e9tise en un seul chiffre la s\u00e9v\u00e9rit\u00e9 d\u2019un d\u00e9partement par rapport \u00e0 la moyenne nationale, toutes infractions confondues, apr\u00e8s avoir neutralis\u00e9 l\u2019effet m\u00e9canique de la r\u00e9cidive.";
+        } else {
+          return "Overall combined severity index after accounting for legal recidivism.\n\nCalculation steps:\n(1) Compute the overall residual imprisonment rate (weighted average across all crimes) and convert it to a z-score.\n(2) Compute the overall residual sentence duration (weighted average across all crimes) and convert it to a z-score.\n(3) Overall combined severity = z-score of overall residual rate + z-score of overall residual duration.\n\nInterpretation: synthesizes into a single number how severe a department is compared to the national average, across all crimes, after neutralizing the mechanical effect of recidivism.";
+        }
+      }
+      if (colName.startsWith('Sévérité combinée spécifique')) {
+        if (lang === 'fr') {
+          return "Indice de s\u00e9v\u00e9rit\u00e9 combin\u00e9 sp\u00e9cifique \u00e0 cette infraction.\n\n\u00c9tapes du calcul :\n(1) On calcule le taux d\u2019emprisonnement r\u00e9siduel sp\u00e9cifique (z-score du r\u00e9siduel infraction \u2212 z-score du r\u00e9siduel global).\n(2) On calcule la dur\u00e9e r\u00e9siduelle sp\u00e9cifique (z-score de la dur\u00e9e infraction \u2212 z-score de la dur\u00e9e globale).\n(3) S\u00e9v\u00e9rit\u00e9 combin\u00e9e sp\u00e9cifique = indicateur sp\u00e9cifique du taux + indicateur sp\u00e9cifique de la dur\u00e9e.\n\nInterpr\u00e9tation : une valeur positive indique que le d\u00e9partement est particuli\u00e8rement s\u00e9v\u00e8re pour cette infraction par rapport \u00e0 sa tendance g\u00e9n\u00e9rale. Une valeur n\u00e9gative signifie qu\u2019il est relativement plus cl\u00e9ment pour cette infraction.";
+        } else {
+          return "Crime-specific combined severity index.\n\nCalculation steps:\n(1) Compute the crime-specific residual imprisonment rate (z-score of crime residual \u2212 z-score of overall residual).\n(2) Compute the crime-specific residual duration (z-score of crime duration residual \u2212 z-score of overall duration residual).\n(3) Crime-specific combined severity = specific rate indicator + specific duration indicator.\n\nInterpretation: a positive value indicates the department is particularly severe for this crime compared to its general tendency. A negative value means it is relatively more lenient for this crime.";
+        }
+      }
+      if (colName.includes('Taux emprisonnement') && !colName.includes('résiduel')) {
+        return lang === 'fr'
+          ? 'Part des condamnations ayant donn\u00e9 lieu \u00e0 une peine d\u2019emprisonnement ferme. Calcul\u00e9e en divisant le nombre de peines d\u2019emprisonnement ferme (NB_EMP_F) par le nombre total de condamnations (NB_CONDA) dans le d\u00e9partement.'
+          : 'Share of convictions resulting in an immediate prison sentence. Calculated by dividing the number of immediate prison sentences (NB_EMP_F) by the total number of convictions (NB_CONDA) in the department.';
+      }
+      return descs['default'];
+    }
+
+    const SEVERITY_WARNING = {
+      en: '\u26A0 Caution: These figures should not be interpreted as a measure of judges\u2019 severity all else being equal. Cases reaching sentencing in each department may differ substantially due to varying prosecution policies, case filtering, plea-bargaining practices, and local case mix. This will become possible when <a href="https://www.courdecassation.fr/acces-rapide-judilibre" target="_blank" style="color:#c0392b;">Judilibre</a> includes first-instance court decisions, by applying <a href="https://arxiv.org/abs/2501.14579" target="_blank" style="color:#c0392b;">this analytical method</a>.',
+      fr: '\u26A0 Attention : Ces chiffres ne peuvent pas \u00eatre interpr\u00e9t\u00e9s comme mesurant la s\u00e9v\u00e9rit\u00e9 des juges toutes choses \u00e9gales par ailleurs. Les affaires arrivant au stade du jugement dans chaque d\u00e9partement peuvent diff\u00e9rer consid\u00e9rablement en raison de politiques de poursuites variables, du filtrage des affaires, des pratiques de comparution sur reconnaissance pr\u00e9alable de culpabilit\u00e9 et de la composition locale du contentieux. Ce qui sera possible quand <a href="https://www.courdecassation.fr/acces-rapide-judilibre" target="_blank" style="color:#c0392b;">Judilibre</a> contiendra les décisions de premières instances, en appliquant <a href="https://arxiv.org/abs/2501.14579" target="_blank" style="color:#c0392b;">cette méthode d\'analyse</a>.'
+    };
+
+    function isSeverityIndicator(colName) {
+      if (colName.includes('Durée moy')) return true;
+      if (colName.includes('Durée moyenne')) return true;
+      if (colName.startsWith('Sévérité résiduelle')) return true;
+      if (colName.includes('Taux emprisonnement')) return true;
+      if (colName.startsWith('Taux emp. ferme')) return true;
+      if (colName.startsWith('Taux emp. résiduel')) return true;
+      if (colName.startsWith('Durée rés. récidive')) return true;
+      if (colName.startsWith('Sévérité combinée')) return true;
+      return false;
+    }
+
+    function getLegendLabels(colName, lang) {
+      const t = I18N[lang];
+      if (colName === 'Couleur politique') {
+        return { low: t.legend_left, high: t.legend_right };
+      }
+      if (colName.startsWith('Taux poursuivis')) {
+        return { low: t.legend_fewer, high: t.legend_more };
+      }
+      if (colName.includes('Durée moy') || colName.includes('Durée moyenne') ||
+          colName.startsWith('Durée rés. récidive')) {
+        return { low: t.legend_shorter, high: t.legend_longer };
+      }
+      if (colName.startsWith('Sévérité résiduelle') || colName.startsWith('Sévérité combinée') ||
+          colName.startsWith('Taux emp. ferme spécifique') || colName.startsWith('Taux emp. résiduel') ||
+          colName.includes('Taux emprisonnement') || colName.startsWith('Taux emp. ferme / conda')) {
+        return { low: t.legend_low, high: t.legend_high };
+      }
+      if (colName === 'Chômage' || colName === 'Population' || colName.startsWith('Taux récidive légale')) {
+        return { low: t.legend_lower, high: t.legend_higher };
+      }
+      return { low: t.legend_lower, high: t.legend_higher };
+    }
+
+    function updateLegendLabels() {
+      const col = document.getElementById('indicatorSelect').value;
+      if (!col) return;
+      const labels = getLegendLabels(col, currentLang);
+      document.getElementById('legendLabelLow').textContent = labels.low;
+      document.getElementById('legendLabelHigh').textContent = labels.high;
+    }
+
+    function updateIndicatorDescription() {
+      const col = document.getElementById('indicatorSelect').value;
+      const descEl = document.getElementById('indicatorDescription');
+      const warnEl = document.getElementById('indicatorWarning');
+      updateLegendLabels();
+      if (col) {
+        const rawDesc = getIndicatorDescription(col, currentLang);
+        descEl.innerHTML = rawDesc.replace(/\n/g, '<br>');
+        if (isSeverityIndicator(col)) {
+          warnEl.innerHTML = SEVERITY_WARNING[currentLang];
+          warnEl.style.display = 'block';
+        } else {
+          warnEl.style.display = 'none';
+        }
+      } else {
+        descEl.textContent = '';
+        warnEl.style.display = 'none';
+      }
+    }
+
+    function getColumnLabel(colName, lang) {
+      const t = COLUMN_TRANSLATIONS[colName];
+      return t ? t[lang] : colName;
+    }
+
+    const GENERAL_COLUMNS = new Set(["Chômage", "Couleur politique", "Population", "Durée moy. emprisonnement ferme", "Taux emprisonnement ferme global", "Taux emp. résiduel récidive global", "Durée rés. récidive global", "Sévérité combinée globale"]);
+
+    const CATEGORY_COLUMN_MAP = {
+      'general': col => GENERAL_COLUMNS.has(col),
+      'ipv': col => col.includes('(VIF)'),
+      'cat1': col => col.includes('(1. Conduite'),
+      'cat2': col => col.includes('(2. Vols agg'),
+      'cat3': col => col.includes('(3. Vols sim'),
+      'cat4': col => col.includes('(4. Infractions'),
+      'cat5': col => col.includes('(5. Infractions'),
+      'cat6': col => col.includes('(6. Violences'),
+      'cat8': col => col.includes('(8. Outrage')
+    };
+
+    function getColumnsForCategory(category) {
+      const matcher = CATEGORY_COLUMN_MAP[category];
+      if (matcher) {
+        return indicatorColumns.filter(matcher);
+      }
+      return indicatorColumns;
+    }
+
+    function populateIndicatorDropdown() {
+      const category = document.getElementById('offenceSelect').value;
+      const cols = getColumnsForCategory(category);
+      const indicatorSelect = document.getElementById('indicatorSelect');
+      indicatorSelect.innerHTML = '';
+      cols.forEach(col => {
+        const opt = document.createElement('option');
+        opt.value = col;
+        opt.textContent = getColumnLabel(col, currentLang);
+        indicatorSelect.appendChild(opt);
+      });
+      updateMap();
+      updateIndicatorDescription();
+    }
+
+    let csvData = {};
+    let indicatorColumns = [];
+    let geoData = null;
+    let colorMode = 'color';
+
+    function parseFrenchNumber(str) {
+      if (!str || str === 'NA' || str.trim() === '') return null;
+      return parseFloat(str.replace(',', '.'));
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (I18N[lang][key]) {
+          el.textContent = I18N[lang][key];
+        }
+      });
+
+      const _lEN=document.getElementById('langEN'); if(_lEN) _lEN.classList.toggle('active', lang === 'en');
+      const _lFR=document.getElementById('langFR'); if(_lFR) _lFR.classList.toggle('active', lang === 'fr');
+
+      const offenceSelect = document.getElementById('offenceSelect');
+      const optKeys = ['opt_general','opt_cat1','opt_cat2','opt_cat3','opt_cat4','opt_cat5','opt_cat6','opt_ipv','opt_cat8'];
+      for (let i = 0; i < optKeys.length && i < offenceSelect.options.length; i++) {
+        offenceSelect.options[i].textContent = I18N[lang][optKeys[i]];
+      }
+
+      const indicatorSelect = document.getElementById('indicatorSelect');
+      for (let i = 0; i < indicatorSelect.options.length; i++) {
+        const colName = indicatorSelect.options[i].value;
+        indicatorSelect.options[i].textContent = getColumnLabel(colName, lang);
+      }
+      updateIndicatorDescription();
+    }
+
+    // lang toggle removed
+    
+
+    const mapContainer = document.querySelector('.mapContainer');
+    const width = mapContainer.clientWidth;
+    const height = mapContainer.clientHeight;
+
+    const svg = d3.select("#map")
+      .attr("width", "100%")
+      .attr("height", "100%")
+      .attr("viewBox", `0 0 ${width} ${height}`)
+      .attr("preserveAspectRatio", "xMidYMid meet");
+
+    const tooltip = d3.select("#tooltip");
+
+    const mapScale = Math.min(width, height) * 4.5;
+    const projection = d3.geoConicConformal()
+      .center([2.454071, 46.279229])
+      .scale(mapScale)
+      .translate([width / 2, height / 2]);
+
+    const pathGenerator = d3.geoPath().projection(projection);
+
+    const colorScaleColor = d3.scaleSequential()
+      .domain([0, 1])
+      .interpolator(d3.interpolateRdYlBu);
+
+    const colorScaleBW = d3.scaleSequential()
+      .domain([0, 1])
+      .interpolator(d3.interpolateGreys);
+
+    function getColorScale() {
+      return colorMode === 'bw' ? colorScaleBW : colorScaleColor;
+    }
+
+    function updateLegend() {
+      const legendBar = document.getElementById('legendBar');
+      const cs = getColorScale();
+      const gradient = [];
+      for (let i = 0; i <= 100; i++) {
+        gradient.push(cs(1 - i/100));
+      }
+      legendBar.style.background = `linear-gradient(to right, ${gradient.join(', ')})`;
+    }
+
+    updateLegend();
+
+    function updateMap() {
+      if (!geoData || indicatorColumns.length === 0) return;
+
+      const indicator = document.getElementById('indicatorSelect').value;
+      const cs = getColorScale();
+
+      const values = [];
+      for (const code in csvData) {
+        const v = csvData[code][indicator];
+        if (v !== null && v !== undefined) values.push(v);
+      }
+      const extent = d3.extent(values);
+      const normalizer = d3.scaleLinear().domain(extent).range([0, 1]);
+
+      svg.selectAll(".department")
+        .attr("fill", d => {
+          const code = d.properties.code;
+          const v = csvData[code] ? csvData[code][indicator] : null;
+          if (v === null || v === undefined) return "#ddd";
+          return cs(1 - normalizer(v));
+        });
+
+      updateLegend();
+    }
+
+    function loadCSV() {
+      return fetch('/data/VIF.csv')
+        .then(r => r.text())
+        .then(text => {
+          const lines = text.trim().split('\n').filter(l => l.replace(/;/g, '').trim() !== '');
+          if (lines.length < 2) return;
+
+          const headers = lines[0].split(';').map(h => h.replace(/^\uFEFF/, '').trim());
+          const deptColIndex = headers.findIndex(h => h.toLowerCase().includes('partement'));
+
+          indicatorColumns = headers.filter((h, i) => i !== deptColIndex && !EXCLUDED_COLUMNS.has(h) && !h.toLowerCase().includes('latitude') && !h.toLowerCase().includes('longitude'));
+
+          populateIndicatorDropdown();
+
+          csvData = {};
+          for (let i = 1; i < lines.length; i++) {
+            const cells = lines[i].split(';');
+            if (cells.length < headers.length) continue;
+            const deptName = cells[deptColIndex] ? cells[deptColIndex].trim().toUpperCase() : '';
+            if (!deptName) continue;
+            const code = DEPT_NAME_TO_CODE[deptName];
+            if (!code) continue;
+
+            csvData[code] = {};
+            indicatorColumns.forEach(col => {
+              const colIdx = headers.indexOf(col);
+              csvData[code][col] = parseFrenchNumber(cells[colIdx]);
+            });
+          }
+        });
+    }
+
+    Promise.all([
+      loadCSV(),
+      d3.json("https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements-version-simplifiee.geojson")
+    ]).then(([_, geo]) => {
+      geoData = geo;
+
+      const metropolitanDepts = geo.features.filter(f => {
+        const code = f.properties.code;
+        return !['971', '972', '973', '974', '976'].includes(code);
+      });
+
+      svg.selectAll(".department")
+        .data(metropolitanDepts)
+        .join("path")
+        .attr("class", "department")
+        .attr("d", pathGenerator)
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 0.5)
+        .style("cursor", "pointer")
+        .on("mouseover", function(event, d) {
+          d3.select(this).attr("stroke", "#333").attr("stroke-width", 1.5);
+
+          const indicator = document.getElementById('indicatorSelect').value;
+          const deptData = csvData[d.properties.code];
+          const value = deptData ? deptData[indicator] : null;
+
+          const formattedValue = value !== null && value !== undefined
+            ? (Number.isInteger(value) ? value.toString() : value.toFixed(4).replace(/0+$/, '').replace(/\.$/, ''))
+            : 'N/A';
+
+          const indicatorLabel = getColumnLabel(indicator, currentLang);
+          tooltip
+            .style("opacity", 1)
+            .html(`
+              <div class="tooltip__name">${d.properties.nom} (${d.properties.code})</div>
+              <div class="tooltip__value">${indicatorLabel}: ${formattedValue}</div>
+            `);
+        })
+        .on("mousemove", function(event) {
+          tooltip
+            .style("left", (event.pageX + 15) + "px")
+            .style("top", (event.pageY - 10) + "px");
+        })
+        .on("mouseout", function() {
+          d3.select(this).attr("stroke", "#fff").attr("stroke-width", 0.5);
+          tooltip.style("opacity", 0);
+        });
+
+      updateMap();
+    }).catch(error => console.error("Error loading data:", error));
+
+    document.getElementById('offenceSelect').addEventListener('change', populateIndicatorDropdown);
+    document.getElementById('indicatorSelect').addEventListener('change', () => { updateMap(); updateIndicatorDescription(); });
+
+    document.getElementById('colorMode').addEventListener('click', () => {
+      colorMode = 'color';
+      document.getElementById('colorMode').classList.add('active');
+      document.getElementById('bwMode').classList.remove('active');
+      updateMap();
     });
-  })();
+
+    document.getElementById('bwMode').addEventListener('click', () => {
+      colorMode = 'bw';
+      document.getElementById('bwMode').classList.add('active');
+      document.getElementById('colorMode').classList.remove('active');
+      updateMap();
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const svgElement = document.getElementById('map');
+      const bbox = svgElement.getBBox();
+      const vb = svgElement.getAttribute('viewBox').split(' ').map(Number);
+      const svgW = vb[2] || width;
+      const svgH = vb[3] || height;
+
+      const cloned = svgElement.cloneNode(true);
+      cloned.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      cloned.setAttribute('width', svgW);
+      cloned.setAttribute('height', svgH);
+
+      const styles = document.createElement('style');
+      styles.textContent = 'path { stroke: #fff; stroke-width: 0.5px; }';
+      cloned.insertBefore(styles, cloned.firstChild);
+
+      const svgData = new XMLSerializer().serializeToString(cloned);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      const scale = 2;
+
+      canvas.width = svgW * scale;
+      canvas.height = svgH * scale;
+      ctx.scale(scale, scale);
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, svgW, svgH);
+
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, svgW, svgH);
+        const link = document.createElement('a');
+        link.download = 'france-sentencing-map.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      };
+
+      img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    });
+
+    document.getElementById('downloadDataBtn').addEventListener('click', () => {
+      const CODE_TO_DEPT = {};
+      for (const [name, code] of Object.entries(DEPT_NAME_TO_CODE)) {
+        CODE_TO_DEPT[code] = name;
+      }
+      const codes = Object.keys(csvData).sort();
+      const cols = indicatorColumns;
+      const lang = currentLang;
+      const esc = (s) => '"' + String(s).replace(/"/g, '""') + '"';
+      const CRIME_CATS_EN = {
+        '(VIF)': 'IPV',
+        '(1. Conduite': 'Driving under Alcohol/Drugs',
+        '(2. Vols agg': 'Aggravated Theft',
+        '(3. Vols sim': 'Simple Theft',
+        '(4. Infractions à la police': 'Immigration Offences',
+        '(5. Infractions à la législation': 'Drug Offences',
+        '(6. Violences': 'Sexual Violence',
+        '(8. Outrage': 'Contempt & Violence against Authority'
+      };
+      const CRIME_CATS_FR = {
+        '(VIF)': 'VIF',
+        '(1. Conduite': 'Conduite alcool/stupéfiants',
+        '(2. Vols agg': 'Vols aggravés',
+        '(3. Vols sim': 'Vols simples',
+        '(4. Infractions à la police': 'Police des étrangers',
+        '(5. Infractions à la législation': 'Stupéfiants',
+        '(6. Violences': 'Violences sexuelles',
+        '(8. Outrage': 'Outrage/rébellion/violences'
+      };
+      function getCsvColumnLabel(colName, lang) {
+        const base = getColumnLabel(colName, lang);
+        const cats = lang === 'fr' ? CRIME_CATS_FR : CRIME_CATS_EN;
+        for (const [key, label] of Object.entries(cats)) {
+          if (colName.includes(key)) {
+            return base + ' - ' + label;
+          }
+        }
+        return base;
+      }
+      const headerRow = [esc('Department Code'), esc('Department Name')];
+      cols.forEach(col => {
+        headerRow.push(esc(getCsvColumnLabel(col, lang)));
+      });
+      const csvRows = [headerRow.join(',')];
+      codes.forEach(code => {
+        const row = [code, esc(CODE_TO_DEPT[code] || code)];
+        cols.forEach(col => {
+          const v = csvData[code][col];
+          row.push(v !== null && v !== undefined ? v : '');
+        });
+        csvRows.push(row.join(','));
+      });
+      const csvContent = csvRows.join('\n');
+      const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'sentencing-data-by-department.csv';
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+
+    applyLanguage('fr');
+  
 </script>
 </body>
 </html>
