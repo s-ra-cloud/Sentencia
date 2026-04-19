@@ -60,7 +60,7 @@
     
     .main {
       display: grid;
-      grid-template-columns: 400px 1fr;
+      grid-template-columns: 300px 1fr;
       height: min(88vh, 900px);
     }
     
@@ -206,14 +206,22 @@
       border-color: var(--text);
     }
     
-    @media (max-width: 900px) {
+    @media (max-width: 640px) {
       .main {
         grid-template-columns: 1fr;
+        height: auto;
       }
       
       .sidebar {
         border-right: none;
         border-bottom: 1px solid var(--border);
+        max-height: 45vh;
+        overflow-y: auto;
+      }
+
+      .mapContainer {
+        height: 70vw;
+        min-height: 360px;
       }
     }
   
@@ -264,10 +272,9 @@
   .sidebar__select{background:var(--bg)}
   .sidebar__btn{background:var(--bg)}
 
-  @media(max-width:900px){
+  @media(max-width:640px){
     .carte-info{grid-template-columns:1fr;margin:24px 16px 60px}
-    .main{height:auto !important}
-    .sidebar{max-height:50vh}
+    .map-preface__inner{grid-template-columns:1fr;gap:20px;padding:24px 20px}
   }
 </style>
 </head>
