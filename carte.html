@@ -901,8 +901,15 @@
     
 
     const mapContainer = document.querySelector('.mapContainer');
-    const width = mapContainer.clientWidth;
-    const height = mapContainer.clientHeight;
+
+    function getContainerDims() {
+      return {
+        width: mapContainer.clientWidth || mapContainer.getBoundingClientRect().width,
+        height: mapContainer.clientHeight || mapContainer.getBoundingClientRect().height
+      };
+    }
+
+    let { width, height } = getContainerDims();
 
     const svg = d3.select("#map")
       .attr("width", "100%")
@@ -910,14 +917,34 @@
       .attr("viewBox", `0 0 ${width} ${height}`)
       .attr("preserveAspectRatio", "xMidYMid meet");
 
+    // Re-fit the viewBox if container resizes (e.g. window resize)
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(() => {
+        const d = getContainerDims();
+        if (d.width > 10 && d.height > 10) {
+          svg.attr("viewBox", `0 0 ${d.width} ${d.height}`);
+        }
+      }).observe(mapContainer);
+    }
+
     const tooltip = d3.select("#tooltip");
 
-    const mapScale = Math.min(width, height) * 4.5;
-    const projection = d3.geoConicConformal()
-      .center([2.454071, 46.279229])
-      .scale(mapScale)
-      .translate([width / 2, height / 2]);
+    // Use actual dims for projection (re-read after layout paint)
+    function initProjection() {
+      const d = getContainerDims();
+      const w = d.width > 10 ? d.width : width;
+      const h = d.height > 10 ? d.height : height;
+      const mapScale = Math.min(w, h) * 4.5;
+      return {
+        proj: d3.geoConicConformal()
+          .center([2.454071, 46.279229])
+          .scale(mapScale)
+          .translate([w / 2, h / 2]),
+        w, h
+      };
+    }
 
+    let { proj: projection } = initProjection();
     const pathGenerator = d3.geoPath().projection(projection);
 
     const colorScaleColor = d3.scaleSequential()
@@ -1001,6 +1028,14 @@
         });
     }
 
+    requestAnimationFrame(function initMap() {
+    // Re-read dims after first paint so CSS layout is computed
+    const _d = getContainerDims();
+    if (_d.width > 10 && _d.height > 10) {
+      const { proj: _p } = initProjection();
+      Object.assign(projection, _p);
+    }
+
     Promise.all([
       loadCSV(),
       d3.json("https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements-version-simplifiee.geojson")
@@ -1051,6 +1086,8 @@
 
       updateMap();
     }).catch(error => console.error("Error loading data:", error));
+
+    }); // end requestAnimationFrame
 
     document.getElementById('offenceSelect').addEventListener('change', populateIndicatorDropdown);
     document.getElementById('indicatorSelect').addEventListener('change', () => { updateMap(); updateIndicatorDescription(); });
