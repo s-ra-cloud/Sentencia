@@ -177,7 +177,7 @@
     <div class="section-head">
       <span class="eyebrow">Prototype interactif</span>
       <h2>Premier modèle exploratoire — données de la carte.</h2>
-      <p class="lead">Ce module est un prototype de modèle dérivé directement des données publiées sur la carte. Il permet de visualiser, à titre <strong>strictement descriptif</strong>, les indicateurs observés pour un département, une catégorie d’infraction et un statut de récidive. Il ne constitue en aucun cas un outil de prédiction d’une décision pénale individuelle.</p>
+      <p class="lead">Ce module est un prototype de modèle dérivé directement des données publiées sur la carte. Il permet de visualiser, à titre <strong>strictement descriptif</strong>, les indicateurs observés pour un département et une catégorie d’infraction. Il ne constitue en aucun cas un outil de prédiction d’une décision pénale individuelle.</p>
     </div>
 
     <div class="proto-wrap">
@@ -193,19 +193,13 @@
               <label for="proto-offense">Catégorie d’infraction</label>
               <select id="proto-offense" aria-label="Catégorie d’infraction"></select>
             </div>
-            <div class="proto-field">
-              <label>Statut de récidive</label>
-              <div class="seg" id="proto-recidive" role="tablist">
-                <button type="button" class="active" data-val="primaire" role="tab" aria-selected="true">Primaire</button>
-                <button type="button" data-val="recidive" role="tab" aria-selected="false">Récidive légale</button>
-              </div>
-            </div>
           </div>
         </div>
 
         <div>
           <div class="proto-section-title">Variables prévues — verrouillées</div>
           <div class="locked-list" aria-label="Variables non disponibles dans cette version">
+            <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Récidive légale</span><span class="pill">v2</span></div>
             <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Garanties de représentation</span><span class="pill">v2</span></div>
             <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Âge du prévenu</span><span class="pill">v2</span></div>
             <div class="locked-row"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Genre</span><span class="pill">v2</span></div>
@@ -234,13 +228,9 @@
           <div class="ctx-row"><span>Taux de récidive légale observé (infraction × département)</span><span id="ctx-rec">—</span></div>
           <div class="ctx-row"><span>Nombre d’affaires poursuivies / 100 000 habitants</span><span id="ctx-prosec">—</span></div>
           <div class="ctx-row"><span>Sévérité résiduelle (z-score, vs national)</span><span id="ctx-sev">—</span></div>
-          <div id="ctx-recidive-extra" style="display:none;flex-direction:column;gap:6px;border-top:1px dashed var(--line);margin-top:6px;padding-top:10px">
-            <div class="ctx-row"><span>Résidu — taux d’emprisonnement (récidive, spécifique)</span><span id="ctx-resid-rate">—</span></div>
-            <div class="ctx-row"><span>Résidu — durée d’emprisonnement (récidive, spécifique)</span><span id="ctx-resid-len">—</span></div>
-          </div>
         </div>
 
-        <div class="ethics-note">Ce prototype est <strong>strictement descriptif</strong> et fondé sur des moyennes départementales agrégées (source : SSMJ). Toutes les valeurs principales sont des lectures directes du jeu de données publié sur la carte ; aucune transformation n’est appliquée. Le sélecteur de récidive révèle les indicateurs résiduels observés dans les données — il ne génère aucune prédiction de peine et ne reflète pas la décision attendue dans une affaire individuelle.</div>
+        <div class="ethics-note"><strong>Périmètre des données.</strong> Les indicateurs affichés portent exclusivement sur les <strong>tribunaux correctionnels</strong> (données SSMJ agrégées au niveau départemental). Ils ne couvrent ni les cours d’assises, ni les juridictions pour mineurs, ni les tribunaux de police. Ce prototype est <strong>strictement descriptif</strong> : toutes les valeurs sont des lectures directes du jeu de données publié sur la carte, sans transformation. Elles ne reflètent pas la décision attendue dans une affaire individuelle.</div>
       </div>
     </div>
   </div>
@@ -310,28 +300,6 @@
   </div>
 </section>
 
-<section class="section-tight">
-  <div class="container">
-    <div class="progress-card">
-      <div>
-        <span class="status-pill status-progress"><span class="dot"></span>En cours de développement</span>
-        <h3 style="margin-top:14px">Modèle interactif de sentencing</h3>
-        <p>Nous travaillons à un module interactif permettant d’explorer, à partir des données publiques, comment différents facteurs sont associés aux décisions pénales. L’outil sera conçu comme un instrument pédagogique et de recherche — strictement descriptif, jamais prédictif à l’échelle individuelle.</p>
-        <ul style="font-size:.92rem;color:var(--ink-soft);padding-left:18px;margin:6px 0 0">
-          <li>Sélection de variables et visualisation immédiate des associations</li>
-          <li>Comparaison entre territoires, périodes et profils de contentieux</li>
-          <li>Documentation transparente des hypothèses et des limites</li>
-        </ul>
-        <div class="progress-bar" aria-hidden="true"><span></span></div>
-        <div class="progress-meta">Progression du prototype · ouverture publique prévue ultérieurement</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
-        <a href="/feuille-de-route.html" class="btn btn-ghost">Voir la feuille de route</a>
-        <a href="/methodologie.html" class="btn btn-link">Lire la méthodologie →</a>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section class="section-tight" style="padding-bottom:96px">
   <div class="container">
@@ -364,120 +332,69 @@
 <script>
 (function(){
   const OFFENSES = [
-    {key:"1. Conduite avec alcool ou stupéfiants", short:"Conduite alcool / stupéfiants"},
-    {key:"2. Vols aggravés", short:"Vols aggravés"},
+    {key:"1. Conduite avec alcool ou stup\u00e9fiants", short:"Conduite alcool\u00a0/ stup\u00e9fiants"},
+    {key:"2. Vols aggrav\u00e9s", short:"Vols aggrav\u00e9s"},
     {key:"3. Vols simples", short:"Vols simples"},
-    {key:"4. Infractions à la police des étrangers", short:"Police des étrangers"},
-    {key:"5. Infractions à la législation sur les stupéfiants", short:"Législation stupéfiants"},
+    {key:"4. Infractions \u00e0 la police des \u00e9trangers", short:"Police des \u00e9trangers"},
+    {key:"5. Infractions \u00e0 la l\u00e9gislation sur les stup\u00e9fiants", short:"L\u00e9gislation stup\u00e9fiants"},
     {key:"6. Violences sexuelles", short:"Violences sexuelles"},
-    {key:"8. Outrage, rébellion et violences sur personnes dépositaires de l'autorité publique", short:"Outrage & rébellion"},
+    {key:"8. Outrage, r\u00e9bellion et violences sur personnes d\u00e9positaires de l\u2019autorit\u00e9 publique", short:"Outrage & r\u00e9bellion"},
     {key:"VIF", short:"Violences intra-familiales"}
   ];
 
-  const fNum = s => (!s||s==='NA'||s.trim()==='') ? null : parseFloat(s.replace(',','.'));
-  const fmt = (v,d=1) => v==null||isNaN(v) ? '—' : v.toLocaleString('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const fNum = s => (!s || s === 'NA' || s.trim() === '') ? null : parseFloat(s.replace(',', '.'));
+  const fmt  = (v, d) => v == null || isNaN(v) ? '\u2014' : v.toLocaleString('fr-FR', {minimumFractionDigits: d||1, maximumFractionDigits: d||1});
 
-  let rows = []; // {dept, fields:{}}
-  let recidive = 'primaire';
-
+  let rows = [];
   const $dept = document.getElementById('proto-dept');
   const $off  = document.getElementById('proto-offense');
   const $sum  = document.getElementById('proto-summary');
 
-  // populate offense dropdown immediately
-  $off.innerHTML = OFFENSES.map(o=>`<option value="${o.key}">${o.short}</option>`).join('');
+  $off.innerHTML = OFFENSES.map(o => '<option value="' + o.key + '">' + o.short + '</option>').join('');
 
-  fetch('/data/VIF.csv').then(r=>r.text()).then(text=>{
-    const lines = text.trim().split('\n').filter(l=>l.replace(/;/g,'').trim()!=='');
-    if(lines.length<2) return;
-    const headers = lines[0].split(';').map(h=>h.replace(/^\uFEFF/,'').trim());
-    rows = lines.slice(1).map(line=>{
+  fetch('/data/VIF.csv').then(r => r.text()).then(text => {
+    const lines = text.trim().split('\n').filter(l => l.replace(/;/g,'').trim() !== '');
+    if (lines.length < 2) return;
+    const headers = lines[0].split(';').map(h => h.replace(/^\uFEFF/, '').trim());
+    rows = lines.slice(1).map(line => {
       const cells = line.split(';');
       const o = {};
-      headers.forEach((h,i)=>{ o[h]=cells[i]!==undefined?cells[i]:''; });
+      headers.forEach((h, i) => { o[h] = cells[i] !== undefined ? cells[i] : ''; });
       return o;
-    }).filter(r => r['Département'] && r['Département'].trim());
-
-    // sort dept by name
-    rows.sort((a,b)=>a['Département'].localeCompare(b['Département'],'fr'));
-    $dept.innerHTML = rows.map((r,i)=>`<option value="${i}">${r['Département']}</option>`).join('');
-    update();
-  }).catch(e=>{
-    $sum.textContent = "Impossible de charger les données pour le moment.";
+    }).filter(r => r[headers[0]] && r[headers[0]].trim());
+    rows.sort((a, b) => a[headers[0]].localeCompare(b[headers[0]], 'fr'));
+    $dept.innerHTML = rows.map((r, i) => '<option value="' + i + '">' + r[headers[0]] + '</option>').join('');
+    update(headers[0]);
+  }).catch(() => {
+    $sum.textContent = "Impossible de charger les donn\u00e9es pour le moment.";
   });
 
-  function get(row, prefix, offenseKey){
-    const col = `${prefix} (${offenseKey})`;
-    return fNum(row[col]);
+  function get(row, prefix, off) { return fNum(row[prefix + ' (' + off + ')']); }
+
+  function update(deptCol) {
+    if (!rows.length) return;
+    var dKey = deptCol || Object.keys(rows[0])[0];
+    var row  = rows[parseInt($dept.value, 10) || 0];
+    var off  = $off.value;
+    var offShort = (OFFENSES.find(o => o.key === off) || {}).short || off;
+
+    document.getElementById('m-avg-sent').textContent = fmt(fNum(row['Dur\u00e9e moy. emprisonnement ferme']));
+    document.getElementById('m-avg-len').textContent  = fmt(get(row, 'Dur\u00e9e moy. emp. ferme', off));
+    document.getElementById('m-prob').textContent     = fmt(get(row, 'Taux emp. ferme / conda', off));
+    document.getElementById('m-share').textContent    = fmt(fNum(row['Taux emprisonnement ferme global']));
+
+    var recRate  = get(row, 'Taux r\u00e9cidive l\u00e9gale', off);
+    var prosec   = get(row, 'Taux poursuivis / 100k', off);
+    var sevResid = get(row, 'S\u00e9v\u00e9rit\u00e9 r\u00e9siduelle', off);
+    document.getElementById('ctx-rec').textContent    = recRate  != null ? fmt(recRate) + '\u202f%' : '\u2014';
+    document.getElementById('ctx-prosec').textContent = prosec   != null ? fmt(prosec) : '\u2014';
+    document.getElementById('ctx-sev').textContent    = sevResid != null ? (sevResid >= 0 ? '+' : '') + fmt(sevResid, 2) : '\u2014';
+
+    $sum.innerHTML = 'Indicateurs observ\u00e9s pour <strong>' + row[dKey] + '</strong> \u00b7 <strong>' + offShort + '</strong>.';
   }
 
-  function update(){
-    if(!rows.length) return;
-    const row = rows[parseInt($dept.value,10)||0];
-    const off = $off.value;
-    const offShort = (OFFENSES.find(o=>o.key===off)||{}).short || off;
-    const isRec = recidive==='recidive';
-
-    // Base values from CSV
-    const avgSent   = fNum(row['Durée moy. emprisonnement ferme']);          // dept overall (mois)
-    const avgLen    = get(row, 'Durée moy. emp. ferme', off);                 // offense × dept (mois)
-    const probPrison= get(row, 'Taux emp. ferme / conda', off);              // % custodial for offense
-    const shareGlob = fNum(row['Taux emprisonnement ferme global']);          // dept-wide %
-    const recRate   = get(row, 'Taux récidive légale', off);                  // %
-    const prosec    = get(row, 'Taux poursuivis / 100k', off);
-    const sevResid  = get(row, 'Sévérité résiduelle', off);
-
-    // The four headline metrics are *direct* readouts from VIF.csv — no transformation.
-    // The recidivism selector does NOT modify them: it would be pseudo-predictive.
-    // Instead, when "récidive légale" is selected, we surface in the contextual area
-    // the residual indicators observed in the data (Taux emp. résiduel récidive
-    // spécifique, Durée rés. récidive spécifique), which describe how this dept
-    // departs from the national pattern after accounting for legal recidivism.
-    document.getElementById('m-avg-sent').textContent = fmt(avgSent,1);
-    document.getElementById('m-avg-len').textContent  = fmt(avgLen,1);
-    document.getElementById('m-prob').textContent     = fmt(probPrison,1);
-    document.getElementById('m-share').textContent    = fmt(shareGlob,1);
-
-    // Contextual indicators
-    const ctxRec    = document.getElementById('ctx-rec');
-    const ctxProsec = document.getElementById('ctx-prosec');
-    const ctxSev    = document.getElementById('ctx-sev');
-    ctxRec.textContent    = recRate!=null ? fmt(recRate,1)+' %' : '—';
-    ctxProsec.textContent = prosec!=null ? fmt(prosec,1) : '—';
-    ctxSev.textContent    = sevResid!=null ? (sevResid>=0?'+':'')+fmt(sevResid,2) : '—';
-
-    // Toggle extra residual rows when récidive is selected
-    const residRate = get(row, 'Taux emp. résiduel récidive spécifique', off);
-    const residLen  = get(row, 'Durée rés. récidive spécifique', off);
-    const extra = document.getElementById('ctx-recidive-extra');
-    if(isRec){
-      extra.style.display = '';
-      document.getElementById('ctx-resid-rate').textContent =
-        residRate!=null ? (residRate>=0?'+':'')+fmt(residRate,2) : '—';
-      document.getElementById('ctx-resid-len').textContent =
-        residLen !=null ? (residLen >=0?'+':'')+fmt(residLen,2)+' mois' : '—';
-    } else {
-      extra.style.display = 'none';
-    }
-
-    const recNote = isRec
-      ? ' Les indicateurs résiduels affichés ci-dessous décrivent l’écart observé dans la régression locale liée à la récidive légale ; aucun ajustement n’est appliqué aux quatre indicateurs principaux.'
-      : '';
-    $sum.innerHTML = `Indicateurs observés pour <strong>${row['Département']}</strong> · <strong>${offShort}</strong> · statut <strong>${isRec?'récidive légale':'primaire'}</strong>.${recNote}`;
-  }
-
-  $dept.addEventListener('change', update);
-  $off.addEventListener('change', update);
-  document.querySelectorAll('#proto-recidive button').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      document.querySelectorAll('#proto-recidive button').forEach(b=>{
-        b.classList.remove('active'); b.setAttribute('aria-selected','false');
-      });
-      btn.classList.add('active'); btn.setAttribute('aria-selected','true');
-      recidive = btn.dataset.val;
-      update();
-    });
-  });
+  $dept.addEventListener('change', function(){ update(Object.keys(rows[0])[0]); });
+  $off.addEventListener('change',  function(){ update(Object.keys(rows[0])[0]); });
 })();
 </script>
 </body>
