@@ -11,28 +11,34 @@
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <link rel="stylesheet" href="/sentencia.css">
 <style>
-  /* ── Beta banner ── */
-  .beta-banner{
-    background:#EBF2FF;border-bottom:1px solid #C1D6F5;
-    padding:13px 32px;display:flex;align-items:flex-start;gap:12px;
+  /* ── Pre-map notice cards ── */
+  .map-notices{
+    background:var(--bg-alt);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:28px 32px;
   }
-  .beta-banner .icon{flex-shrink:0;width:18px;height:18px;margin-top:1px;color:#1F5FA6}
-  .beta-banner p{font-size:.92rem;color:#1A3F6F;margin:0}
-  .beta-banner strong{font-weight:600}
-  .beta-banner a{color:#1F5FA6;text-decoration:underline;text-underline-offset:2px}
-
-  /* ── Info cards below map ── */
-  .carte-info{
+  .map-notices__grid{
     max-width:var(--max);
-    margin:40px auto 80px;
-    padding:0 32px;
-    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-    background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
   }
-  .carte-info > div{background:var(--bg);padding:24px 28px}
-  .carte-info h3{font-size:.85rem;font-family:var(--sans);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
-  .carte-info p{font-size:.92rem;margin:0}
-  .carte-info a{color:var(--accent);border-bottom:1px solid var(--line-strong)}
+  .mn-card{background:var(--bg);padding:20px 22px}
+  .mn-card--beta{background:#F8F4ED}
+  .mn-card__heading{
+    font-family:var(--sans);font-size:.72rem;font-weight:600;
+    letter-spacing:.07em;text-transform:uppercase;color:var(--accent);margin:0 0 7px;
+  }
+  .mn-card--beta .mn-card__heading{color:var(--gold)}
+  .mn-card__text{font-size:.875rem;color:var(--ink-soft);line-height:1.6;margin:0}
+  .mn-card__text a{color:var(--accent);border-bottom:1px solid var(--line-strong)}
+  .mn-card--beta .mn-card__text a{color:var(--gold)}
 
   /* ── Map CSS (from geography-sentencing.html, adapted) ── */
 
@@ -255,7 +261,8 @@
     margin:0;
   }
   @media(max-width:900px){
-    .map-preface__inner{grid-template-columns:1fr;gap:20px;padding:24px 20px}
+    .map-notices{padding:16px}
+    .map-notices__grid{grid-template-columns:1fr}
   }
 
   /* ── Sentencia overrides for the map embed ── */
@@ -265,21 +272,13 @@
   .sidebar__btn{background:var(--bg)}
 
   @media(max-width:640px){
-    .carte-info{grid-template-columns:1fr;margin:24px 16px 60px}
-    .map-preface__inner{grid-template-columns:1fr;gap:20px;padding:24px 20px}
+.map-preface__inner{grid-template-columns:1fr;gap:20px;padding:24px 20px}
   }
 </style>
 </head>
 <body data-page="carte">
 <div id="site-header"></div>
 
-<div class="beta-banner" role="note" aria-label="Version bêta">
-  <svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-    <circle cx="10" cy="10" r="8.5"/>
-    <path d="M10 9v4.5M10 6.5v.5" stroke-linecap="round"/>
-  </svg>
-  <p><strong>Version bêta.</strong> Cette carte est en cours de développement. Si vous constatez une valeur incohérente, un indicateur erroné ou un problème d’affichage, merci de nous le signaler à <a href="mailto:sacha.raoult@univ-amu.fr">sacha.raoult@univ-amu.fr</a> en précisant le département et l’indicateur concernés. Votre retour est précieux.</p>
-</div>
 
 <section class="page-header">
   <div class="container">
@@ -289,14 +288,32 @@
   </div>
 </section>
 
-<!-- ══ Integrated map (no iframe) ══ -->
-<div class="map-preface">
-  <div class="map-preface__inner">
-    <div>
-      <h3 class="map-preface__heading" data-i18n="geo_about_heading">À propos de cette carte</h3>
-      <p class="map-preface__text" data-i18n="geo_about_text">Cette carte représente les résultats judiciaires au niveau départemental, et non la prévalence de la criminalité ou les infractions signalées. La visualisation utilise des données administratives de condamnation agrégées par département, les couleurs indiquant la sévérité relative des peines au sein de la distribution nationale. Cette visualisation repose exclusivement sur des données agrégées au niveau départemental. Elle ne permet en aucun cas d’identifier ou d’évaluer un magistrat individuellement.</p>
+<section class="map-notices">
+  <div class="map-notices__grid">
+    <div class="mn-card">
+      <h3 class="mn-card__heading">À propos de cette carte</h3>
+      <p class="mn-card__text" data-i18n="geo_about_text">Cette carte représente les résultats judiciaires au niveau départemental, et non la prévalence de la criminalité ou les infractions signalées. Les couleurs indiquent la sévérité relative des peines au sein de la distribution nationale.</p>
     </div>
-    <div>
+    <div class="mn-card">
+      <h3 class="mn-card__heading">Comment lire la carte</h3>
+      <p class="mn-card__text">Sélectionnez une catégorie d’infraction puis un indicateur. Bleu = sévérité moindre, rouge = sévérité plus élevée. Survolez un département pour afficher sa valeur précise.</p>
+    </div>
+    <div class="mn-card">
+      <h3 class="mn-card__heading">Précautions d’interprétation</h3>
+      <p class="mn-card__text">Les indicateurs sont strictement descriptifs. Ils ne classent pas les juridictions et ne permettent pas de prédire l’issue d’une affaire individuelle. Les écarts reflètent une combinaison de facteurs — voir <a href="/methodologie.html">la méthodologie</a>.</p>
+    </div>
+    <div class="mn-card">
+      <h3 class="mn-card__heading">Sources</h3>
+      <p class="mn-card__text" data-i18n="geo_data_text">Données du Service statistique du Ministère de la Justice (Cassiopée), agrégées au niveau départemental. Sources documentées dans la <a href="/bibliographie.html">bibliographie</a>.</p>
+    </div>
+    <div class="mn-card mn-card--beta">
+      <h3 class="mn-card__heading">Version bêta</h3>
+      <p class="mn-card__text">Carte en cours de développement. Pour signaler une valeur incohérente ou un problème d’affichage : <a href="mailto:sacha.raoult@univ-amu.fr">sacha.raoult@univ-amu.fr</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ Integrated map (no iframe) ══ -->    <div>
       <h3 class="map-preface__heading" data-i18n="geo_data_heading">Sources des données</h3>
       <p class="map-preface__text" data-i18n="geo_data_text">Les données judiciaires proviennent de la cartographie du contentieux pénal produite par le Service statistique du ministère de la Justice, à partir du système d’information Cassiopée. Les données couvrent les condamnations prononcées par les juridictions pénales de première instance pour les prévenus majeurs.</p>
     </div>
@@ -353,12 +370,6 @@
 </main>
 
 <div id="tooltip" class="tooltip"></div>
-
-<div class="carte-info">
-  <div>
-    <h3>Comment lire la carte</h3>
-    <p>Sélectionnez une catégorie d’infraction puis un indicateur. Les couleurs traduisent la position relative de chaque département dans la distribution nationale. Survolez un département pour afficher sa valeur précise.</p>
-  </div>
   <div>
     <h3>Précautions d’interprétation</h3>
     <p>Les indicateurs sont descriptifs. Ils ne classent pas les juridictions et ne prédisent pas l’issue d’une affaire individuelle. Les écarts territoriaux reflètent une combinaison de facteurs — voir <a href="/methodologie.html">la méthodologie</a>.</p>
