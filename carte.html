@@ -217,6 +217,47 @@
       }
     }
   
+  /* ── Map preface (above the map) ── */
+  .map-preface{
+    border-top:1px solid var(--line);
+    background:var(--bg-alt);
+  }
+  .map-preface__inner{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:32px 32px;
+    display:grid;
+    grid-template-columns:1fr 2fr 2fr;
+    gap:40px;
+    align-items:start;
+  }
+  .map-preface__title{
+    font-family:var(--serif);
+    font-size:1.15rem;
+    font-weight:500;
+    color:var(--ink);
+    line-height:1.3;
+    margin:0;
+  }
+  .map-preface__heading{
+    font-family:var(--sans);
+    font-size:.75rem;
+    font-weight:600;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 8px;
+  }
+  .map-preface__text{
+    font-size:.88rem;
+    color:var(--ink-soft);
+    line-height:1.6;
+    margin:0;
+  }
+  @media(max-width:900px){
+    .map-preface__inner{grid-template-columns:1fr;gap:20px;padding:24px 20px}
+  }
+
   /* ── Sentencia overrides for the map embed ── */
   .main{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .sidebar{background:var(--bg)}
@@ -250,20 +291,24 @@
 </section>
 
 <!-- ══ Integrated map (no iframe) ══ -->
+<div class="map-preface">
+  <div class="map-preface__inner">
+    <div>
+      <h2 class="map-preface__title" data-i18n="geo_title">La Géographie des Condamnations en France</h2>
+    </div>
+    <div>
+      <h3 class="map-preface__heading" data-i18n="geo_about_heading">À propos de cette carte</h3>
+      <p class="map-preface__text" data-i18n="geo_about_text">Cette carte représente les résultats judiciaires au niveau départemental, et non la prévalence de la criminalité ou les infractions signalées. La visualisation utilise des données administratives de condamnation agrégées par département, les couleurs indiquant la sévérité relative des peines au sein de la distribution nationale. Cette visualisation repose exclusivement sur des données agrégées au niveau départemental. Elle ne permet en aucun cas d’identifier ou d’évaluer un magistrat individuellement.</p>
+    </div>
+    <div>
+      <h3 class="map-preface__heading" data-i18n="geo_data_heading">Sources des données</h3>
+      <p class="map-preface__text" data-i18n="geo_data_text">Les données judiciaires proviennent de la cartographie du contentieux pénal produite par le Service statistique du ministère de la Justice, à partir du système d’information Cassiopée. Les données couvrent les condamnations prononcées par les juridictions pénales de première instance pour les prévenus majeurs.</p>
+    </div>
+  </div>
+</div>
+
 <main class="main">
 <aside class="sidebar">
-      <h1 class="sidebar__title" data-i18n="geo_title">The Geography of Sentencing in France</h1>
-      
-      <div class="sidebar__section">
-        <h2 class="sidebar__heading" data-i18n="geo_about_heading">About This Map</h2>
-        <p class="sidebar__text" data-i18n="geo_about_text">This map represents judicial outcomes at the departmental level, not crime prevalence or reported offences. The visualization uses administrative sentencing data aggregated by department, with colors indicating relative sentencing severity within the national distribution. This visualization is based exclusively on data aggregated at the departmental level. It cannot in any way be used to identify or evaluate an individual judge.</p>
-      </div>
-      
-      <div class="sidebar__section">
-        <h2 class="sidebar__heading" data-i18n="geo_data_heading">Data Sources</h2>
-        <p class="sidebar__text" data-i18n="geo_data_text">The judicial data come from the criminal litigation mapping produced by the Statistical Service of the Ministry of Justice, based on the Cassiopée information system. The data cover convictions handed down by first-instance criminal courts for adult defendants.</p>
-      </div>
-      
       <div class="sidebar__section">
         <h2 class="sidebar__heading" data-i18n="geo_offence_heading">Offence Category</h2>
         <select class="sidebar__select" id="offenceSelect">
