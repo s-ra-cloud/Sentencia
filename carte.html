@@ -12,32 +12,50 @@
 <link rel="stylesheet" href="/sentencia.css">
 <style>
   /* ── Pre-map notice cards ── */
+  /* Pre-map notice cards */
   .map-notices{
     background:var(--bg-alt);
     border-top:1px solid var(--line);
     border-bottom:1px solid var(--line);
-    padding:28px 32px;
+    padding:24px 32px;
   }
   .map-notices__grid{
     max-width:var(--max);
     margin:0 auto;
     display:grid;
     grid-template-columns:repeat(3,1fr);
+    grid-template-rows:auto auto;
     gap:1px;
     background:var(--line);
     border:1px solid var(--line);
     border-radius:6px;
     overflow:hidden;
   }
-  .mn-card{background:var(--bg);padding:20px 22px}
+  .mn-card{
+    background:var(--bg);
+    padding:18px 20px;
+    display:flex;
+    flex-direction:column;
+  }
   .mn-card--beta{background:#F8F4ED}
   .mn-card__heading{
-    font-family:var(--sans);font-size:.72rem;font-weight:600;
-    letter-spacing:.07em;text-transform:uppercase;color:var(--accent);margin:0 0 7px;
+    font-family:var(--sans);
+    font-size:.7rem;
+    font-weight:600;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 6px;
+    flex-shrink:0;
   }
   .mn-card--beta .mn-card__heading{color:var(--gold)}
-  .mn-card__text{font-size:.875rem;color:var(--ink-soft);line-height:1.6;margin:0}
-  .mn-card__text a{color:var(--accent);border-bottom:1px solid var(--line-strong)}
+  .mn-card__text{
+    font-size:.84rem;
+    color:var(--ink-soft);
+    line-height:1.55;
+    margin:0;
+  }
+  .mn-card__text a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
   .mn-card--beta .mn-card__text a{color:var(--gold)}
 
   /* ── Map CSS (from geography-sentencing.html, adapted) ── */
@@ -232,34 +250,6 @@
     }
   
   /* ── Map preface (above the map) ── */
-  .map-preface{
-    border-top:1px solid var(--line);
-    background:var(--bg-alt);
-  }
-  .map-preface__inner{
-    max-width:var(--max);
-    margin:0 auto;
-    padding:28px 32px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:40px;
-    align-items:start;
-  }
-  .map-preface__heading{
-    font-family:var(--sans);
-    font-size:.75rem;
-    font-weight:600;
-    letter-spacing:.07em;
-    text-transform:uppercase;
-    color:var(--accent);
-    margin:0 0 8px;
-  }
-  .map-preface__text{
-    font-size:.88rem;
-    color:var(--ink-soft);
-    line-height:1.6;
-    margin:0;
-  }
   @media(max-width:900px){
     .map-notices{padding:16px}
     .map-notices__grid{grid-template-columns:1fr}
@@ -272,7 +262,8 @@
   .sidebar__btn{background:var(--bg)}
 
   @media(max-width:640px){
-.map-preface__inner{grid-template-columns:1fr;gap:20px;padding:24px 20px}
+    .map-notices{padding:16px}
+    .map-notices__grid{grid-template-columns:1fr}
   }
 </style>
 </head>
@@ -291,35 +282,34 @@
 <section class="map-notices">
   <div class="map-notices__grid">
     <div class="mn-card">
-      <h3 class="mn-card__heading">À propos de cette carte</h3>
-      <p class="mn-card__text" data-i18n="geo_about_text">Cette carte représente les résultats judiciaires au niveau départemental, et non la prévalence de la criminalité ou les infractions signalées. Les couleurs indiquent la sévérité relative des peines au sein de la distribution nationale.</p>
+      <h3 class="mn-card__heading">Données judiciaires, pas pénales</h3>
+      <p class="mn-card__text">Cette carte montre les résultats judiciaires (condamnations), non la criminalité ou les infractions signalées. Un département coloré en rouge ne signifie pas plus de crimes commis.</p>
+    </div>
+    <div class="mn-card">
+      <h3 class="mn-card__heading">Niveau départemental uniquement</h3>
+      <p class="mn-card__text">Les données sont agrégées à l’échelle du département. Elles ne permettent pas d’identifier ou d’évaluer un magistrat, un tribunal ou un justiciable individuellement.</p>
+    </div>
+    <div class="mn-card">
+      <h3 class="mn-card__heading">Strictement descriptif</h3>
+      <p class="mn-card__text">Les indicateurs ne classent pas les juridictions et ne prédisent pas l’issue d’une affaire. Les écarts territoriaux reflètent de multiples facteurs — voir <a href="/methodologie.html">la méthodologie</a>.</p>
     </div>
     <div class="mn-card">
       <h3 class="mn-card__heading">Comment lire la carte</h3>
-      <p class="mn-card__text">Sélectionnez une catégorie d’infraction puis un indicateur. Bleu = sévérité moindre, rouge = sévérité plus élevée. Survolez un département pour afficher sa valeur précise.</p>
-    </div>
-    <div class="mn-card">
-      <h3 class="mn-card__heading">Précautions d’interprétation</h3>
-      <p class="mn-card__text">Les indicateurs sont strictement descriptifs. Ils ne classent pas les juridictions et ne permettent pas de prédire l’issue d’une affaire individuelle. Les écarts reflètent une combinaison de facteurs — voir <a href="/methodologie.html">la méthodologie</a>.</p>
+      <p class="mn-card__text">Choisissez une catégorie d’infraction et un indicateur. Les couleurs indiquent la position relative dans la distribution nationale. Survolez un département pour sa valeur.</p>
     </div>
     <div class="mn-card">
       <h3 class="mn-card__heading">Sources</h3>
-      <p class="mn-card__text" data-i18n="geo_data_text">Données du Service statistique du Ministère de la Justice (Cassiopée), agrégées au niveau départemental. Sources documentées dans la <a href="/bibliographie.html">bibliographie</a>.</p>
+      <p class="mn-card__text">Service statistique du Ministère de la Justice (Cassiopée), tribunaux correctionnels, prévenus majeurs. Détail des sources dans la <a href="/bibliographie.html">bibliographie</a>.</p>
     </div>
     <div class="mn-card mn-card--beta">
       <h3 class="mn-card__heading">Version bêta</h3>
-      <p class="mn-card__text">Carte en cours de développement. Pour signaler une valeur incohérente ou un problème d’affichage : <a href="mailto:sacha.raoult@univ-amu.fr">sacha.raoult@univ-amu.fr</a>.</p>
+      <p class="mn-card__text">Carte en développement. Signalez toute valeur incohérente à <a href="mailto:sacha.raoult@univ-amu.fr">sacha.raoult@univ-amu.fr</a> en précisant le département et l’indicateur.</p>
     </div>
   </div>
 </section>
 
-<!-- ══ Integrated map (no iframe) ══ -->    <div>
-      <h3 class="map-preface__heading" data-i18n="geo_data_heading">Sources des données</h3>
-      <p class="map-preface__text" data-i18n="geo_data_text">Les données judiciaires proviennent de la cartographie du contentieux pénal produite par le Service statistique du ministère de la Justice, à partir du système d’information Cassiopée. Les données couvrent les condamnations prononcées par les juridictions pénales de première instance pour les prévenus majeurs.</p>
-    </div>
-  </div>
-</div>
 
+<!-- ══ Integrated map (no iframe) ══ -->
 <main class="main">
 <aside class="sidebar">
       <div class="sidebar__section">
