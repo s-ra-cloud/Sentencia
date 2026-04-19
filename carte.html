@@ -22,20 +22,21 @@
   .beta-banner strong{font-weight:600}
   .beta-banner a{color:#1F5FA6;text-decoration:underline;text-underline-offset:2px}
 
-  .carte-page{padding:48px 0 80px}
-  .carte-wrap{max-width:1440px;margin:0 auto;padding:0 32px}
+  .carte-page{padding:0 0 80px}
+  .carte-wrap{max-width:100%;margin:0;padding:0}
   .carte-frame{
-    border:1px solid var(--line);
-    background:#fff;
-    border-radius:6px;
+    width:100%;
+    height:min(88vh,900px);
+    min-height:640px;
     overflow:hidden;
-    box-shadow:var(--shadow);
-    height:min(82vh,820px);
-    min-height:620px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
   }
   .carte-frame iframe{width:100%;height:100%;border:none;display:block;background:#fff}
   .carte-info{
-    margin-top:32px;
+    max-width:var(--max);
+    margin:40px auto 0;
+    padding:0 32px;
     display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
     background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;
   }
@@ -44,10 +45,9 @@
   .carte-info p{font-size:.92rem;margin:0}
   .carte-info a{color:var(--accent);border-bottom:1px solid var(--line-strong)}
   @media (max-width:900px){
-    .carte-info{grid-template-columns:1fr}
+    .carte-info{grid-template-columns:1fr;margin:24px 16px 0}
     .carte-frame{height:auto;min-height:0}
     .carte-frame iframe{height:140vh;min-height:1000px}
-    .carte-wrap{padding:0 20px}
   }
 </style>
 </head>
@@ -71,24 +71,22 @@
 </section>
 
 <section class="carte-page">
-  <div class="carte-wrap">
-    <div class="carte-frame">
-      <iframe id="mapFrame" src="/geography-sentencing.html#lang=fr" title="Carte interactive Sentencia" loading="lazy"></iframe>
-    </div>
+  <div class="carte-frame">
+    <iframe id="mapFrame" src="/geography-sentencing.html#lang=fr" title="Carte interactive Sentencia" loading="lazy"></iframe>
+  </div>
 
-    <div class="carte-info">
-      <div>
-        <h3>Comment lire la carte</h3>
-        <p>Sélectionnez une catégorie d’infraction puis un indicateur. Les couleurs traduisent la position relative de chaque département dans la distribution nationale. Survolez ou cliquez sur un département pour afficher sa valeur précise.</p>
-      </div>
-      <div>
-        <h3>Précautions d’interprétation</h3>
-        <p>Les indicateurs sont descriptifs. Ils ne classent pas les juridictions et ne prédisent pas l’issue d’une affaire individuelle. Les écarts territoriaux reflètent une combinaison de facteurs (contentieux, démographie, organisation judiciaire) — voir <a href="/methodologie.html">la méthodologie</a>.</p>
-      </div>
-      <div>
-        <h3>Sources</h3>
-        <p>Données issues du Service statistique du Ministère de la Justice (système d’information Cassiopée), agrégées au niveau départemental. Les sources et traitements sont documentés dans la <a href="/bibliographie.html">bibliographie</a>.</p>
-      </div>
+  <div class="carte-info">
+    <div>
+      <h3>Comment lire la carte</h3>
+      <p>Sélectionnez une catégorie d’infraction puis un indicateur. Les couleurs traduisent la position relative de chaque département dans la distribution nationale. Survolez ou cliquez sur un département pour afficher sa valeur précise.</p>
+    </div>
+    <div>
+      <h3>Précautions d’interprétation</h3>
+      <p>Les indicateurs sont descriptifs. Ils ne classent pas les juridictions et ne prédisent pas l’issue d’une affaire individuelle. Les écarts territoriaux reflètent une combinaison de facteurs (contentieux, démographie, organisation judiciaire) — voir <a href="/methodologie.html">la méthodologie</a>.</p>
+    </div>
+    <div>
+      <h3>Sources</h3>
+      <p>Données issues du Service statistique du Ministère de la Justice (système d’information Cassiopée), agrégées au niveau départemental. Les sources et traitements sont documentés dans la <a href="/bibliographie.html">bibliographie</a>.</p>
     </div>
   </div>
 </section>
