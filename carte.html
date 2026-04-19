@@ -255,6 +255,23 @@
     .map-notices__grid{grid-template-columns:1fr}
   }
 
+  /* ── Page header with hero image ── */
+  body[data-page="carte"] .page-header{
+    background:
+      linear-gradient(to right, var(--bg) 42%, transparent 68%),
+      url('/sentencia-assets/hero-courtroom.png') right center / auto 100% no-repeat,
+      var(--bg);
+    padding:72px 0 60px;
+    border-bottom:none;
+  }
+  body[data-page="carte"] .page-header h1{font-size:clamp(1.9rem,3.5vw,2.8rem)}
+  @media(max-width:900px){
+    body[data-page="carte"] .page-header{
+      background:var(--bg);
+      padding:48px 0 40px;
+    }
+  }
+
   /* ── Sentencia overrides for the map embed ── */
   .main{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .sidebar{background:var(--bg)}
