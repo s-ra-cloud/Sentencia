@@ -144,10 +144,10 @@ app.post('/api/newsletter', async (req, res) => {
   try {
     const file = path.join(__dirname, 'data', 'newsletter.json');
     let list = [];
-    try { list = JSON.parse(await fs.readFile(file, 'utf8')); } catch {}
+    try { list = JSON.parse(fs.readFileSync(file, 'utf8')); } catch {}
     if (list.find(e => e.email === email)) return res.json({ already: true });
     list.push({ email, date: new Date().toISOString() });
-    await fs.writeFile(file, JSON.stringify(list, null, 2));
+    fs.writeFileSync(file, JSON.stringify(list, null, 2));
     res.json({ ok: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
