@@ -773,7 +773,15 @@
       btn.addEventListener('click', function() {
         var idx = parseInt(btn.getAttribute('data-idx'), 10);
         var chosen = current.opts[idx];
-        trail.push({ q: current.q, a: chosen.l });
+        var label = chosen.l;
+        if (chosen.r) {
+          var key = JSON.stringify(chosen.r);
+          var sameLabels = current.opts
+            .filter(function(o){ return o.r && JSON.stringify(o.r) === key; })
+            .map(function(o){ return o.l; });
+          if (sameLabels.length > 1) label = sameLabels.join(' ou ');
+        }
+        trail.push({ q: current.q, a: label });
         if (chosen.r) {
           showResult(chosen.r);
         } else {
@@ -903,7 +911,15 @@
       btn.addEventListener('click', function() {
         var idx = parseInt(btn.getAttribute('data-idx'), 10);
         var chosen = current.opts[idx];
-        trail.push({ q: current.q, a: chosen.l });
+        var label = chosen.l;
+        if (chosen.r) {
+          var key = JSON.stringify(chosen.r);
+          var sameLabels = current.opts
+            .filter(function(o){ return o.r && JSON.stringify(o.r) === key; })
+            .map(function(o){ return o.l; });
+          if (sameLabels.length > 1) label = sameLabels.join(' ou ');
+        }
+        trail.push({ q: current.q, a: label });
         if (chosen.r) {
           showResult(chosen.r);
         } else {
