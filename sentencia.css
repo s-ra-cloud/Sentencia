@@ -82,9 +82,9 @@ p{color:var(--ink-soft)}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:1.35rem;letter-spacing:.01em}
 .brand-mark{
   width:28px;height:28px;border:1.5px solid var(--ink);
-  display:grid;place-items:center;font-size:.85rem;font-weight:600;
-  font-family:var(--sans);
+  display:grid;place-items:center;
 }
+.brand-mark svg{width:18px;height:18px;display:block}
 .brand strong{font-weight:500}
 .nav-links{display:flex;gap:28px;align-items:center}
 .nav-links a{

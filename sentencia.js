@@ -15,7 +15,7 @@
     <header class="site-header">
       <div class="nav">
         <a href="/" class="brand" aria-label="Sentencia – accueil">
-          <span class="brand-mark">S</span>
+          <span class="brand-mark"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="10" y1="3.5" x2="10" y2="16"/><line x1="7" y1="16" x2="13" y2="16"/><line x1="3" y1="6" x2="17" y2="6"/><line x1="4" y1="6" x2="4" y2="10.5"/><line x1="16" y1="6" x2="16" y2="10.5"/><path d="M2,10.5 Q4,13.5 6,10.5"/><path d="M14,10.5 Q16,13.5 18,10.5"/><circle cx="10" cy="6" r=".8" fill="currentColor" stroke="none"/></svg></span>
           <strong>Sentencia</strong>
         </a>
         <nav class="nav-links" id="navLinks">
@@ -38,7 +38,7 @@
     <footer class="site-footer">
       <div class="container">
         <div class="footer-brand">
-          <div class="brand"><span class="brand-mark">S</span><strong>Sentencia</strong></div>
+          <div class="brand"><span class="brand-mark"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="10" y1="3.5" x2="10" y2="16"/><line x1="7" y1="16" x2="13" y2="16"/><line x1="3" y1="6" x2="17" y2="6"/><line x1="4" y1="6" x2="4" y2="10.5"/><line x1="16" y1="6" x2="16" y2="10.5"/><path d="M2,10.5 Q4,13.5 6,10.5"/><path d="M14,10.5 Q16,13.5 18,10.5"/><circle cx="10" cy="6" r=".8" fill="currentColor" stroke="none"/></svg></span><strong>Sentencia</strong></div>
           <p>Plateforme ouverte d’analyse de la justice pénale en France. Un projet de recherche public et non lucratif porté par le Machina Research Network.</p>
           <div class="badges">
             <span class="badge">Open source</span>
