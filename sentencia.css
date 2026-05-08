@@ -93,12 +93,30 @@ p{color:var(--ink-soft)}
 }
 .nav-links a:hover,.nav-links a.active{color:var(--ink);border-bottom-color:var(--ink)}
 .nav-cta{
-  padding:10px 18px;border:1px solid var(--ink);
-  border-radius:999px;font-size:.88rem;
-  display:inline-flex;align-items:center;gap:8px;transition:.2s;
+  padding:10px 18px;border:1px solid var(--ink);background:none;cursor:pointer;
+  border-radius:999px;font-size:.88rem;font-family:inherit;color:var(--ink);
+  display:inline-flex;align-items:center;gap:8px;transition:.2s;white-space:nowrap;
 }
 .nav-cta:hover{background:var(--ink);color:#fff}
 .nav-toggle{display:none}
+.nl-drop{
+  position:fixed;top:64px;right:32px;z-index:999;
+  background:#fff;border:1px solid var(--line-strong);border-radius:12px;
+  box-shadow:0 8px 32px rgba(0,0,0,.12);
+  padding:20px 20px 16px;width:320px;
+}
+.nl-drop form{display:flex;gap:8px}
+.nl-drop input[type="email"]{
+  flex:1;padding:9px 13px;border:1px solid var(--line-strong);border-radius:999px;
+  font-family:inherit;font-size:.88rem;color:var(--ink);outline:none;
+}
+.nl-drop input[type="email"]:focus{border-color:var(--accent)}
+.nl-drop button[type="submit"]{
+  padding:9px 16px;border:none;border-radius:999px;cursor:pointer;
+  background:var(--accent);color:#fff;font-family:inherit;font-size:.88rem;font-weight:500;white-space:nowrap;
+}
+.nl-drop button[type="submit"]:hover{background:var(--ink)}
+.nl-drop p{margin:8px 0 0;font-size:.82rem;min-height:1em}
 
 /* HERO */
 .hero{

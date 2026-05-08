@@ -21,7 +21,7 @@
         <nav class="nav-links" id="navLinks">
           ${NAV.map(n=>`<a href="${n.href}" class="${n.key===current?'active':''}">${n.label}</a>`).join('')}
         </nav>
-        <a href="/carte.html" class="nav-cta">Ouvrir la carte <span aria-hidden="true">↗</span></a>
+        <button class="nav-cta" id="nlNavBtn" type="button">S&rsquo;inscrire à la newsletter</button>
         <button class="nav-toggle" aria-label="Ouvrir le menu" id="navToggle" aria-expanded="false" aria-controls="navLinks">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
         </button>
@@ -72,9 +72,18 @@
       </div>
     </footer>`;
 
+  const nlDropHTML = `
+    <div id="nl-drop" class="nl-drop" hidden>
+      <form id="nl-drop-form">
+        <input type="email" id="nl-drop-email" placeholder="votre@email.fr" required autocomplete="email">
+        <button type="submit">S&rsquo;inscrire</button>
+      </form>
+      <p id="nl-drop-msg"></p>
+    </div>`;
+
   const headerSlot = document.getElementById('site-header');
   const footerSlot = document.getElementById('site-footer');
-  if (headerSlot) headerSlot.outerHTML = headerHTML + alphaNoticeHTML;
+  if (headerSlot) headerSlot.outerHTML = headerHTML + nlDropHTML + alphaNoticeHTML;
   if (footerSlot) footerSlot.outerHTML = footerHTML;
 
   const alphaNotice = document.getElementById('alpha-notice');
@@ -96,4 +105,45 @@
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
   });
+
+  const nlNavBtn = document.getElementById('nlNavBtn');
+  const nlDrop = document.getElementById('nl-drop');
+  if (nlNavBtn && nlDrop) {
+    nlNavBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nlDrop.hidden = !nlDrop.hidden;
+      if (!nlDrop.hidden) document.getElementById('nl-drop-email').focus();
+    });
+    document.addEventListener('click', (e) => {
+      if (!nlDrop.hidden && !nlDrop.contains(e.target)) nlDrop.hidden = true;
+    });
+    document.getElementById('nl-drop-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('nl-drop-email').value.trim();
+      const msg = document.getElementById('nl-drop-msg');
+      msg.textContent = '';
+      try {
+        const r = await fetch('/api/newsletter', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({email})
+        });
+        const d = await r.json();
+        if (d.ok) {
+          msg.textContent = 'Inscription enregistr\u00e9e\u00a0!';
+          msg.style.color = '#2a7a2a';
+          document.getElementById('nl-drop-email').value = '';
+        } else if (d.already) {
+          msg.textContent = 'D\u00e9j\u00e0 inscrit(e).';
+          msg.style.color = '#2a7a2a';
+        } else {
+          msg.textContent = 'Erreur. R\u00e9essayez.';
+          msg.style.color = '#b00';
+        }
+      } catch {
+        msg.textContent = 'Erreur. R\u00e9essayez.';
+        msg.style.color = '#b00';
+      }
+    });
+  }
 })();
