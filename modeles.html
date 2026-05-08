@@ -11,10 +11,20 @@
 <link rel="stylesheet" href="/sentencia.css">
 <style>
 
-  /* Page header richer intro */
-  .page-header-intro{display:flex;flex-direction:column;gap:18px}
-  .page-header-intro p{font-size:1.05rem;color:var(--ink-soft);margin:0}
-  .page-header-intro p:first-child{font-size:1.1rem}
+  /* Page header richer intro — full-width card */
+  .page-header-intro{
+    display:flex;flex-direction:column;gap:18px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:36px 40px;
+    margin-top:32px;
+  }
+  .page-header-intro p{font-size:1.05rem;color:var(--ink-soft);margin:0;max-width:90ch}
+  .page-header-intro p:first-child{font-size:1.1rem;color:var(--ink)}
+  @media(max-width:560px){
+    .page-header-intro{padding:24px 20px}
+  }
 
   /* Tab bar */
   .model-tabs-wrap{
