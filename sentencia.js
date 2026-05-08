@@ -2,9 +2,8 @@
   const NAV = [
     {href:'/',label:'Accueil',key:'accueil'},
     {href:'/carte.html',label:'Carte',key:'carte'},
-    {href:'/modeles.html',label:'Modèles',key:'modeles'},
+    {href:'/modeles.html',label:'Modèles prototypes',key:'modeles'},
     {href:'/methodologie.html',label:'Méthodologie',key:'methodologie'},
-    {href:'/feuille-de-route.html',label:'Feuille de route',key:'feuille-de-route'},
     {href:'/faq.html',label:'FAQ',key:'faq'},
     {href:'/presse.html',label:'Presse',key:'presse'},
     {href:'/bibliographie.html',label:'Bibliographie',key:'bibliographie'},
@@ -58,9 +57,8 @@
         <div>
           <h4>Explorer</h4>
           <a href="/carte.html">Carte interactive</a>
-          <a href="/modeles.html">Modèles</a>
+          <a href="/modeles.html">Modèles prototypes</a>
           <a href="/methodologie.html">Méthodologie</a>
-          <a href="/feuille-de-route.html">Feuille de route</a>
         </div>
         <div>
           <h4>Ressources</h4>
