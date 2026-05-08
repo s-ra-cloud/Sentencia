@@ -74,8 +74,8 @@
 
   const headerSlot = document.getElementById('site-header');
   const footerSlot = document.getElementById('site-footer');
-  if (headerSlot) headerSlot.outerHTML = headerHTML;
-  if (footerSlot) footerSlot.outerHTML = alphaNoticeHTML + footerHTML;
+  if (headerSlot) headerSlot.outerHTML = headerHTML + alphaNoticeHTML;
+  if (footerSlot) footerSlot.outerHTML = footerHTML;
 
   const alphaNotice = document.getElementById('alpha-notice');
   if (alphaNotice) {
