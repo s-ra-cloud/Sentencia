@@ -498,6 +498,7 @@
           </div>
 
           <div class="ethics-note"><strong>Périmètre des données.</strong> Les indicateurs affichés portent exclusivement sur les <strong>tribunaux correctionnels</strong> (données SSMJ agrégées au niveau départemental). Ils ne couvrent ni les cours d'assises, ni les juridictions pour mineurs, ni les tribunaux de police. Ce prototype est <strong>strictement descriptif</strong> : toutes les valeurs sont des lectures directes du jeu de données publié sur la carte, sans transformation. Elles ne reflètent pas la décision attendue dans une affaire individuelle.</div>
+          <div style="margin-top:18px"><button class="wizard-report" id="proto-report" type="button"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="6"/><line x1="7" y1="4" x2="7" y2="7.5"/><circle cx="7" cy="10" r=".7" fill="currentColor" stroke="none"/></svg>Signaler une valeur incohérente</button></div>
         </div>
       </div>
     </div>
@@ -624,6 +625,32 @@
 
   $dept.addEventListener('change', function(){ update(Object.keys(rows[0])[0]); });
   $off.addEventListener('change',  function(){ update(Object.keys(rows[0])[0]); });
+
+  var $report = document.getElementById('proto-report');
+  if ($report) {
+    $report.addEventListener('click', function() {
+      var deptTxt = $dept.options[$dept.selectedIndex] ? $dept.options[$dept.selectedIndex].text : '\u2014';
+      var offTxt  = $off.options[$off.selectedIndex]   ? $off.options[$off.selectedIndex].text   : '\u2014';
+      var avgLen  = (document.getElementById('m-avg-len') || {}).textContent || '\u2014';
+      var prob    = (document.getElementById('m-prob')    || {}).textContent || '\u2014';
+      var rec     = (document.getElementById('ctx-rec')   || {}).textContent || '\u2014';
+      var prosec  = (document.getElementById('ctx-prosec'))? document.getElementById('ctx-prosec').textContent : '\u2014';
+      var sev     = (document.getElementById('ctx-sev'))  ? document.getElementById('ctx-sev').textContent   : '\u2014';
+      var body = 'Module\u00a0: Tableau de bord d\u00e9partemental (carte / SSMJ)\n\n'
+        + 'D\u00e9partement\u00a0: ' + deptTxt + '\n'
+        + 'Cat\u00e9gorie d\u2019infraction\u00a0: ' + offTxt + '\n\n'
+        + 'Valeurs affich\u00e9es\u00a0:\n'
+        + '  Dur\u00e9e moyenne emp. ferme\u00a0: ' + avgLen + '\n'
+        + '  Taux emp. ferme / condamnation\u00a0: ' + prob + '\n'
+        + '  Taux de r\u00e9cidive l\u00e9gale\u00a0: ' + rec + '\n'
+        + '  Affaires poursuivies / 100\u202f000 hab.\u00a0: ' + prosec + '\n'
+        + '  S\u00e9v\u00e9rit\u00e9 r\u00e9siduelle\u00a0: ' + sev + '\n\n'
+        + 'Valeur signal\u00e9e comme incoh\u00e9rente\u00a0:\n[D\u00e9crivez ici ce qui vous semble incorrect]';
+      window.location.href = 'mailto:sacha.raoult@univ-amu.fr?subject='
+        + encodeURIComponent('[Sentencia] Signalement \u2014 Tableau d\u00e9partemental')
+        + '&body=' + encodeURIComponent(body);
+    });
+  }
 })();
 </script>
 <script>
