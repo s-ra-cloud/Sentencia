@@ -138,6 +138,22 @@ function checkAuth(req, res, next) {
   next();
 }
 
+app.post('/api/newsletter', async (req, res) => {
+  const { email } = req.body;
+  if (!email || !email.includes('@')) return res.status(400).json({ error: 'Email invalide' });
+  try {
+    const file = path.join(__dirname, 'data', 'newsletter.json');
+    let list = [];
+    try { list = JSON.parse(await fs.readFile(file, 'utf8')); } catch {}
+    if (list.find(e => e.email === email)) return res.json({ already: true });
+    list.push({ email, date: new Date().toISOString() });
+    await fs.writeFile(file, JSON.stringify(list, null, 2));
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.post('/api/login', (req, res) => {
   const { password } = req.body;
   if (password === ADMIN_PASSWORD) {

@@ -22,6 +22,14 @@
       <div class="cta-row">
         <a href="/carte.html" class="btn btn-primary">Ouvrir la carte interactive <span class="arrow" aria-hidden="true">↗</span></a>
         <a href="/methodologie.html" class="btn btn-ghost">Lire la méthodologie</a>
+        <button class="btn btn-ghost" id="nlBtn" type="button" onclick="document.getElementById('nlForm').classList.toggle('nl-open')">S&rsquo;inscrire à la newsletter</button>
+      </div>
+      <div id="nlForm" class="nl-form">
+        <form onsubmit="nlSubmit(event)">
+          <input type="email" id="nlEmail" placeholder="votre@email.fr" required autocomplete="email">
+          <button type="submit" id="nlSubmitBtn">S&rsquo;inscrire</button>
+        </form>
+        <p id="nlMsg" class="nl-msg"></p>
       </div>
       <div class="hero-tags">
         <span class="tag">Open source</span>
@@ -222,5 +230,67 @@
 
 <div id="site-footer"></div>
 <script src="/sentencia.js"></script>
+<style>
+.nl-form{
+  display:none;margin-top:16px;
+}
+.nl-form.nl-open{display:block}
+.nl-form form{
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.nl-form input[type="email"]{
+  flex:1;min-width:220px;
+  padding:10px 14px;
+  border:1px solid var(--line-strong);border-radius:999px;
+  font-family:inherit;font-size:.95rem;
+  background:#fff;color:var(--ink);
+  outline:none;
+}
+.nl-form input[type="email"]:focus{border-color:var(--accent)}
+.nl-form button[type="submit"]{
+  padding:10px 22px;border-radius:999px;border:none;cursor:pointer;
+  background:var(--accent);color:#fff;
+  font-family:inherit;font-size:.95rem;font-weight:500;
+  white-space:nowrap;
+}
+.nl-form button[type="submit"]:hover{background:var(--ink)}
+.nl-msg{margin-top:10px;font-size:.88rem;min-height:1.2em}
+.nl-msg.ok{color:#2a7a2a}
+.nl-msg.err{color:#b00}
+</style>
+<script>
+async function nlSubmit(e) {
+  e.preventDefault();
+  var email = document.getElementById('nlEmail').value.trim();
+  var msg = document.getElementById('nlMsg');
+  var btn = document.getElementById('nlSubmitBtn');
+  btn.disabled = true;
+  msg.textContent = '';
+  msg.className = 'nl-msg';
+  try {
+    var r = await fetch('/api/newsletter', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({email})
+    });
+    var d = await r.json();
+    if (d.ok) {
+      msg.textContent = 'Inscription enregistr\u00e9e\u00a0! Vous serez averti(e) des prochaines mises \u00e0 jour.';
+      msg.className = 'nl-msg ok';
+      document.getElementById('nlEmail').value = '';
+    } else if (d.already) {
+      msg.textContent = 'Cette adresse est d\u00e9j\u00e0 inscrite.';
+      msg.className = 'nl-msg ok';
+    } else {
+      msg.textContent = 'Une erreur est survenue. R\u00e9essayez.';
+      msg.className = 'nl-msg err';
+    }
+  } catch {
+    msg.textContent = 'Une erreur est survenue. R\u00e9essayez.';
+    msg.className = 'nl-msg err';
+  }
+  btn.disabled = false;
+}
+</script>
 </body>
 </html>
