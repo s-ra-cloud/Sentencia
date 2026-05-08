@@ -258,6 +258,9 @@
   .metric .hint{font-size:.78rem;color:var(--muted)}
   .metric.placeholder{background:repeating-linear-gradient(135deg,#FAF8F3 0 8px,#fff 8px 16px);border-style:dashed}
   .metric.placeholder .val{color:var(--muted);font-family:var(--sans);font-size:2rem}
+  .metric.locked-metric{flex-direction:row;align-items:center;gap:.5rem;border-style:dashed}
+  .metric.locked-metric .lbl{display:flex;align-items:center;gap:8px;font-size:.86rem;color:var(--muted)}
+  .metric.locked-metric svg{width:13px;height:13px;color:var(--muted);flex-shrink:0}
 
   .proto-context{
     border-top:1px solid var(--line);padding-top:16px;
@@ -470,7 +473,7 @@
             <div class="metric"><span class="label">Durée moyenne de la peine (infraction)</span><span class="val"><span id="m-avg-len">—</span><span class="unit">mois</span></span><span class="hint">Pour la catégorie d'infraction sélectionnée, dans ce département.</span></div>
             <div class="metric"><span class="label">Probabilité de prison ferme (infraction)</span><span class="val"><span id="m-prob">—</span><span class="unit">%</span></span><span class="hint">Part des condamnations donnant lieu à une peine d'emprisonnement ferme.</span></div>
             <div class="metric placeholder"><span class="label">Écart-type de la peine</span><span class="val">?</span><span class="hint">Indicateur de dispersion — disponible dans une version ultérieure.</span></div>
-            <div class="metric placeholder"><span class="label">Taux d'erreur du modèle</span><span class="val">?</span><span class="hint">Indicateur de fiabilité — disponible dans une version ultérieure.</span></div>
+            <div class="metric locked-metric"><span class="lbl"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="6" width="9" height="6" rx="1"/><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2"/></svg>Marge d'erreur non disponible actuellement</span></div>
           </div>
 
           <div class="proto-context">
