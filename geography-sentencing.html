@@ -460,7 +460,8 @@
         region_idf: 'Île-de-France',
         region_domtom: 'DOM-TOM',
         region_domtom_badge: 'Coming soon',
-        idf_badge: 'Zoom: Île-de-France'
+        idf_badge: 'Zoom: Île-de-France',
+        city_locked_tooltip: 'City-level data — coming soon'
       },
       fr: {
         back_to_main: 'Retour au site principal',
@@ -502,9 +503,16 @@
         region_idf: 'Île-de-France',
         region_domtom: 'DOM-TOM',
         region_domtom_badge: 'Prochainement',
-        idf_badge: 'Zoom : Île-de-France'
+        idf_badge: 'Zoom : Île-de-France',
+        city_locked_tooltip: 'Données à l\'échelle de la ville — à venir'
       }
     };
+
+    const LOCKED_CITIES = [
+      { nameEN: 'Paris', nameFR: 'Paris', lat: 48.8566, lon: 2.3522, locked: true },
+      { nameEN: 'Lyon', nameFR: 'Lyon', lat: 45.7640, lon: 4.8357, locked: true },
+      { nameEN: 'Marseille', nameFR: 'Marseille', lat: 43.2965, lon: 5.3698, locked: true }
+    ];
 
     let currentLang = localStorage.getItem('lang') || 'en';
 
@@ -944,6 +952,9 @@
       updateIndicatorDescription();
 
       document.getElementById('regionDomtom').title = I18N[lang].region_domtom_badge;
+
+      mapG.selectAll('.city-name-label')
+        .text(d => lang === 'fr' ? d.nameFR : d.nameEN);
     }
 
     document.getElementById('langEN').addEventListener('click', () => applyLanguage('en'));
@@ -1053,6 +1064,62 @@
 
     updateLegend();
 
+    function renderCityMarkers() {
+      mapG.selectAll('.city-marker').remove();
+
+      const markers = mapG.selectAll('.city-marker')
+        .data(LOCKED_CITIES)
+        .join('g')
+        .attr('class', 'city-marker')
+        .attr('transform', d => {
+          const [x, y] = projection([d.lon, d.lat]);
+          return `translate(${x}, ${y})`;
+        })
+        .style('cursor', 'default');
+
+      markers.append('circle')
+        .attr('r', 8)
+        .attr('fill', '#d0d0d0')
+        .attr('stroke', '#888')
+        .attr('stroke-width', 1.5)
+        .attr('opacity', 0.9);
+
+      markers.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'central')
+        .attr('font-size', '9px')
+        .attr('pointer-events', 'none')
+        .text('🔒');
+
+      markers.append('text')
+        .attr('class', 'city-name-label')
+        .attr('x', 12)
+        .attr('y', 0)
+        .attr('dominant-baseline', 'central')
+        .attr('font-size', '9px')
+        .attr('fill', '#555')
+        .attr('font-weight', '500')
+        .attr('pointer-events', 'none')
+        .text(d => currentLang === 'fr' ? d.nameFR : d.nameEN);
+
+      markers
+        .on('mouseover', function(event, d) {
+          const name = currentLang === 'fr' ? d.nameFR : d.nameEN;
+          const msg = I18N[currentLang].city_locked_tooltip;
+          tooltip
+            .style('opacity', 1)
+            .html(`<div class="tooltip__name">${name}</div><div class="tooltip__value">🔒 ${msg}</div>`);
+        })
+        .on('mousemove', function(event) {
+          tooltip
+            .style('left', (event.pageX + 15) + 'px')
+            .style('top', (event.pageY - 10) + 'px');
+        })
+        .on('mouseout', function() {
+          tooltip.style('opacity', 0);
+        });
+    }
+
     function updateMap() {
       if (!geoData || indicatorColumns.length === 0) return;
 
@@ -1159,6 +1226,7 @@
         });
 
       updateMap();
+      renderCityMarkers();
     }).catch(error => console.error("Error loading data:", error));
 
     document.getElementById('offenceSelect').addEventListener('change', populateIndicatorDropdown);
