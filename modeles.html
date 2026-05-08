@@ -457,10 +457,8 @@
           <div class="proto-summary" id="proto-summary">Sélectionnez un département et une infraction pour afficher les indicateurs observés.</div>
 
           <div class="metric-grid">
-            <div class="metric"><span class="label">Peine moyenne (département, toutes infractions)</span><span class="val"><span id="m-avg-sent">—</span><span class="unit">mois</span></span><span class="hint">Durée moyenne des peines d'emprisonnement ferme prononcées dans le département.</span></div>
             <div class="metric"><span class="label">Durée moyenne de la peine (infraction)</span><span class="val"><span id="m-avg-len">—</span><span class="unit">mois</span></span><span class="hint">Pour la catégorie d'infraction sélectionnée, dans ce département.</span></div>
             <div class="metric"><span class="label">Probabilité de prison ferme (infraction)</span><span class="val"><span id="m-prob">—</span><span class="unit">%</span></span><span class="hint">Part des condamnations donnant lieu à une peine d'emprisonnement ferme.</span></div>
-            <div class="metric"><span class="label">Taux d'emprisonnement ferme (département)</span><span class="val"><span id="m-share">—</span><span class="unit">%</span></span><span class="hint">Part globale des condamnations menant à une peine ferme dans le département.</span></div>
             <div class="metric placeholder"><span class="label">Écart-type de la peine</span><span class="val">?</span><span class="hint">Indicateur de dispersion — disponible dans une version ultérieure.</span></div>
             <div class="metric placeholder"><span class="label">Taux d'erreur du modèle</span><span class="val">?</span><span class="hint">Indicateur de fiabilité — disponible dans une version ultérieure.</span></div>
           </div>
@@ -583,10 +581,8 @@
     var off  = $off.value;
     var offShort = (OFFENSES.find(o => o.key === off) || {}).short || off;
 
-    document.getElementById('m-avg-sent').textContent = fmt(fNum(row['Dur\u00e9e moy. emprisonnement ferme']));
     document.getElementById('m-avg-len').textContent  = fmt(get(row, 'Dur\u00e9e moy. emp. ferme', off));
     document.getElementById('m-prob').textContent     = fmt(get(row, 'Taux emp. ferme / conda', off));
-    document.getElementById('m-share').textContent    = fmt(fNum(row['Taux emprisonnement ferme global']));
 
     var recRate  = get(row, 'Taux r\u00e9cidive l\u00e9gale', off);
     var prosec   = get(row, 'Taux poursuivis / 100k', off);
