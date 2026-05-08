@@ -319,6 +319,15 @@
       color: white;
       border-color: var(--text);
     }
+
+    .sidebar__btn--locked,
+    .sidebar__btn--locked:hover {
+      opacity: 0.45;
+      cursor: not-allowed;
+      border-color: var(--border);
+      background: white;
+      color: inherit;
+    }
     
     @media (max-width: 900px) {
       .main {
@@ -391,7 +400,7 @@
       
       <div class="sidebar__controls">
         <button class="sidebar__btn" id="exportBtn" data-i18n="export_btn">Export Image</button>
-        <button class="sidebar__btn" id="downloadDataBtn" data-i18n="download_data_btn">Download All Data</button>
+        <button class="sidebar__btn sidebar__btn--locked" id="downloadDataBtn" disabled>🔒 Disponible bientôt</button>
       </div>
       
       <div class="legend">
