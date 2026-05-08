@@ -1006,6 +1006,7 @@
         idfBadge.style.display = 'none';
         btnMetro.classList.add('active');
         btnIdf.classList.remove('active');
+        renderCityMarkers();
       } else if (region === 'idf') {
         if (!geoData) return;
         const idfCodes = new Set(['75', '77', '78', '91', '92', '93', '94', '95']);
@@ -1036,6 +1037,7 @@
         idfBadge.style.display = 'block';
         btnIdf.classList.add('active');
         btnMetro.classList.remove('active');
+        renderCityMarkers();
       }
     }
 
@@ -1076,8 +1078,12 @@
     function renderCityMarkers() {
       mapG.selectAll('.city-marker').remove();
 
+      const visibleCities = currentRegion === 'idf'
+        ? LOCKED_CITIES.filter(d => d.nameEN !== 'Paris')
+        : LOCKED_CITIES;
+
       const markers = mapG.selectAll('.city-marker')
-        .data(LOCKED_CITIES)
+        .data(visibleCities)
         .join('g')
         .attr('class', 'city-marker')
         .attr('transform', d => {
