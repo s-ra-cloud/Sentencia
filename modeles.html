@@ -106,11 +106,11 @@
   }
   .wizard-trail{display:flex;flex-direction:column;gap:6px;min-height:40px}
   .trail-item{
-    display:flex;align-items:baseline;gap:8px;font-size:.84rem;color:var(--ink-soft);
-    padding:6px 10px;background:#fff;border:1px solid var(--line);border-radius:4px;
+    display:flex;flex-direction:column;gap:2px;font-size:.84rem;
+    padding:8px 10px;background:#fff;border:1px solid var(--line);border-radius:4px;
   }
-  .trail-item .tq{color:var(--muted);font-size:.78rem;flex-shrink:0}
-  .trail-item .ta{color:var(--ink);font-weight:500}
+  .trail-item .tq{color:var(--muted);font-size:.78rem;line-height:1.3}
+  .trail-item .ta{color:var(--ink);font-weight:600;font-size:.88rem}
   .trail-empty{font-size:.84rem;color:var(--muted);font-style:italic}
 
   .wizard-main{
@@ -381,13 +381,13 @@
   <section class="section-tight">
     <div class="container">
 
-      <p>Ce modèle est fondé sur l'arbre de décision du rapport ORDCS n°12 de Derbay &amp; Raoult (2018), <em><a href="/sentencia-assets/pdfs/Rapport-ORDCS-12-Detention-Provisoire-2018.pdf" target="_blank" rel="noopener">Faut-il avouer pour sortir de détention provisoire ?</a></em> (Observatoire régional de la délinquance et des contextes sociaux, Aix-Marseille Université). Les données proviennent de l'observation d'environ 500 audiences de détention provisoire au TGI de Marseille. Le modèle est commenté par Sacha Raoult dans une <a href="https://www.youtube.com/watch?v=XFIrgddhAGg" target="_blank" rel="noopener">vidéo disponible en ligne</a>. Ce modèle pose la question suivante : parmi les personnes <strong>déjà placées en détention provisoire</strong>, quels facteurs prédisent l'obtention d'un <strong>contrôle judiciaire</strong> (libération sous supervision) plutôt que le maintien en détention ?</p>
+      <p>Ce modèle est fondé sur l'arbre de décision du rapport ORDCS n°12 de Derbey &amp; Raoult (2018), <em><a href="/sentencia-assets/pdfs/Rapport-ORDCS-12-Detention-Provisoire-2018.pdf" target="_blank" rel="noopener">Faut-il avouer pour sortir de détention provisoire ?</a></em> (Observatoire régional de la délinquance et des contextes sociaux, Aix-Marseille Université). Les données proviennent de l'analyse de plus de 800 décisions de détention provisoire portant sur 117 mis en examen au TGI de Marseille. Le modèle est commenté par Sacha Raoult dans une <a href="https://www.youtube.com/watch?v=XFIrgddhAGg" target="_blank" rel="noopener">vidéo disponible en ligne</a>. Ce modèle pose la question suivante : parmi les personnes <strong>déjà placées en détention provisoire</strong>, quels facteurs prédisent l'obtention d'un <strong>contrôle judiciaire</strong> (libération sous supervision) plutôt que le maintien en détention ?</p>
 
       <div class="wizard-wrap">
         <div class="wizard-sidebar">
           <div class="wizard-source-card">
             <div class="ws-title">Source &amp; données</div>
-            <p><strong>Derbay, A. &amp; Raoult, S. (2018).</strong> Rapport ORDCS n°12. Aix-Marseille Université.<br>~500 audiences de détention provisoire, TGI de Marseille.</p>
+            <p><strong>Derbey, A. &amp; Raoult, S. (2018).</strong> Rapport ORDCS n°12. Aix-Marseille Université.<br>Plus de 800 décisions, 117 mis en examen, TGI de Marseille.</p>
             <p>
               <a href="/sentencia-assets/pdfs/Rapport-ORDCS-12-Detention-Provisoire-2018.pdf" target="_blank" rel="noopener">↗ Rapport ORDCS n°12 (PDF)</a><br>
               <a href="https://www.youtube.com/watch?v=XFIrgddhAGg" target="_blank" rel="noopener">↗ Commentaire vidéo (Raoult)</a><br>
@@ -409,7 +409,7 @@
       </div>
 
       <div class="wizard-ethics" style="margin-top:20px">
-        <strong>Avertissement éthique.</strong> Les résultats affichés sont <strong>strictement descriptifs</strong> : ils reflètent des associations statistiques observées dans un corpus limité de ~500 audiences de détention provisoire à Marseille. Ils ne constituent pas, et ne sauraient constituer, une prédiction de l'issue d'une affaire individuelle. La décision appartient exclusivement au juge, qui apprécie la situation dans toute sa singularité. Cet outil est destiné à la réflexion académique et pédagogique.
+        <strong>Avertissement éthique.</strong> Les résultats affichés sont <strong>strictement descriptifs</strong> : ils reflètent des associations statistiques observées dans un corpus de plus de 800 décisions portant sur 117 mis en examen à Marseille. Ils ne constituent pas, et ne sauraient constituer, une prédiction de l'issue d'une affaire individuelle. La décision appartient exclusivement au juge, qui apprécie la situation dans toute sa singularité. Cet outil est destiné à la réflexion académique et pédagogique.
       </div>
 
     </div>
@@ -893,7 +893,7 @@
     html += '<div class="result-card ' + cls + '">';
     html += '<div class="rc-label">R\u00e9sultat du mod\u00e8le</div>';
     html += '<div class="rc-verdict">' + esc(verdict) + '</div>';
-    html += '<div class="rc-pct">Observ\u00e9 dans <strong>' + r.pct + '\u00a0%</strong> des cas correspondant \u00e0 ce profil dans les donn\u00e9es de Derbay &amp; Raoult (2018).</div>';
+    html += '<div class="rc-pct">Observ\u00e9 dans <strong>' + r.pct + '\u00a0%</strong> des cas correspondant \u00e0 ce profil dans les donn\u00e9es de Derbey &amp; Raoult (2018).</div>';
     html += '</div>';
     html += '<button class="wizard-reset" id="dp-reset" type="button">';
     html += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 7a6 6 0 1 0 1.2-3.6" stroke-linecap="round"/><path d="M1 2v2.5h2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
