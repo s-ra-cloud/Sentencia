@@ -680,41 +680,41 @@
           { l: 'Comparution libre', next: {
             q: 'Logement\u00a0?',
             opts: [
-              { l: 'Oui (logement stable)', next: {
-                q: 'Emploi\u00a0?',
+              { l: 'Oui', next: {
+                q: 'Qualit\u00e9 du logement\u00a0?',
                 opts: [
-                  { l: 'Oui', next: {
-                    q: 'Type d\u2019emploi\u00a0?',
+                  { l: 'Logement pr\u00e9caire', r: { md: true, pct: 79 } },
+                  { l: 'Logement propre', next: {
+                    q: 'Emploi\u00a0?',
                     opts: [
-                      { l: 'Emploi stable', r: { md: false, pct: 82 } },
-                      { l: 'Emploi pr\u00e9caire', next: {
-                        q: 'Nationalit\u00e9\u00a0?',
+                      { l: 'Oui', next: {
+                        q: 'Type d\u2019emploi\u00a0?',
                         opts: [
-                          { l: 'Fran\u00e7ais', next: {
-                            q: '\u00c2ge\u00a0?',
+                          { l: 'Emploi stable', r: { md: false, pct: 82 } },
+                          { l: 'Emploi pr\u00e9caire', next: {
+                            q: 'Nationalit\u00e9\u00a0?',
                             opts: [
-                              { l: '< 35 ans', r: { md: false, pct: 68 } },
-                              { l: '\u2265 35 ans', r: { md: true, pct: 70 } }
+                              { l: 'Fran\u00e7ais', next: {
+                                q: '\u00c2ge\u00a0?',
+                                opts: [
+                                  { l: '< 35 ans', r: { md: false, pct: 68 } },
+                                  { l: '\u2265 35 ans', r: { md: true, pct: 70 } }
+                                ]
+                              }},
+                              { l: '\u00c9tranger', r: { md: true, pct: 82 } }
                             ]
-                          }},
-                          { l: '\u00c9tranger', r: { md: true, pct: 82 } }
+                          }}
                         ]
-                      }}
+                      }},
+                      { l: 'Non', r: { md: true, pct: 71 } }
                     ]
-                  }},
-                  { l: 'Non', r: { md: true, pct: 71 } }
+                  }}
                 ]
               }},
-              { l: 'Non (logement pr\u00e9caire)', r: { md: true, pct: 79 } }
+              { l: 'Non', r: { md: true, pct: 81 } }
             ]
           }},
-          { l: 'Comparution sous contrainte', next: {
-            q: 'Logement\u00a0?',
-            opts: [
-              { l: 'Non', r: { md: true, pct: 81 } },
-              { l: 'Oui', r: { md: true, pct: 92 } }
-            ]
-          }}
+          { l: 'Comparution sous contrainte', r: { md: true, pct: 92 } }
         ]
       }}
     ]
