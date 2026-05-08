@@ -2,5 +2,10 @@
   {
     "email": "test@example.com",
     "date": "2026-05-08T10:03:09.305Z"
+  },
+  {
+    "email": "webtest@example.com",
+    "type": "webinaire",
+    "date": "2026-05-08T10:13:24.377Z"
   }
 ]

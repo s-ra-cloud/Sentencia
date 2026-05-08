@@ -139,14 +139,17 @@ function checkAuth(req, res, next) {
 }
 
 app.post('/api/newsletter', async (req, res) => {
-  const { email } = req.body;
+  const { email, type } = req.body;
   if (!email || !email.includes('@')) return res.status(400).json({ error: 'Email invalide' });
+  const kind = type === 'webinaire' ? 'webinaire' : 'newsletter';
   try {
     const file = path.join(__dirname, 'data', 'newsletter.json');
     let list = [];
     try { list = JSON.parse(fs.readFileSync(file, 'utf8')); } catch {}
-    if (list.find(e => e.email === email)) return res.json({ already: true });
-    list.push({ email, date: new Date().toISOString() });
+    if (list.find(e => e.email === email && (e.type || 'newsletter') === kind)) {
+      return res.json({ already: true });
+    }
+    list.push({ email, type: kind, date: new Date().toISOString() });
     fs.writeFileSync(file, JSON.stringify(list, null, 2));
     res.json({ ok: true });
   } catch (e) {

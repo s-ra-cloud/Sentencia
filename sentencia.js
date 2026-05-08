@@ -32,6 +32,15 @@
     <div id="alpha-notice" style="background:var(--navy,#1a2e4a);color:#fff;padding:14px 32px;display:flex;align-items:center;gap:16px;font-family:var(--sans,'Inter',sans-serif);font-size:.88rem;line-height:1.5;">
       <span style="flex:1;">Sentencia est actuellement en <strong>alpha fermée</strong>, réservée aux retours de la communauté. Si vous constatez une valeur incorrecte ou incohérente, contactez-nous à <a href="mailto:sacha.raoult@univ-amu.fr" style="color:var(--gold,#C9A84C);text-decoration:underline;text-underline-offset:2px;">sacha.raoult@univ-amu.fr</a>.</span>
       <button id="alpha-notice-close" aria-label="Fermer cette bannière" style="background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:4px;padding:4px 10px;cursor:pointer;font-size:.85rem;flex-shrink:0;">×</button>
+    </div>
+    <div id="webinar-notice" style="background:#F5EBD3;color:#3a2a10;padding:12px 32px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:var(--sans,'Inter',sans-serif);font-size:.88rem;line-height:1.5;border-bottom:1px solid #E2D2A8;">
+      <span style="flex:1;min-width:240px;"><strong>Webinaire de présentation de la plateforme</strong> — mardi <strong>2 juin à 12h</strong>. Inscrivez-vous pour recevoir le lien de connexion.</span>
+      <form id="webinar-form" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <input type="email" id="webinar-email" placeholder="votre@email.fr" required autocomplete="email" style="padding:6px 12px;border:1px solid #C8A95A;border-radius:4px;font-size:.85rem;background:#fff;font-family:inherit;min-width:200px;">
+        <button type="submit" style="background:#1a2e4a;color:#fff;border:none;border-radius:4px;padding:7px 14px;font-size:.85rem;cursor:pointer;font-family:inherit;">S&rsquo;inscrire</button>
+        <span id="webinar-msg" style="font-size:.82rem;"></span>
+      </form>
+      <button id="webinar-notice-close" aria-label="Fermer cette bannière" style="background:none;border:1px solid rgba(58,42,16,.3);color:#3a2a10;border-radius:4px;padding:4px 10px;cursor:pointer;font-size:.85rem;flex-shrink:0;">×</button>
     </div>`;
 
   const footerHTML = `
@@ -94,6 +103,47 @@
     if (closeBtn) closeBtn.addEventListener('click', () => {
       alphaNotice.style.display = 'none';
       sessionStorage.setItem('alphaNoticeDismissed', '1');
+    });
+  }
+
+  const webinarNotice = document.getElementById('webinar-notice');
+  if (webinarNotice) {
+    if (sessionStorage.getItem('webinarNoticeDismissed')) {
+      webinarNotice.style.display = 'none';
+    }
+    const wClose = document.getElementById('webinar-notice-close');
+    if (wClose) wClose.addEventListener('click', () => {
+      webinarNotice.style.display = 'none';
+      sessionStorage.setItem('webinarNoticeDismissed', '1');
+    });
+    const wForm = document.getElementById('webinar-form');
+    if (wForm) wForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('webinar-email').value.trim();
+      const msg = document.getElementById('webinar-msg');
+      msg.textContent = '';
+      try {
+        const r = await fetch('/api/newsletter', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({email, type: 'webinaire'})
+        });
+        const d = await r.json();
+        if (d.ok) {
+          msg.textContent = 'Inscription enregistr\u00e9e\u202f!';
+          msg.style.color = '#1a5c1a';
+          document.getElementById('webinar-email').value = '';
+        } else if (d.already) {
+          msg.textContent = 'D\u00e9j\u00e0 inscrit(e).';
+          msg.style.color = '#1a5c1a';
+        } else {
+          msg.textContent = 'Erreur. R\u00e9essayez.';
+          msg.style.color = '#a02020';
+        }
+      } catch {
+        msg.textContent = 'Erreur. R\u00e9essayez.';
+        msg.style.color = '#a02020';
+      }
     });
   }
 
