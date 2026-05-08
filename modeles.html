@@ -68,6 +68,103 @@
     color:var(--muted);font-weight:500;
   }
 
+  /* ── Decision-tree wizard (tab 1) ── */
+  .wizard-wrap{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    display:grid;grid-template-columns:minmax(300px,360px) 1fr;gap:0;
+    overflow:hidden;
+  }
+  .wizard-sidebar{
+    padding:32px;border-right:1px solid var(--line);background:#FAF8F3;
+    display:flex;flex-direction:column;gap:24px;
+  }
+  .wizard-source-card{
+    background:#fff;border:1px solid var(--line);border-radius:6px;padding:20px;
+    display:flex;flex-direction:column;gap:10px;font-size:.88rem;
+  }
+  .wizard-source-card .ws-title{
+    font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--accent);font-weight:600;margin-bottom:4px;
+  }
+  .wizard-source-card a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+  .wizard-source-card p{font-size:.85rem;color:var(--ink-soft);margin:0}
+
+  .wizard-trail-title{
+    font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--gold);font-weight:600;
+  }
+  .wizard-trail{display:flex;flex-direction:column;gap:6px;min-height:40px}
+  .trail-item{
+    display:flex;align-items:baseline;gap:8px;font-size:.84rem;color:var(--ink-soft);
+    padding:6px 10px;background:#fff;border:1px solid var(--line);border-radius:4px;
+  }
+  .trail-item .tq{color:var(--muted);font-size:.78rem;flex-shrink:0}
+  .trail-item .ta{color:var(--ink);font-weight:500}
+  .trail-empty{font-size:.84rem;color:var(--muted);font-style:italic}
+
+  .wizard-main{
+    padding:40px;display:flex;flex-direction:column;justify-content:center;
+    gap:28px;min-height:360px;
+  }
+  .wizard-step-label{
+    font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--muted);font-weight:500;
+  }
+  .wizard-question{
+    font-family:var(--serif);font-size:1.45rem;font-weight:500;
+    color:var(--ink);line-height:1.3;
+  }
+  .wizard-options{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
+  .wizard-btn{
+    padding:12px 24px;border:1.5px solid var(--line-strong);border-radius:6px;
+    font:inherit;font-size:.95rem;font-weight:500;color:var(--ink);background:#fff;
+    cursor:pointer;transition:.15s;
+  }
+  .wizard-btn:hover{border-color:var(--accent);color:var(--accent);background:#F0F4FA}
+  .wizard-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* Result card */
+  .wizard-result{display:flex;flex-direction:column;gap:20px}
+  .result-card{
+    border-radius:8px;padding:32px 36px;display:flex;flex-direction:column;gap:10px;
+  }
+  .result-card.md-oui{
+    background:#FFF0EE;border:1.5px solid #F5C2BB;
+  }
+  .result-card.md-non{
+    background:#EDFAF1;border:1.5px solid #A8D9B8;
+  }
+  .result-card .rc-label{
+    font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;font-weight:600;
+    color:var(--muted);
+  }
+  .result-card .rc-verdict{
+    font-family:var(--serif);font-size:2rem;font-weight:500;line-height:1.1;
+  }
+  .result-card.md-oui .rc-verdict{color:#C0392B}
+  .result-card.md-non .rc-verdict{color:#1E7A46}
+  .result-card .rc-pct{
+    font-family:var(--sans);font-size:1rem;color:var(--ink-soft);margin-top:4px;
+  }
+  .wizard-reset{
+    align-self:flex-start;padding:10px 20px;border:1px solid var(--line-strong);
+    border-radius:999px;font-size:.88rem;color:var(--ink);background:#fff;cursor:pointer;
+    transition:.15s;display:inline-flex;align-items:center;gap:8px;
+  }
+  .wizard-reset:hover{border-color:var(--accent);color:var(--accent)}
+  .wizard-ethics{
+    font-size:.82rem;color:var(--muted);font-style:italic;
+    padding:14px 16px;border:1px solid var(--line);border-radius:6px;
+    background:#FFFCEF;margin-top:8px;
+  }
+
+  @media(max-width:900px){
+    .wizard-wrap{grid-template-columns:1fr}
+    .wizard-sidebar{border-right:none;border-bottom:1px solid var(--line)}
+    .wizard-main{padding:28px}
+  }
+
   /* Map source note (tab 4) */
   .map-source-note{
     display:flex;align-items:flex-start;gap:14px;
@@ -244,17 +341,44 @@
 <div id="panel-comparutions" class="model-panel" role="tabpanel" aria-labelledby="tab-comparutions" aria-hidden="true">
   <section class="section-tight">
     <div class="container">
-      <div class="tab-placeholder">
-        <div class="tp-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <rect x="3" y="11" width="18" height="10" rx="1.5"/>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <span class="tp-pill">En cours de développement</span>
-        <h3>Modèle — Comparutions immédiates</h3>
-        <p>Ce modèle, fondé sur les travaux du Machina Research Network, est en cours de préparation. Il sera disponible dans une prochaine version de Sentencia.</p>
+
+      <div class="map-source-note" role="note" style="margin-bottom:32px">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="10" cy="10" r="8.5"/>
+          <path d="M10 9v4.5M10 6.5v.5" stroke-linecap="round"/>
+        </svg>
+        <p>Ce modèle est fondé sur l'arbre de décision (Graphique 2) de la thèse de doctorat de Warren Azoulay (2020), <em><a href="https://theses.fr/2020AIXM0458" target="_blank" rel="noopener">Le mandat de dépôt en comparution immédiate : éléments pour une théorie de la pratique</a></em> (Aix-Marseille Université, dir. Sacha Raoult). Les données proviennent de l'observation d'environ 500 audiences au TGI de Marseille, collectées dans le cadre du <a href="/bibliographie.html">rapport Raoult &amp; Azoulay 2016 (ORDCS n°8)</a>. Le modèle est commenté par Sacha Raoult dans une <a href="https://www.youtube.com/watch?v=XFIrgddhAGg" target="_blank" rel="noopener">vidéo disponible en ligne</a>.</p>
       </div>
+
+      <div class="wizard-wrap">
+        <div class="wizard-sidebar">
+          <div class="wizard-source-card">
+            <div class="ws-title">Source &amp; données</div>
+            <p><strong>Azoulay, W. (2020).</strong> Thèse de doctorat. Aix-Marseille Université.<br>~500 audiences de comparution immédiate, TGI de Marseille.</p>
+            <p>
+              <a href="https://theses.fr/2020AIXM0458" target="_blank" rel="noopener">↗ Fiche de thèse (theses.fr)</a><br>
+              <a href="https://www.youtube.com/watch?v=XFIrgddhAGg" target="_blank" rel="noopener">↗ Commentaire vidéo (Raoult)</a><br>
+              <a href="/bibliographie.html">↗ Rapport ORDCS 2016 (bibliographie)</a>
+            </p>
+          </div>
+
+          <div>
+            <div class="wizard-trail-title" style="margin-bottom:10px">Réponses saisies</div>
+            <div class="wizard-trail" id="wz-trail">
+              <span class="trail-empty">Aucune réponse pour le moment.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="wizard-main" id="wz-main">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+
+      <div class="wizard-ethics" style="margin-top:20px">
+        <strong>Avertissement éthique.</strong> Les résultats affichés sont <strong>strictement descriptifs</strong> : ils reflètent des associations statistiques observées dans un corpus limité de ~500 audiences à Marseille en 2015–2016. Ils ne constituent pas, et ne sauraient constituer, une prédiction de l'issue d'une affaire individuelle. La décision appartient exclusivement au juge, qui apprécie la situation dans toute sa singularité. Cet outil est destiné à la réflexion académique et pédagogique.
+      </div>
+
     </div>
   </section>
 </div>
@@ -485,6 +609,181 @@
 
   $dept.addEventListener('change', function(){ update(Object.keys(rows[0])[0]); });
   $off.addEventListener('change',  function(){ update(Object.keys(rows[0])[0]); });
+})();
+</script>
+<script>
+(function(){
+  var TREE = {
+    q: 'Casier judiciaire\u00a0?',
+    opts: [
+      { l: 'Non', next: {
+        q: 'Emploi\u00a0?',
+        opts: [
+          { l: 'Oui', next: {
+            q: 'Type d\u2019emploi\u00a0?',
+            opts: [
+              { l: 'Emploi stable', r: { md: false, pct: 93 } },
+              { l: 'Emploi pr\u00e9caire', next: {
+                q: 'Probl\u00e8me de sant\u00e9\u00a0?',
+                opts: [
+                  { l: 'Non', next: {
+                    q: 'Logement stable\u00a0?',
+                    opts: [
+                      { l: 'Oui', r: { md: false, pct: 88 } },
+                      { l: 'Non', next: {
+                        q: 'Mode de comparution\u00a0?',
+                        opts: [
+                          { l: 'Comparution libre', r: { md: false, pct: 87 } },
+                          { l: 'Comparution sous contrainte', r: { md: true, pct: 80 } }
+                        ]
+                      }}
+                    ]
+                  }},
+                  { l: 'Oui', r: { md: true, pct: 78 } }
+                ]
+              }}
+            ]
+          }},
+          { l: 'Non', next: {
+            q: 'Nationalit\u00e9\u00a0?',
+            opts: [
+              { l: 'Fran\u00e7ais', next: {
+                q: 'Logement\u00a0?',
+                opts: [
+                  { l: 'Oui', r: { md: false, pct: 72 } },
+                  { l: 'Non', r: { md: true, pct: 78 } }
+                ]
+              }},
+              { l: '\u00c9tranger', r: { md: true, pct: 80 } }
+            ]
+          }}
+        ]
+      }},
+      { l: 'Oui', next: {
+        q: 'Mode de comparution\u00a0?',
+        opts: [
+          { l: 'Comparution libre', next: {
+            q: 'Logement\u00a0?',
+            opts: [
+              { l: 'Oui (logement stable)', next: {
+                q: 'Emploi\u00a0?',
+                opts: [
+                  { l: 'Oui', next: {
+                    q: 'Type d\u2019emploi\u00a0?',
+                    opts: [
+                      { l: 'Emploi stable', r: { md: false, pct: 82 } },
+                      { l: 'Emploi pr\u00e9caire', next: {
+                        q: 'Nationalit\u00e9\u00a0?',
+                        opts: [
+                          { l: 'Fran\u00e7ais', next: {
+                            q: '\u00c2ge\u00a0?',
+                            opts: [
+                              { l: '< 35 ans', r: { md: false, pct: 68 } },
+                              { l: '\u2265 35 ans', r: { md: true, pct: 70 } }
+                            ]
+                          }},
+                          { l: '\u00c9tranger', r: { md: true, pct: 82 } }
+                        ]
+                      }}
+                    ]
+                  }},
+                  { l: 'Non', r: { md: true, pct: 71 } }
+                ]
+              }},
+              { l: 'Non (logement pr\u00e9caire)', r: { md: true, pct: 79 } }
+            ]
+          }},
+          { l: 'Comparution sous contrainte', next: {
+            q: 'Logement\u00a0?',
+            opts: [
+              { l: 'Non', r: { md: true, pct: 81 } },
+              { l: 'Oui', r: { md: true, pct: 92 } }
+            ]
+          }}
+        ]
+      }}
+    ]
+  };
+
+  var trail = [];
+  var current = TREE;
+  var stepNum = 0;
+
+  var $main  = document.getElementById('wz-main');
+  var $trail = document.getElementById('wz-trail');
+
+  function render() {
+    renderTrail();
+    if (current && current.q) {
+      renderQuestion();
+    }
+  }
+
+  function renderTrail() {
+    if (!trail.length) {
+      $trail.innerHTML = '<span class="trail-empty">Aucune r\u00e9ponse pour le moment.</span>';
+      return;
+    }
+    $trail.innerHTML = trail.map(function(item) {
+      return '<div class="trail-item"><span class="tq">' + esc(item.q) + '</span><span class="ta">' + esc(item.a) + '</span></div>';
+    }).join('');
+  }
+
+  function renderQuestion() {
+    stepNum = trail.length + 1;
+    var html = '<div class="wizard-step-label">\u00c9tape ' + stepNum + '</div>';
+    html += '<div class="wizard-question">' + esc(current.q) + '</div>';
+    html += '<div class="wizard-options">';
+    current.opts.forEach(function(opt, i) {
+      html += '<button class="wizard-btn" data-idx="' + i + '">' + esc(opt.l) + '</button>';
+    });
+    html += '</div>';
+    $main.innerHTML = html;
+    $main.querySelectorAll('.wizard-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var idx = parseInt(btn.getAttribute('data-idx'), 10);
+        var chosen = current.opts[idx];
+        trail.push({ q: current.q, a: chosen.l });
+        if (chosen.r) {
+          showResult(chosen.r);
+        } else {
+          current = chosen.next;
+          render();
+        }
+      });
+    });
+  }
+
+  function showResult(r) {
+    renderTrail();
+    var cls = r.md ? 'md-oui' : 'md-non';
+    var mdLabel = r.md ? 'Oui' : 'Non';
+    var verdict = 'Mandat de d\u00e9p\u00f4t\u00a0: <strong>' + mdLabel + '</strong> \u2014 ' + r.pct + '\u00a0%';
+    var html = '<div class="wizard-result">';
+    html += '<div class="result-card ' + cls + '">';
+    html += '<div class="rc-label">R\u00e9sultat du mod\u00e8le</div>';
+    html += '<div class="rc-verdict">' + verdict + '</div>';
+    html += '<div class="rc-pct">Observ\u00e9 dans <strong>' + r.pct + '\u00a0%</strong> des cas correspondant \u00e0 ce profil dans les donn\u00e9es d\u2019Azoulay (2020).</div>';
+    html += '</div>';
+    html += '<button class="wizard-reset" id="wz-reset" type="button">';
+    html += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 7a6 6 0 1 0 1.2-3.6" stroke-linecap="round"/><path d="M1 2v2.5h2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    html += 'Recommencer</button>';
+    html += '</div>';
+    $main.innerHTML = html;
+    document.getElementById('wz-reset').addEventListener('click', reset);
+  }
+
+  function reset() {
+    trail = [];
+    current = TREE;
+    render();
+  }
+
+  function esc(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  render();
 })();
 </script>
 </body>
