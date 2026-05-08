@@ -157,6 +157,16 @@
   .result-card .rc-pct{
     font-family:var(--sans);font-size:1rem;color:var(--ink-soft);margin-top:4px;
   }
+  .result-card .rc-ci{
+    font-family:var(--sans);font-size:.92rem;color:var(--ink);margin-top:10px;
+    padding-top:12px;border-top:1px dashed var(--line);
+  }
+  .result-card .rc-ci-label{color:var(--ink-soft);margin-right:4px}
+  .result-card .rc-warn{
+    margin-top:10px;padding:10px 14px;border-radius:6px;
+    background:#FCF3E6;border:1px solid #E6C58C;color:#7A5417;
+    font-family:var(--sans);font-size:.88rem;line-height:1.45;
+  }
   .wizard-reset{
     align-self:flex-start;padding:10px 20px;border:1px solid var(--line-strong);
     border-radius:999px;font-size:.88rem;color:var(--ink);background:#fff;cursor:pointer;
@@ -781,12 +791,12 @@
       { l: 'Oui', next: {
         q: 'Situation professionnelle\u00a0?',
         opts: [
-          { l: 'Emploi stable ou emploi \u00e0 venir', r: { cj: true, pct: 96 } },
+          { l: 'Emploi stable ou emploi \u00e0 venir', r: { cj: true, pct: 96, n: 23 } },
           { l: 'Sans emploi (au moment des faits)', next: {
             q: 'Ant\u00e9c\u00e9dents judiciaires\u00a0?',
             opts: [
-              { l: 'Non', r: { cj: true, pct: 71 } },
-              { l: 'Oui', r: { cj: false, pct: 100 } }
+              { l: 'Non', r: { cj: true, pct: 71, n: 7 } },
+              { l: 'Oui', r: { cj: false, pct: 100, n: 4 } }
             ]
           }}
         ]
@@ -794,18 +804,18 @@
       { l: 'Non', next: {
         q: 'Le parquet a-t-il requis le contr\u00f4le judiciaire\u00a0?',
         opts: [
-          { l: 'Oui', r: { cj: true, pct: 100 } },
+          { l: 'Oui', r: { cj: true, pct: 100, n: 4 } },
           { l: 'Non', next: {
             q: 'Situation professionnelle\u00a0?',
             opts: [
               { l: 'Emploi \u00e0 venir', next: {
                 q: 'Ant\u00e9c\u00e9dents judiciaires\u00a0?',
                 opts: [
-                  { l: 'Non', r: { cj: true, pct: 80 } },
-                  { l: 'Oui', r: { cj: false, pct: 83 } }
+                  { l: 'Non', r: { cj: true, pct: 80, n: 5 } },
+                  { l: 'Oui', r: { cj: false, pct: 83, n: 12 } }
                 ]
               }},
-              { l: 'Autre (sans emploi)', r: { cj: false, pct: 95 } }
+              { l: 'Autre (sans emploi)', r: { cj: false, pct: 95, n: 63 } }
             ]
           }}
         ]
@@ -861,17 +871,45 @@
     });
   }
 
+  function ci95(pct, n) {
+    var p = pct / 100;
+    if (n <= 0) return null;
+    if (p === 0) {
+      var hi0 = (1 - Math.pow(0.025, 1 / n)) * 100;
+      return { lo: 0, hi: hi0, me: null };
+    }
+    if (p === 1) {
+      var lo1 = Math.pow(0.025, 1 / n) * 100;
+      return { lo: lo1, hi: 100, me: null };
+    }
+    var me = 1.96 * Math.sqrt(p * (1 - p) / n) * 100;
+    return { lo: Math.max(0, pct - me), hi: Math.min(100, pct + me), me: me };
+  }
+
   function showResult(r) {
     renderTrail();
     var cls = r.cj ? 'md-non' : 'md-oui';
     var verdict = r.cj
       ? 'Contr\u00f4le judiciaire obtenu'
       : 'Maintien en d\u00e9tention provisoire';
+    var ci = ci95(r.pct, r.n);
+    var meTxt = ci && ci.me !== null
+      ? '\u00b1' + ci.me.toFixed(0) + '\u00a0%'
+      : 'non d\u00e9finie (taux de\u00a0' + r.pct + '\u00a0%)';
+    var icTxt = ci
+      ? '[' + ci.lo.toFixed(0) + '\u00a0%\u00a0\u2013\u00a0' + ci.hi.toFixed(0) + '\u00a0%]'
+      : '\u2013';
+    var warn = '';
+    if (r.n < 15) {
+      warn = '<div class="rc-warn"><strong>Effectif tr\u00e8s faible.</strong> Les bornes de l\u2019intervalle de confiance couvrent une large plage&nbsp;: le pourcentage central doit \u00eatre interpr\u00e9t\u00e9 avec une grande prudence.</div>';
+    }
     var html = '<div class="wizard-result">';
     html += '<div class="result-card ' + cls + '">';
     html += '<div class="rc-label">R\u00e9sultat du mod\u00e8le</div>';
     html += '<div class="rc-verdict">' + esc(verdict) + '</div>';
-    html += '<div class="rc-pct">Observ\u00e9 dans <strong>' + r.pct + '\u00a0%</strong> des cas correspondant \u00e0 ce profil dans les donn\u00e9es de Derbey &amp; Raoult (2018).</div>';
+    html += '<div class="rc-pct">Observ\u00e9 dans <strong>' + r.pct + '\u00a0%</strong> des cas correspondant \u00e0 ce profil (n\u00a0=\u00a0' + r.n + ' d\u00e9cisions) dans les donn\u00e9es de Derbey &amp; Raoult (2018).</div>';
+    html += '<div class="rc-ci"><span class="rc-ci-label">Marge d\u2019erreur (95\u00a0%)\u00a0:</span> <strong>' + meTxt + '</strong> \u2014 IC\u00a095\u00a0% ' + icTxt + '</div>';
+    html += warn;
     html += '</div>';
     html += '<button class="wizard-reset" id="dp-reset" type="button">';
     html += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 7a6 6 0 1 0 1.2-3.6" stroke-linecap="round"/><path d="M1 2v2.5h2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
