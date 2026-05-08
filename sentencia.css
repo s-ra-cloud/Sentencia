@@ -258,7 +258,7 @@ p{color:var(--ink-soft)}
 
 /* PAGE HEADER */
 .page-header{
-  padding:80px 0 56px;border-bottom:1px solid var(--line);
+  padding:80px 0 88px;border-bottom:1px solid var(--line);
   background:linear-gradient(180deg,#fff,var(--bg));
 }
 .page-header h1{margin-bottom:18px;font-size:clamp(2rem,4vw,3rem)}
