@@ -12,7 +12,7 @@
 <style>
 
   /* Page header richer intro */
-  .page-header-intro{display:flex;flex-direction:column;gap:18px;max-width:72ch}
+  .page-header-intro{display:flex;flex-direction:column;gap:18px}
   .page-header-intro p{font-size:1.05rem;color:var(--ink-soft);margin:0}
   .page-header-intro p:first-child{font-size:1.1rem}
 
@@ -225,8 +225,8 @@
     <h1>Modèles d'analyse du sentencing</h1>
     <div class="page-header-intro">
       <p>Les modèles statistiques et computationnels du sentencing cherchent à décrire, de façon systématique et reproductible, comment les caractéristiques d'une affaire, d'un prévenu ou d'une juridiction sont associées aux décisions pénales prononcées. Ils mobilisent des méthodes variées — régressions multivariées, arbres de choix, apprentissage automatique, traitement automatique de la langue — pour quantifier ces associations et les rendre comparables dans le temps et entre territoires.</p>
-      <p>Les modèles hébergés sur Sentencia sont ancrés dans les travaux publiés par les membres du <strong>Machina Research Network</strong> : des chercheurs en droit pénal, en sciences cognitives, en psychologie et en philosophie qui étudient conjointement la décision judiciaire depuis plusieurs années. Chaque modèle est documenté et rattaché aux publications académiques dont il est issu.</p>
-      <p>Ces modèles sont <strong>strictement descriptifs</strong>. Ils rendent compte de ce qui a été observé dans les données — des tendances, des associations, des écarts entre juridictions — sans jamais prétendre prédire l'issue d'une affaire individuelle. Cette limite n'est pas un défaut technique : elle est constitutive d'une éthique de la modélisation judiciaire. Une décision pénale dépend de l'appréciation souveraine du juge, de la singularité du dossier et du débat contradictoire ; aucun modèle ne peut ni ne doit s'y substituer. Produire un outil prédictif à usage individuel serait non seulement imprudent sur le plan épistémologique, mais contraire aux droits fondamentaux des justiciables.</p>
+      <p>Les modèles présentés ici sont tous issus de la <a href="/bibliographie.html">bibliographie du site</a>.</p>
+      <p>Ces modèles sont <strong>strictement descriptifs</strong>. Ils rendent compte de ce qui a été observé dans les données — des tendances, des associations, des écarts entre juridictions — sans jamais prétendre prédire l'issue d'une affaire individuelle. Cette limite n'est pas un défaut technique : elle est constitutive d'une éthique de la modélisation judiciaire. Une décision pénale dépend de l'appréciation souveraine du juge, de la singularité du dossier et du débat contradictoire.</p>
       <p>L'ambition de Sentencia est différente : offrir aux praticiens — magistrats, avocats, chercheurs, décideurs publics — des outils qui stimulent la <strong>réflexion qualitative</strong>. Un écart statistique entre deux départements n'est pas une réponse ; c'est une invitation à questionner les pratiques, les ressources, les contextes sociaux et les choix institutionnels qui le produisent.</p>
     </div>
   </div>
@@ -362,70 +362,6 @@
     </div>
   </section>
 </div>
-
-<section class="section-tight">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">Approches mobilisées</span>
-      <h2>Quatre familles de modèles, complémentaires.</h2>
-      <p class="lead">Aucune méthode ne suffit, à elle seule, à décrire la décision pénale. Sentencia combine des approches descriptives, explicatives et exploratoires, en assumant les forces et limites de chacune.</p>
-    </div>
-
-    <div class="model-grid">
-      <article class="model-card">
-        <span class="status-pill status-established"><span class="dot"></span>Approche établie</span>
-        <span class="kicker">Modèle 01</span>
-        <h3>Régressions multivariées</h3>
-        <p>Estimation de l'influence de plusieurs variables (gravité de l'infraction, antécédents, profil du prévenu, juridiction…) sur la décision pénale, à travers des modèles linéaires ou logistiques.</p>
-        <ul>
-          <li>Lecture quantitative des facteurs explicatifs</li>
-          <li>Comparabilité des coefficients entre populations</li>
-          <li>Sensibilité aux variables omises et au choix des contrôles</li>
-        </ul>
-        <span class="ref">Cf. Raoult, S. (2022), <em>Jurimétrie</em> n°1 — comparaison régressions / arbres de choix.</span>
-      </article>
-
-      <article class="model-card">
-        <span class="status-pill status-established"><span class="dot"></span>Approche établie</span>
-        <span class="kicker">Modèle 02</span>
-        <h3>Arbres de choix &amp; modèles d'ensemble</h3>
-        <p>Apprentissage automatique non linéaire (arbres de décision, forêts aléatoires, gradient boosting) pour identifier les configurations de variables qui structurent la prise de décision.</p>
-        <ul>
-          <li>Captent des effets de seuil et d'interaction</li>
-          <li>Révèlent des « profils » de décisions</li>
-          <li>Interprétabilité requise pour un usage public</li>
-        </ul>
-        <span class="ref">Cf. Derbey &amp; Raoult (2018), <em>Faut-il avouer pour sortir de détention provisoire ?</em></span>
-      </article>
-
-      <article class="model-card">
-        <span class="status-pill status-established"><span class="dot"></span>Approche établie</span>
-        <span class="kicker">Modèle 03</span>
-        <h3>Statistiques descriptives territoriales</h3>
-        <p>Indicateurs agrégés au niveau du département ou du ressort, comparés à la distribution nationale. C'est l'approche qui sous-tend la carte interactive de Sentencia.</p>
-        <ul>
-          <li>Lecture immédiate, accessible au grand public</li>
-          <li>Comparaisons inter-juridictions ajustables</li>
-          <li>Ne traduit pas, en soi, des relations causales</li>
-        </ul>
-        <span class="ref">Source : SSMJ — Service statistique du Ministère de la Justice.</span>
-      </article>
-
-      <article class="model-card">
-        <span class="status-pill status-established"><span class="dot"></span>Approche établie</span>
-        <span class="kicker">Modèle 04</span>
-        <h3>Extraction d'information sur décisions</h3>
-        <p>Méthodes de traitement automatique de la langue appliquées aux décisions de justice pour structurer les motivations, les peines et les facteurs cités, dans une perspective descriptive.</p>
-        <ul>
-          <li>Constitution de corpus exploitables</li>
-          <li>Mesure de la stabilité des motivations</li>
-          <li>Limites techniques et théoriques documentées</li>
-        </ul>
-        <span class="ref">Cf. Barnier, Jeandidier &amp; Sayn (2022), <em>Jurimétrie</em> n°1.</span>
-      </article>
-    </div>
-  </div>
-</section>
 
 
 <section class="section-tight" style="padding-bottom:96px">
