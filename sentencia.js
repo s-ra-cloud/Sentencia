@@ -68,7 +68,6 @@
       </div>
       <div class="footer-bottom">
         <span>© ${new Date().getFullYear()} Sentencia – Machina Research Network</span>
-        <span>Données issues du Service statistique du Ministère de la Justice et de partenariats publics.</span>
       </div>
     </footer>`;
 
