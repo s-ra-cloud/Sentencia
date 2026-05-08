@@ -28,6 +28,12 @@
       </div>
     </header>`;
 
+  const alphaNoticeHTML = `
+    <div id="alpha-notice" style="background:var(--navy,#1a2e4a);color:#fff;padding:14px 32px;display:flex;align-items:center;gap:16px;font-family:var(--sans,'Inter',sans-serif);font-size:.88rem;line-height:1.5;">
+      <span style="flex:1;">Sentencia est actuellement en <strong>alpha fermée</strong>, réservée aux retours de la communauté. Si vous constatez une valeur incorrecte ou incohérente, contactez-nous à <a href="mailto:sacha.raoult@univ-amu.fr" style="color:var(--gold,#C9A84C);text-decoration:underline;text-underline-offset:2px;">sacha.raoult@univ-amu.fr</a>.</span>
+      <button id="alpha-notice-close" aria-label="Fermer cette bannière" style="background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:4px;padding:4px 10px;cursor:pointer;font-size:.85rem;flex-shrink:0;">×</button>
+    </div>`;
+
   const footerHTML = `
     <footer class="site-footer">
       <div class="container">
@@ -69,7 +75,19 @@
   const headerSlot = document.getElementById('site-header');
   const footerSlot = document.getElementById('site-footer');
   if (headerSlot) headerSlot.outerHTML = headerHTML;
-  if (footerSlot) footerSlot.outerHTML = footerHTML;
+  if (footerSlot) footerSlot.outerHTML = alphaNoticeHTML + footerHTML;
+
+  const alphaNotice = document.getElementById('alpha-notice');
+  if (alphaNotice) {
+    if (sessionStorage.getItem('alphaNoticeDismissed')) {
+      alphaNotice.style.display = 'none';
+    }
+    const closeBtn = document.getElementById('alpha-notice-close');
+    if (closeBtn) closeBtn.addEventListener('click', () => {
+      alphaNotice.style.display = 'none';
+      sessionStorage.setItem('alphaNoticeDismissed', '1');
+    });
+  }
 
   const toggle = document.getElementById('navToggle');
   const links = document.getElementById('navLinks');
