@@ -148,6 +148,91 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      position: relative;
+    }
+
+    .regionSelector {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      min-width: 168px;
+      backdrop-filter: blur(4px);
+    }
+
+    .regionSelector__title {
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      padding: 0 0.25rem;
+    }
+
+    .regionSelector__btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.4rem 0.6rem;
+      border: none;
+      border-radius: 4px;
+      background: none;
+      font-family: inherit;
+      font-size: 0.75rem;
+      cursor: pointer;
+      color: var(--text);
+      transition: background 0.15s;
+      margin-bottom: 0.1rem;
+    }
+
+    .regionSelector__btn:hover:not(:disabled) {
+      background: var(--bg);
+    }
+
+    .regionSelector__btn.active {
+      background: var(--accent);
+      color: white;
+      font-weight: 500;
+    }
+
+    .regionSelector__btn:disabled {
+      color: #aaa;
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+
+    .regionSelector__locked-badge {
+      display: inline-block;
+      font-size: 0.6rem;
+      background: #f0f0f0;
+      color: #999;
+      border-radius: 3px;
+      padding: 0.05rem 0.25rem;
+      margin-left: 0.25rem;
+      vertical-align: middle;
+      font-style: normal;
+    }
+
+    .idfBadge {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: rgba(37, 99, 235, 0.88);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.3rem 0.65rem;
+      border-radius: 4px;
+      z-index: 100;
+      display: none;
+      pointer-events: none;
+      backdrop-filter: blur(2px);
     }
     
     #map {
@@ -373,6 +458,16 @@
       </div>
     </aside>
   <div class="mapContainer">
+    <div class="regionSelector">
+      <div class="regionSelector__title" data-i18n="region_selector_title">Région</div>
+      <button class="regionSelector__btn active" id="regionMetro" data-i18n="region_metro">France métropolitaine</button>
+      <button class="regionSelector__btn" id="regionIdf" data-i18n="region_idf">Île-de-France</button>
+      <button class="regionSelector__btn" id="regionDomtom" disabled>
+        <span data-i18n="region_domtom">DOM-TOM</span> 🔒
+        <span class="regionSelector__locked-badge" data-i18n="region_domtom_badge">Prochainement</span>
+      </button>
+    </div>
+    <div class="idfBadge" id="idfBadge" data-i18n="idf_badge">Zoom : Île-de-France</div>
     <svg id="map"></svg>
   </div>
 </main>
@@ -418,7 +513,14 @@
         colormode_color: 'Color',
         colormode_bw: 'Black & White',
         export_btn: 'Export Image',
-        download_data_btn: 'Download All Data'
+        download_data_btn: 'Download All Data',
+        region_selector_title: 'Region',
+        region_metro: 'Metropolitan France',
+        region_idf: 'Île-de-France',
+        region_domtom: 'DOM-TOM',
+        region_domtom_badge: 'Coming soon',
+        idf_badge: 'Zoom: Île-de-France',
+        city_locked_tooltip: 'City-level data — coming soon'
       },
       fr: {
         back_to_main: 'Retour au site principal',
@@ -454,9 +556,22 @@
         colormode_color: 'Couleur',
         colormode_bw: 'Noir & Blanc',
         export_btn: 'Exporter l\'image',
-        download_data_btn: 'Télécharger toutes les données'
+        download_data_btn: 'Télécharger toutes les données',
+        region_selector_title: 'Région',
+        region_metro: 'France métropolitaine',
+        region_idf: 'Île-de-France',
+        region_domtom: 'DOM-TOM',
+        region_domtom_badge: 'Prochainement',
+        idf_badge: 'Zoom : Île-de-France',
+        city_locked_tooltip: 'Données à l\'échelle de la ville — à venir'
       }
     };
+
+    const LOCKED_CITIES = [
+      { nameEN: 'Paris', nameFR: 'Paris', lat: 48.8566, lon: 2.3522, locked: true },
+      { nameEN: 'Lyon', nameFR: 'Lyon', lat: 45.7640, lon: 4.8357, locked: true },
+      { nameEN: 'Marseille', nameFR: 'Marseille', lat: 43.2965, lon: 5.3698, locked: true }
+    ];
 
     let currentLang = 'fr';
 
@@ -894,6 +1009,12 @@
         indicatorSelect.options[i].textContent = getColumnLabel(colName, lang);
       }
       updateIndicatorDescription();
+
+      mapG.selectAll('.city-marker .city-name-label')
+        .text(d => lang === 'fr' ? d.nameFR : d.nameEN);
+
+      const _domtom = document.getElementById('regionDomtom');
+      if (_domtom) _domtom.title = I18N[lang].region_domtom_badge;
     }
 
     // lang toggle removed
@@ -915,6 +1036,64 @@
       .attr("height", "100%")
       .attr("viewBox", `0 0 ${width} ${height}`)
       .attr("preserveAspectRatio", "xMidYMid meet");
+
+    const mapG = svg.append("g").attr("class", "mapGroup");
+
+    const zoom = d3.zoom()
+      .scaleExtent([1, 30])
+      .filter(() => false)
+      .on("zoom", (event) => {
+        mapG.attr("transform", event.transform);
+      });
+
+    svg.call(zoom);
+
+    let currentRegion = 'metro';
+
+    function zoomToRegion(region) {
+      currentRegion = region;
+      const idfBadge = document.getElementById('idfBadge');
+      const btnMetro = document.getElementById('regionMetro');
+      const btnIdf = document.getElementById('regionIdf');
+
+      if (region === 'metro') {
+        svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+        idfBadge.style.display = 'none';
+        btnMetro.classList.add('active');
+        btnIdf.classList.remove('active');
+      } else if (region === 'idf') {
+        if (!geoData) return;
+        const idfCodes = new Set(['75', '77', '78', '91', '92', '93', '94', '95']);
+        const idfFeatures = geoData.features.filter(f => idfCodes.has(f.properties.code));
+
+        let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+        idfFeatures.forEach(f => {
+          const b = pathGenerator.bounds(f);
+          x0 = Math.min(x0, b[0][0]);
+          y0 = Math.min(y0, b[0][1]);
+          x1 = Math.max(x1, b[1][0]);
+          y1 = Math.max(y1, b[1][1]);
+        });
+
+        const { width: cw, height: ch } = getContainerDims();
+        const padding = 48;
+        const scale = Math.min(
+          (cw - padding * 2) / (x1 - x0),
+          (ch - padding * 2) / (y1 - y0)
+        );
+        const tx = cw / 2 - scale * (x0 + x1) / 2;
+        const ty = ch / 2 - scale * (y0 + y1) / 2;
+
+        svg.transition().duration(750).call(
+          zoom.transform,
+          d3.zoomIdentity.translate(tx, ty).scale(scale)
+        );
+
+        idfBadge.style.display = 'block';
+        btnIdf.classList.add('active');
+        btnMetro.classList.remove('active');
+      }
+    }
 
     // Re-fit the viewBox if container resizes (e.g. window resize)
     if (typeof ResizeObserver !== 'undefined') {
@@ -970,6 +1149,62 @@
 
     updateLegend();
 
+    function renderCityMarkers() {
+      mapG.selectAll('.city-marker').remove();
+
+      const markers = mapG.selectAll('.city-marker')
+        .data(LOCKED_CITIES)
+        .join('g')
+        .attr('class', 'city-marker')
+        .attr('transform', d => {
+          const [x, y] = projection([d.lon, d.lat]);
+          return `translate(${x}, ${y})`;
+        })
+        .style('cursor', 'default');
+
+      markers.append('circle')
+        .attr('r', 8)
+        .attr('fill', '#d0d0d0')
+        .attr('stroke', '#888')
+        .attr('stroke-width', 1.5)
+        .attr('opacity', 0.9);
+
+      markers.append('text')
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'central')
+        .attr('font-size', '9px')
+        .attr('pointer-events', 'none')
+        .text('🔒');
+
+      markers.append('text')
+        .attr('class', 'city-name-label')
+        .attr('x', 12)
+        .attr('y', 0)
+        .attr('dominant-baseline', 'central')
+        .attr('font-size', '9px')
+        .attr('fill', '#555')
+        .attr('font-weight', '500')
+        .attr('pointer-events', 'none')
+        .text(d => currentLang === 'fr' ? d.nameFR : d.nameEN);
+
+      markers
+        .on('mouseover', function(event, d) {
+          const name = currentLang === 'fr' ? d.nameFR : d.nameEN;
+          const msg = I18N[currentLang].city_locked_tooltip;
+          tooltip
+            .style('opacity', 1)
+            .html(`<div class="tooltip__name">${name}</div><div class="tooltip__value">🔒 ${msg}</div>`);
+        })
+        .on('mousemove', function(event) {
+          tooltip
+            .style('left', (event.pageX + 15) + 'px')
+            .style('top', (event.pageY - 10) + 'px');
+        })
+        .on('mouseout', function() {
+          tooltip.style('opacity', 0);
+        });
+    }
+
     function updateMap() {
       if (!geoData || indicatorColumns.length === 0) return;
 
@@ -984,7 +1219,7 @@
       const extent = d3.extent(values);
       const normalizer = d3.scaleLinear().domain(extent).range([0, 1]);
 
-      svg.selectAll(".department")
+      mapG.selectAll(".department")
         .attr("fill", d => {
           const code = d.properties.code;
           const v = csvData[code] ? csvData[code][indicator] : null;
@@ -1046,7 +1281,7 @@
         return !['971', '972', '973', '974', '976'].includes(code);
       });
 
-      svg.selectAll(".department")
+      mapG.selectAll(".department")
         .data(metropolitanDepts)
         .join("path")
         .attr("class", "department")
@@ -1084,9 +1319,13 @@
         });
 
       updateMap();
+      renderCityMarkers();
     }).catch(error => console.error("Error loading data:", error));
 
     }); // end requestAnimationFrame
+
+    document.getElementById('regionMetro').addEventListener('click', () => zoomToRegion('metro'));
+    document.getElementById('regionIdf').addEventListener('click', () => zoomToRegion('idf'));
 
     document.getElementById('offenceSelect').addEventListener('change', populateIndicatorDropdown);
     document.getElementById('indicatorSelect').addEventListener('change', () => { updateMap(); updateIndicatorDescription(); });
