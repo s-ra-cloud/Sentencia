@@ -380,17 +380,38 @@
 <div id="panel-detention" class="model-panel" role="tabpanel" aria-labelledby="tab-detention" aria-hidden="true">
   <section class="section-tight">
     <div class="container">
-      <div class="tab-placeholder">
-        <div class="tp-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <rect x="3" y="11" width="18" height="10" rx="1.5"/>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke-linecap="round"/>
-          </svg>
+
+      <p>Ce modèle est fondé sur l'arbre de décision du rapport ORDCS n°12 de Derbay &amp; Raoult (2018), <em><a href="/sentencia-assets/pdfs/Rapport-ORDCS-12-Detention-Provisoire-2018.pdf" target="_blank" rel="noopener">Faut-il avouer pour sortir de détention provisoire ?</a></em> (Observatoire régional de la délinquance et des contextes sociaux, Aix-Marseille Université). Les données proviennent de l'observation d'environ 500 audiences de détention provisoire au TGI de Marseille. Le modèle est commenté par Sacha Raoult dans une <a href="https://www.youtube.com/watch?v=XFIrgddhAGg" target="_blank" rel="noopener">vidéo disponible en ligne</a>. Ce modèle pose la question suivante : parmi les personnes <strong>déjà placées en détention provisoire</strong>, quels facteurs prédisent l'obtention d'un <strong>contrôle judiciaire</strong> (libération sous supervision) plutôt que le maintien en détention ?</p>
+
+      <div class="wizard-wrap">
+        <div class="wizard-sidebar">
+          <div class="wizard-source-card">
+            <div class="ws-title">Source &amp; données</div>
+            <p><strong>Derbay, A. &amp; Raoult, S. (2018).</strong> Rapport ORDCS n°12. Aix-Marseille Université.<br>~500 audiences de détention provisoire, TGI de Marseille.</p>
+            <p>
+              <a href="/sentencia-assets/pdfs/Rapport-ORDCS-12-Detention-Provisoire-2018.pdf" target="_blank" rel="noopener">↗ Rapport ORDCS n°12 (PDF)</a><br>
+              <a href="https://www.youtube.com/watch?v=XFIrgddhAGg" target="_blank" rel="noopener">↗ Commentaire vidéo (Raoult)</a><br>
+              <a href="/bibliographie.html">↗ Bibliographie Sentencia</a>
+            </p>
+          </div>
+
+          <div>
+            <div class="wizard-trail-title" style="margin-bottom:10px">Réponses saisies</div>
+            <div class="wizard-trail" id="dp-trail">
+              <span class="trail-empty">Aucune réponse pour le moment.</span>
+            </div>
+          </div>
         </div>
-        <span class="tp-pill">En cours de développement</span>
-        <h3>Modèle — Détention provisoire</h3>
-        <p>Ce modèle, fondé sur les travaux du Machina Research Network, est en cours de préparation. Il sera disponible dans une prochaine version de Sentencia.</p>
+
+        <div class="wizard-main" id="dp-main">
+          <!-- Injected by JS -->
+        </div>
       </div>
+
+      <div class="wizard-ethics" style="margin-top:20px">
+        <strong>Avertissement éthique.</strong> Les résultats affichés sont <strong>strictement descriptifs</strong> : ils reflètent des associations statistiques observées dans un corpus limité de ~500 audiences de détention provisoire à Marseille. Ils ne constituent pas, et ne sauraient constituer, une prédiction de l'issue d'une affaire individuelle. La décision appartient exclusivement au juge, qui apprécie la situation dans toute sa singularité. Cet outil est destiné à la réflexion académique et pédagogique.
+      </div>
+
     </div>
   </section>
 </div>
@@ -759,6 +780,127 @@
     html += '</div>';
     $main.innerHTML = html;
     document.getElementById('wz-reset').addEventListener('click', reset);
+  }
+
+  function reset() {
+    trail = [];
+    current = TREE;
+    render();
+  }
+
+  function esc(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  render();
+})();
+</script>
+<script>
+(function(){
+  var TREE = {
+    q: 'La personne plac\u00e9e en d\u00e9tention a-t-elle fait des aveux\u00a0?',
+    opts: [
+      { l: 'Oui', next: {
+        q: 'Situation professionnelle\u00a0?',
+        opts: [
+          { l: 'Emploi stable ou emploi \u00e0 venir', r: { cj: true, pct: 96 } },
+          { l: 'Sans emploi (au moment des faits)', next: {
+            q: 'Ant\u00e9c\u00e9dents judiciaires\u00a0?',
+            opts: [
+              { l: 'Non', r: { cj: true, pct: 71 } },
+              { l: 'Oui', r: { cj: false, pct: 100 } }
+            ]
+          }}
+        ]
+      }},
+      { l: 'Non', next: {
+        q: 'Le parquet a-t-il requis le contr\u00f4le judiciaire\u00a0?',
+        opts: [
+          { l: 'Oui', r: { cj: true, pct: 100 } },
+          { l: 'Non', next: {
+            q: 'Situation professionnelle\u00a0?',
+            opts: [
+              { l: 'Emploi \u00e0 venir', next: {
+                q: 'Ant\u00e9c\u00e9dents judiciaires\u00a0?',
+                opts: [
+                  { l: 'Non', r: { cj: true, pct: 80 } },
+                  { l: 'Oui', r: { cj: false, pct: 83 } }
+                ]
+              }},
+              { l: 'Autre (sans emploi)', r: { cj: false, pct: 95 } }
+            ]
+          }}
+        ]
+      }}
+    ]
+  };
+
+  var trail = [];
+  var current = TREE;
+
+  var $main  = document.getElementById('dp-main');
+  var $trail = document.getElementById('dp-trail');
+
+  function render() {
+    renderTrail();
+    if (current && current.q) {
+      renderQuestion();
+    }
+  }
+
+  function renderTrail() {
+    if (!trail.length) {
+      $trail.innerHTML = '<span class="trail-empty">Aucune r\u00e9ponse pour le moment.</span>';
+      return;
+    }
+    $trail.innerHTML = trail.map(function(item) {
+      return '<div class="trail-item"><span class="tq">' + esc(item.q) + '</span><span class="ta">' + esc(item.a) + '</span></div>';
+    }).join('');
+  }
+
+  function renderQuestion() {
+    var stepNum = trail.length + 1;
+    var html = '<div class="wizard-step-label">\u00c9tape ' + stepNum + '</div>';
+    html += '<div class="wizard-question">' + esc(current.q) + '</div>';
+    html += '<div class="wizard-options">';
+    current.opts.forEach(function(opt, i) {
+      html += '<button class="wizard-btn" data-idx="' + i + '">' + esc(opt.l) + '</button>';
+    });
+    html += '</div>';
+    $main.innerHTML = html;
+    $main.querySelectorAll('.wizard-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var idx = parseInt(btn.getAttribute('data-idx'), 10);
+        var chosen = current.opts[idx];
+        trail.push({ q: current.q, a: chosen.l });
+        if (chosen.r) {
+          showResult(chosen.r);
+        } else {
+          current = chosen.next;
+          render();
+        }
+      });
+    });
+  }
+
+  function showResult(r) {
+    renderTrail();
+    var cls = r.cj ? 'md-non' : 'md-oui';
+    var verdict = r.cj
+      ? 'Contr\u00f4le judiciaire obtenu'
+      : 'Maintien en d\u00e9tention provisoire';
+    var html = '<div class="wizard-result">';
+    html += '<div class="result-card ' + cls + '">';
+    html += '<div class="rc-label">R\u00e9sultat du mod\u00e8le</div>';
+    html += '<div class="rc-verdict">' + esc(verdict) + '</div>';
+    html += '<div class="rc-pct">Observ\u00e9 dans <strong>' + r.pct + '\u00a0%</strong> des cas correspondant \u00e0 ce profil dans les donn\u00e9es de Derbay &amp; Raoult (2018).</div>';
+    html += '</div>';
+    html += '<button class="wizard-reset" id="dp-reset" type="button">';
+    html += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 7a6 6 0 1 0 1.2-3.6" stroke-linecap="round"/><path d="M1 2v2.5h2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    html += 'Recommencer</button>';
+    html += '</div>';
+    $main.innerHTML = html;
+    document.getElementById('dp-reset').addEventListener('click', reset);
   }
 
   function reset() {
