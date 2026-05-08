@@ -173,6 +173,8 @@
     transition:.15s;display:inline-flex;align-items:center;gap:8px;
   }
   .wizard-reset:hover{border-color:var(--accent);color:var(--accent)}
+  .wizard-report{align-self:flex-start;padding:10px 20px;border:1px solid #C8A06A;border-radius:999px;font-size:.88rem;color:#7A5020;background:#FDF6EE;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:8px;font-family:inherit}
+  .wizard-report:hover{background:#F5E8D0;border-color:#7A5020}
   .wizard-cta{
     margin-top:12px;padding:16px 20px;border-radius:var(--radius);
     background:#F0F4FA;border:1px solid #C8D6EC;
@@ -782,9 +784,16 @@
     html += '<button class="wizard-reset" id="wz-reset" type="button">';
     html += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 7a6 6 0 1 0 1.2-3.6" stroke-linecap="round"/><path d="M1 2v2.5h2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     html += 'Recommencer</button>';
+    html += '<button class="wizard-report" id="wz-report" type="button"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="6"/><line x1="7" y1="4" x2="7" y2="7.5"/><circle cx="7" cy="10" r=".7" fill="currentColor" stroke="none"/></svg>Signaler une valeur incoh\u00e9rente</button>';
     html += '</div>';
     $main.innerHTML = html;
     document.getElementById('wz-reset').addEventListener('click', reset);
+    document.getElementById('wz-report').addEventListener('click', function() {
+      var lines = trail.map(function(t) { return t.q + '\n  R\u00e9ponse\u00a0: ' + t.a; }).join('\n');
+      var verdict = r.md ? 'Mandat de d\u00e9p\u00f4t\u00a0: Oui \u2014 ' + r.pct + '\u00a0%' : 'Mandat de d\u00e9p\u00f4t\u00a0: Non \u2014 ' + r.pct + '\u00a0%';
+      var body = 'Mod\u00e8le\u00a0: Comparutions imm\u00e9diates (Azoulay 2020)\n\nParcours\u00a0:\n' + lines + '\n\nR\u00e9sultat affich\u00e9\u00a0: ' + verdict + '\n\nValeur signal\u00e9e comme incoh\u00e9rente\u00a0:\n[D\u00e9crivez ici ce qui vous semble incorrect]';
+      window.location.href = 'mailto:sacha.raoult@univ-amu.fr?subject=' + encodeURIComponent('[Sentencia] Signalement \u2014 Mod\u00e8le comparution imm\u00e9diate') + '&body=' + encodeURIComponent(body);
+    });
   }
 
   function reset() {
@@ -933,9 +942,16 @@
     html += '<button class="wizard-reset" id="dp-reset" type="button">';
     html += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 7a6 6 0 1 0 1.2-3.6" stroke-linecap="round"/><path d="M1 2v2.5h2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     html += 'Recommencer</button>';
+    html += '<button class="wizard-report" id="dp-report" type="button"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="6"/><line x1="7" y1="4" x2="7" y2="7.5"/><circle cx="7" cy="10" r=".7" fill="currentColor" stroke="none"/></svg>Signaler une valeur incoh\u00e9rente</button>';
     html += '</div>';
     $main.innerHTML = html;
     document.getElementById('dp-reset').addEventListener('click', reset);
+    document.getElementById('dp-report').addEventListener('click', function() {
+      var lines = trail.map(function(t) { return t.q + '\n  R\u00e9ponse\u00a0: ' + t.a; }).join('\n');
+      var verdictTxt = r.cj ? 'Contr\u00f4le judiciaire \u2014 ' + r.pct + '\u00a0%' : 'Maintien en d\u00e9tention \u2014 ' + r.pct + '\u00a0%';
+      var body = 'Mod\u00e8le\u00a0: D\u00e9tention provisoire (Derbey &amp; Raoult 2018)\n\nParcours\u00a0:\n' + lines + '\n\nR\u00e9sultat affich\u00e9\u00a0: ' + verdictTxt + '\n\nValeur signal\u00e9e comme incoh\u00e9rente\u00a0:\n[D\u00e9crivez ici ce qui vous semble incorrect]';
+      window.location.href = 'mailto:sacha.raoult@univ-amu.fr?subject=' + encodeURIComponent('[Sentencia] Signalement \u2014 Mod\u00e8le d\u00e9tention provisoire') + '&body=' + encodeURIComponent(body);
+    });
   }
 
   function reset() {
