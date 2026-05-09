@@ -388,6 +388,7 @@ app.get('/api/export', checkAuth, async (req, res) => {
     for (const key of keys) {
       exportData[key] = await getData(key);
     }
+    exportData.subscribers = await getSubscribers();
     exportData.exportedAt = new Date().toISOString();
     res.json(exportData);
   } catch (e) {
@@ -397,13 +398,14 @@ app.get('/api/export', checkAuth, async (req, res) => {
 
 app.post('/api/import', checkAuth, async (req, res) => {
   try {
-    const { outputs, members, funding, program, partners, team_descriptions } = req.body;
+    const { outputs, members, funding, program, partners, team_descriptions, subscribers } = req.body;
     if (outputs) await setData('outputs', outputs);
     if (members) await setData('members', members);
     if (funding) await setData('funding', funding);
     if (program) await setData('program', program);
     if (partners) await setData('partners', partners);
     if (team_descriptions) await setData('team_descriptions', team_descriptions);
+    if (Array.isArray(subscribers)) await saveSubscribers(subscribers);
     res.json({ success: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
