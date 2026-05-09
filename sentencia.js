@@ -81,7 +81,7 @@
       </div>
     </footer>
 
-    <div id="sub-admin-overlay" hidden style="position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9000;display:flex;align-items:center;justify-content:center;">
+    <div id="sub-admin-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9000;display:none;align-items:center;justify-content:center;">
       <div id="sub-admin-modal" style="background:#fff;border-radius:10px;width:min(700px,96vw);max-height:85vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.25);overflow:hidden;">
         <div style="background:#1a2e4a;color:#fff;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
           <strong style="font-size:1rem;font-family:var(--sans,'Inter',sans-serif);">Gestion des abonnés</strong>
@@ -299,7 +299,7 @@
   function openSubPanel() {
     const overlay = document.getElementById('sub-admin-overlay');
     if (!overlay) return;
-    overlay.hidden = false;
+    overlay.style.display = 'flex';
     document.getElementById('sub-admin-auth').style.display = 'block';
     const panel = document.getElementById('sub-admin-panel');
     panel.hidden = true;
@@ -311,7 +311,7 @@
 
   function closeSubPanel() {
     const overlay = document.getElementById('sub-admin-overlay');
-    if (overlay) overlay.hidden = true;
+    if (overlay) overlay.style.display = 'none';
     _subToken = null;
   }
 
@@ -349,7 +349,7 @@
   if (subOverlay) subOverlay.addEventListener('click', (e) => { if (e.target === subOverlay) closeSubPanel(); });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && subOverlay && !subOverlay.hidden) closeSubPanel();
+    if (e.key === 'Escape' && subOverlay && subOverlay.style.display !== 'none') closeSubPanel();
   });
 
   const pwForm = document.getElementById('sub-admin-pw-form');
