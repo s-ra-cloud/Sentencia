@@ -138,6 +138,56 @@ function checkAuth(req, res, next) {
   next();
 }
 
+app.get('/api/subscribers', checkAuth, (req, res) => {
+  try {
+    const file = path.join(__dirname, 'data', 'newsletter.json');
+    let list = [];
+    try { list = JSON.parse(fs.readFileSync(file, 'utf8')); } catch {}
+    res.json(list);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/subscribers/export', checkAuth, (req, res) => {
+  try {
+    const file = path.join(__dirname, 'data', 'newsletter.json');
+    let list = [];
+    try { list = JSON.parse(fs.readFileSync(file, 'utf8')); } catch {}
+    const rows = [['email', 'type', 'date']];
+    for (const entry of list) {
+      rows.push([
+        entry.email || '',
+        entry.type || 'newsletter',
+        entry.date || ''
+      ]);
+    }
+    const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    res.setHeader('Content-Disposition', 'attachment; filename="subscribers.csv"');
+    res.send('\uFEFF' + csv);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.delete('/api/subscribers/:email', checkAuth, (req, res) => {
+  try {
+    const email = req.params.email;
+    const type = req.query.type || 'newsletter';
+    const file = path.join(__dirname, 'data', 'newsletter.json');
+    let list = [];
+    try { list = JSON.parse(fs.readFileSync(file, 'utf8')); } catch {}
+    const before = list.length;
+    list = list.filter(e => !(e.email === email && (e.type || 'newsletter') === type));
+    if (list.length === before) return res.status(404).json({ error: 'Not found' });
+    fs.writeFileSync(file, JSON.stringify(list, null, 2));
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.post('/api/newsletter', async (req, res) => {
   const { email, type } = req.body;
   if (!email || !email.includes('@')) return res.status(400).json({ error: 'Email invalide' });
