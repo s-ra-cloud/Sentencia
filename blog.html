@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog — Sentencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/sentencia.css">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+  .blog-list { display: flex; flex-direction: column; gap: 40px; max-width: 740px; }
+  .blog-card { border-bottom: 1px solid var(--line); padding-bottom: 36px; }
+  .blog-card:last-child { border-bottom: none; }
+  .blog-meta { font-size: .78rem; letter-spacing: .09em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .blog-card h2 { font-family: var(--serif); font-size: 1.55rem; font-weight: 500; line-height: 1.3; margin-bottom: 10px; }
+  .blog-card h2 a { color: var(--ink); text-decoration: none; }
+  .blog-card h2 a:hover { color: var(--accent); }
+  .blog-card p.excerpt { color: var(--ink-soft); line-height: 1.7; margin-bottom: 14px; }
+  .blog-read { font-size: .88rem; color: var(--accent); text-decoration: none; font-weight: 500; }
+  .blog-read:hover { text-decoration: underline; }
+  .blog-empty { color: var(--ink-soft); font-style: italic; }
+
+  /* single post */
+  #post-view { display: none; }
+  #post-view.active { display: block; }
+  #list-view.hidden { display: none; }
+  .post-back { display: inline-block; margin-bottom: 28px; font-size: .88rem; color: var(--accent); text-decoration: none; }
+  .post-back:hover { text-decoration: underline; }
+  .post-header { margin-bottom: 40px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+  .post-header h1 { font-family: var(--serif); font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 500; line-height: 1.25; }
+  .post-body { max-width: 720px; }
+  .post-body h1,.post-body h2,.post-body h3 { font-family: var(--serif); font-weight: 500; margin: 1.8em 0 .6em; }
+  .post-body h2 { font-size: 1.35rem; }
+  .post-body h3 { font-size: 1.1rem; }
+  .post-body p { color: var(--ink-soft); line-height: 1.8; margin-bottom: 1.1em; }
+  .post-body a { color: var(--accent); text-underline-offset: 2px; }
+  .post-body ul,.post-body ol { color: var(--ink-soft); line-height: 1.8; margin: 0 0 1em 1.4em; }
+  .post-body blockquote { border-left: 3px solid var(--gold); padding: 6px 0 6px 18px; margin: 1.5em 0; color: var(--ink-soft); font-style: italic; }
+  .post-body code { background: #f0ede8; border-radius: 3px; padding: 1px 5px; font-size: .88em; }
+  .post-body pre { background: #f0ede8; border-radius: 6px; padding: 16px; overflow-x: auto; margin-bottom: 1em; }
+  .post-body pre code { background: none; padding: 0; }
+  .post-body hr { border: none; border-top: 1px solid var(--line); margin: 2em 0; }
+</style>
+</head>
+<body data-page="blog">
+<div id="site-header"></div>
+
+<div id="list-view">
+  <section class="page-header">
+    <div class="container">
+      <div class="crumbs"><a href="/">Accueil</a> &nbsp;/&nbsp; Blog</div>
+      <h1>Blog Sentencia</h1>
+      <p>Notes de recherche, mises à jour de la plateforme et réflexions sur la justice pénale.</p>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="blog-list" id="blog-list">
+        <p class="blog-empty">Chargement…</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="post-view">
+  <section class="section-tight">
+    <div class="container">
+      <a href="/blog.html" class="post-back" id="back-link">← Retour au blog</a>
+      <div class="post-header">
+        <div class="blog-meta" id="post-meta"></div>
+        <h1 id="post-title"></h1>
+      </div>
+      <div class="post-body" id="post-body"></div>
+    </div>
+  </section>
+</div>
+
+<div id="site-footer"></div>
+<script src="/sentencia.js"></script>
+<script>
+(function () {
+  function fmtDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  function slugify(text) {
+    return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  async function loadPosts() {
+    try {
+      const res = await fetch('/api/blog');
+      return await res.json();
+    } catch { return []; }
+  }
+
+  function renderList(posts) {
+    const container = document.getElementById('blog-list');
+    if (!posts.length) {
+      container.innerHTML = '<p class="blog-empty">Aucun article publié pour le moment.</p>';
+      return;
+    }
+    container.innerHTML = posts.map(p => `
+      <article class="blog-card">
+        <div class="blog-meta">${esc(fmtDate(p.date))}</div>
+        <h2><a href="/blog.html#${esc(p.slug)}">${esc(p.title)}</a></h2>
+        ${p.excerpt ? `<p class="excerpt">${esc(p.excerpt)}</p>` : ''}
+        <a class="blog-read" href="/blog.html#${esc(p.slug)}">Lire la suite →</a>
+      </article>`).join('');
+  }
+
+  function renderPost(post) {
+    document.getElementById('post-meta').textContent = fmtDate(post.date);
+    document.getElementById('post-title').textContent = post.title;
+    document.getElementById('post-body').innerHTML = marked.parse(post.content || '');
+    document.getElementById('list-view').classList.add('hidden');
+    document.getElementById('post-view').classList.add('active');
+    document.title = post.title + ' — Sentencia';
+    window.scrollTo(0, 0);
+  }
+
+  function showList() {
+    document.getElementById('list-view').classList.remove('hidden');
+    document.getElementById('post-view').classList.remove('active');
+    document.title = 'Blog — Sentencia';
+  }
+
+  let allPosts = [];
+
+  async function init() {
+    allPosts = await loadPosts();
+    const hash = location.hash.slice(1);
+    if (hash) {
+      const post = allPosts.find(p => p.slug === hash);
+      if (post) { renderList(allPosts); renderPost(post); return; }
+    }
+    renderList(allPosts);
+  }
+
+  window.addEventListener('hashchange', () => {
+    const hash = location.hash.slice(1);
+    if (hash) {
+      const post = allPosts.find(p => p.slug === hash);
+      if (post) { renderPost(post); return; }
+    }
+    showList();
+  });
+
+  init();
+})();
+</script>
+</body>
+</html>

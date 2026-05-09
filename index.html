@@ -143,6 +143,17 @@
   </div>
 </section>
 
+<section class="section" id="blog-section" style="display:none">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Blog</span>
+      <h2>Dernières notes &amp; mises à jour.</h2>
+    </div>
+    <div class="grid-3" id="blog-cards" style="align-items:start;"></div>
+    <div style="margin-top:28px"><a href="/blog.html" class="btn btn-link">Tous les articles <span class="arrow" aria-hidden="true">→</span></a></div>
+  </div>
+</section>
+
 <section class="section">
   <div class="container">
     <div class="section-head">
@@ -243,6 +254,28 @@
 
 <div id="site-footer"></div>
 <script src="/sentencia.js"></script>
+<script>
+(function(){
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function fmtDate(iso){
+    if(!iso) return '';
+    return new Date(iso+'T00:00:00').toLocaleDateString('fr-FR',{year:'numeric',month:'long',day:'numeric'});
+  }
+  fetch('/api/blog').then(r=>r.json()).then(posts=>{
+    if(!posts||!posts.length) return;
+    const latest = posts.slice(0,3);
+    const section = document.getElementById('blog-section');
+    const grid = document.getElementById('blog-cards');
+    grid.innerHTML = latest.map(p=>`
+      <a href="/blog.html#${esc(p.slug)}" class="feature" style="display:block;text-decoration:none;color:inherit;">
+        <span class="num" style="font-size:.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:.09em;">${esc(fmtDate(p.date))}</span>
+        <h3 style="font-size:1.1rem;margin:8px 0 6px;">${esc(p.title)}</h3>
+        ${p.excerpt?`<p style="color:var(--ink-soft);font-size:.92rem;line-height:1.6;margin:0;">${esc(p.excerpt)}</p>`:''}
+      </a>`).join('');
+    section.style.display = '';
+  }).catch(()=>{});
+})();
+</script>
 <style>
 .nl-form{
   display:none;margin-top:16px;

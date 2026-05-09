@@ -276,6 +276,7 @@
       <button class="tab" data-panel="partners">Partners</button>
       <button class="tab" data-panel="funding">Funding</button>
       <button class="tab" data-panel="program">Research Program</button>
+      <button class="tab" data-panel="blog">Blog</button>
       <button class="tab" data-panel="ratelimits">Rate Limits</button>
     </div>
 
@@ -319,6 +320,48 @@
       <button class="btn btn-success" id="saveProgram">Save Changes</button>
     </div>
 
+    <div class="panel" id="panel-blog">
+      <h2>Blog</h2>
+      <div id="blogFormWrap" style="display:none;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin-bottom:1.5rem;">
+        <h3 id="blogFormTitle" style="font-size:1rem;margin-bottom:1rem;">Nouvel article</h3>
+        <input type="hidden" id="blogEditId">
+        <div class="row" style="margin-bottom:.75rem;">
+          <div class="formGroup">
+            <label>Titre</label>
+            <input type="text" id="blogTitle" placeholder="Titre de l'article">
+          </div>
+          <div class="formGroup">
+            <label>Slug (URL, auto si vide)</label>
+            <input type="text" id="blogSlug" placeholder="mon-article">
+          </div>
+        </div>
+        <div class="row" style="margin-bottom:.75rem;">
+          <div class="formGroup">
+            <label>Date</label>
+            <input type="date" id="blogDate">
+          </div>
+          <div class="formGroup" style="display:flex;align-items:center;gap:.5rem;padding-top:1.75rem;">
+            <input type="checkbox" id="blogPublished" style="width:auto;">
+            <label for="blogPublished" style="margin:0;">Publié</label>
+          </div>
+        </div>
+        <div class="formGroup" style="margin-bottom:.75rem;">
+          <label>Résumé / extrait</label>
+          <input type="text" id="blogExcerpt" placeholder="Courte description affichée sur la liste et la page d'accueil">
+        </div>
+        <div class="formGroup" style="margin-bottom:1rem;">
+          <label>Contenu (Markdown)</label>
+          <textarea id="blogContent" style="min-height:280px;font-family:monospace;font-size:.88rem;" placeholder="# Titre\n\nVotre texte en **Markdown**…"></textarea>
+        </div>
+        <div style="display:flex;gap:.5rem;">
+          <button class="btn btn-success btn-sm" onclick="saveBlogPost()">Enregistrer</button>
+          <button class="btn btn-sm" onclick="cancelBlogForm()">Annuler</button>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm" id="newPostBtn" onclick="openBlogForm()">+ Nouvel article</button>
+      <div class="itemList" id="blogContainer" style="margin-top:1rem;"></div>
+    </div>
+
     <div class="panel" id="panel-ratelimits">
       <h2>Sentencing Tree Rate Limits</h2>
       <p style="color: var(--muted); margin-bottom: 1rem;">IPs are blocked after 10 analyses. Your allowed IPs are not rate limited.</p>
@@ -345,6 +388,11 @@
     let partnersData = null;
     let fundingData = null;
     let programData = null;
+    let blogData = [];
+
+    function escHtml(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
 
     function showToast(msg) {
       const toast = document.getElementById('toast');
@@ -443,11 +491,13 @@
       partnersData = await apiCall('GET', '/api/partners');
       fundingData = await apiCall('GET', '/api/funding');
       programData = await apiCall('GET', '/api/program');
+      blogData = await apiCall('GET', '/api/blog?all=1');
       renderOutputs();
       renderMembers();
       renderPartners();
       renderFunding();
       renderProgram();
+      renderBlog();
     }
 
     function renderOutputs() {
@@ -978,6 +1028,100 @@
       await apiCall('PUT', '/api/program', programData);
       showToast('Program saved!');
     });
+
+    /* ── Blog ── */
+    function renderBlog() {
+      const container = document.getElementById('blogContainer');
+      if (!Array.isArray(blogData) || blogData.length === 0) {
+        container.innerHTML = '<p style="color:var(--muted);">Aucun article. Créez le premier avec le bouton ci-dessus.</p>';
+        return;
+      }
+      const sorted = [...blogData].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+      container.innerHTML = '';
+      sorted.forEach(post => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `
+          <div class="item-header">
+            <span class="item-title">${escHtml(post.title || '(sans titre)')}</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="font-size:.78rem;color:${post.published ? 'var(--success)' : 'var(--muted)'};">${post.published ? '● Publié' : '○ Brouillon'}</span>
+              <span style="font-size:.78rem;color:var(--muted);">${escHtml(post.date || '')}</span>
+              <button class="btn btn-sm" onclick="editBlogPost('${escHtml(post.id)}')">Modifier</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteBlogPost('${escHtml(post.id)}')">Supprimer</button>
+            </div>
+          </div>
+          ${post.excerpt ? `<p style="font-size:.85rem;color:var(--muted);margin-top:4px;">${escHtml(post.excerpt)}</p>` : ''}`;
+        container.appendChild(div);
+      });
+    }
+
+    function openBlogForm(post) {
+      document.getElementById('blogFormWrap').style.display = 'block';
+      document.getElementById('newPostBtn').style.display = 'none';
+      if (post) {
+        document.getElementById('blogFormTitle').textContent = 'Modifier l\'article';
+        document.getElementById('blogEditId').value = post.id;
+        document.getElementById('blogTitle').value = post.title || '';
+        document.getElementById('blogSlug').value = post.slug || '';
+        document.getElementById('blogDate').value = post.date || '';
+        document.getElementById('blogExcerpt').value = post.excerpt || '';
+        document.getElementById('blogContent').value = post.content || '';
+        document.getElementById('blogPublished').checked = !!post.published;
+      } else {
+        document.getElementById('blogFormTitle').textContent = 'Nouvel article';
+        document.getElementById('blogEditId').value = '';
+        document.getElementById('blogTitle').value = '';
+        document.getElementById('blogSlug').value = '';
+        document.getElementById('blogDate').value = new Date().toISOString().slice(0,10);
+        document.getElementById('blogExcerpt').value = '';
+        document.getElementById('blogContent').value = '';
+        document.getElementById('blogPublished').checked = false;
+      }
+    }
+
+    function cancelBlogForm() {
+      document.getElementById('blogFormWrap').style.display = 'none';
+      document.getElementById('newPostBtn').style.display = '';
+    }
+
+    window.editBlogPost = function(id) {
+      const post = blogData.find(p => p.id === id);
+      if (post) openBlogForm(post);
+    };
+
+    window.deleteBlogPost = async function(id) {
+      if (!confirm('Supprimer cet article définitivement ?')) return;
+      await apiCall('DELETE', '/api/blog/' + id);
+      blogData = await apiCall('GET', '/api/blog?all=1');
+      renderBlog();
+      showToast('Article supprimé.');
+    };
+
+    window.saveBlogPost = async function() {
+      const id = document.getElementById('blogEditId').value;
+      const payload = {
+        title: document.getElementById('blogTitle').value.trim(),
+        slug: document.getElementById('blogSlug').value.trim(),
+        date: document.getElementById('blogDate').value,
+        excerpt: document.getElementById('blogExcerpt').value.trim(),
+        content: document.getElementById('blogContent').value,
+        published: document.getElementById('blogPublished').checked
+      };
+      if (!payload.title) { alert('Le titre est obligatoire.'); return; }
+      if (id) {
+        await apiCall('PUT', '/api/blog/' + id, payload);
+      } else {
+        await apiCall('POST', '/api/blog', payload);
+      }
+      blogData = await apiCall('GET', '/api/blog?all=1');
+      renderBlog();
+      cancelBlogForm();
+      showToast(id ? 'Article mis à jour.' : 'Article créé.');
+    };
+
+    window.openBlogForm = openBlogForm;
+    window.cancelBlogForm = cancelBlogForm;
 
     async function loadRateLimits() {
       try {

@@ -293,6 +293,56 @@ app.put('/api/partners', checkAuth, async (req, res) => {
   }
 });
 
+/* ── Blog ── */
+app.get('/api/blog', async (req, res) => {
+  try {
+    let posts = (await getData('blog')) || [];
+    const showAll = req.query.all === '1';
+    const auth = req.headers.authorization;
+    const isAdmin = auth && auth === `Bearer ${ADMIN_PASSWORD}`;
+    if (!showAll || !isAdmin) posts = posts.filter(p => p.published);
+    posts = [...posts].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    res.json(posts);
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.post('/api/blog', checkAuth, async (req, res) => {
+  try {
+    const posts = (await getData('blog')) || [];
+    const { title, slug, excerpt, content, date, published } = req.body;
+    const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    const safeSlug = (slug || title || id)
+      .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || id;
+    const post = { id, slug: safeSlug, title: title || '', excerpt: excerpt || '', content: content || '', date: date || new Date().toISOString().slice(0,10), published: !!published };
+    posts.push(post);
+    await setData('blog', posts);
+    res.json(post);
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.put('/api/blog/:id', checkAuth, async (req, res) => {
+  try {
+    const posts = (await getData('blog')) || [];
+    const idx = posts.findIndex(p => p.id === req.params.id);
+    if (idx === -1) return res.status(404).json({ error: 'Not found' });
+    posts[idx] = { ...posts[idx], ...req.body, id: posts[idx].id };
+    await setData('blog', posts);
+    res.json(posts[idx]);
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.delete('/api/blog/:id', checkAuth, async (req, res) => {
+  try {
+    let posts = (await getData('blog')) || [];
+    const before = posts.length;
+    posts = posts.filter(p => p.id !== req.params.id);
+    if (posts.length === before) return res.status(404).json({ error: 'Not found' });
+    await setData('blog', posts);
+    res.json({ ok: true });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
 app.get('/api/program', async (req, res) => {
   try {
     res.json(await getData('program'));
