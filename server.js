@@ -106,6 +106,20 @@ async function initializeDatabase() {
         }
       }
     }
+
+    const subsExisting = await client.query('SELECT 1 FROM content WHERE key = $1', ['subscribers']);
+    if (subsExisting.rows.length === 0) {
+      const subsFile = path.join(__dirname, 'data', 'newsletter.json');
+      let seed = [];
+      if (fs.existsSync(subsFile)) {
+        try { seed = JSON.parse(fs.readFileSync(subsFile, 'utf8')); } catch {}
+      }
+      await client.query(
+        `INSERT INTO content (key, data) VALUES ($1, $2)`,
+        ['subscribers', JSON.stringify(seed)]
+      );
+      console.log(`Seeded subscribers from newsletter.json (${seed.length} entries)`);
+    }
   } finally {
     client.release();
   }
@@ -138,22 +152,33 @@ function checkAuth(req, res, next) {
   next();
 }
 
-app.get('/api/subscribers', checkAuth, (req, res) => {
+async function getSubscribers() {
+  const result = await pool.query('SELECT data FROM content WHERE key = $1', ['subscribers']);
+  if (result.rows.length > 0 && Array.isArray(result.rows[0].data)) {
+    return result.rows[0].data;
+  }
+  return [];
+}
+
+async function saveSubscribers(list) {
+  await pool.query(
+    `INSERT INTO content (key, data, updated_at) VALUES ($1, $2, CURRENT_TIMESTAMP)
+     ON CONFLICT (key) DO UPDATE SET data = $2, updated_at = CURRENT_TIMESTAMP`,
+    ['subscribers', JSON.stringify(list)]
+  );
+}
+
+app.get('/api/subscribers', checkAuth, async (req, res) => {
   try {
-    const file = path.join(__dirname, 'data', 'newsletter.json');
-    let list = [];
-    try { list = JSON.parse(fs.readFileSync(file, 'utf8')); } catch {}
-    res.json(list);
+    res.json(await getSubscribers());
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
-app.get('/api/subscribers/export', checkAuth, (req, res) => {
+app.get('/api/subscribers/export', checkAuth, async (req, res) => {
   try {
-    const file = path.join(__dirname, 'data', 'newsletter.json');
-    let list = [];
-    try { list = JSON.parse(fs.readFileSync(file, 'utf8')); } catch {}
+    const list = await getSubscribers();
     const rows = [['email', 'type', 'date']];
     for (const entry of list) {
       rows.push([
@@ -171,17 +196,15 @@ app.get('/api/subscribers/export', checkAuth, (req, res) => {
   }
 });
 
-app.delete('/api/subscribers/:email', checkAuth, (req, res) => {
+app.delete('/api/subscribers/:email', checkAuth, async (req, res) => {
   try {
     const email = req.params.email;
     const type = req.query.type || 'newsletter';
-    const file = path.join(__dirname, 'data', 'newsletter.json');
-    let list = [];
-    try { list = JSON.parse(fs.readFileSync(file, 'utf8')); } catch {}
+    let list = await getSubscribers();
     const before = list.length;
     list = list.filter(e => !(e.email === email && (e.type || 'newsletter') === type));
     if (list.length === before) return res.status(404).json({ error: 'Not found' });
-    fs.writeFileSync(file, JSON.stringify(list, null, 2));
+    await saveSubscribers(list);
     res.json({ ok: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -193,14 +216,12 @@ app.post('/api/newsletter', async (req, res) => {
   if (!email || !email.includes('@')) return res.status(400).json({ error: 'Email invalide' });
   const kind = type === 'webinaire' ? 'webinaire' : 'newsletter';
   try {
-    const file = path.join(__dirname, 'data', 'newsletter.json');
-    let list = [];
-    try { list = JSON.parse(fs.readFileSync(file, 'utf8')); } catch {}
+    const list = await getSubscribers();
     if (list.find(e => e.email === email && (e.type || 'newsletter') === kind)) {
       return res.json({ already: true });
     }
     list.push({ email, type: kind, date: new Date().toISOString() });
-    fs.writeFileSync(file, JSON.stringify(list, null, 2));
+    await saveSubscribers(list);
     res.json({ ok: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
