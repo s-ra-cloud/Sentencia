@@ -8,6 +8,7 @@
     {href:'/faq.html',label:'FAQ',key:'faq'},
     {href:'/presse.html',label:'Presse',key:'presse'},
     {href:'/bibliographie.html',label:'Bibliographie',key:'bibliographie'},
+    {href:'/equipe.html',label:'Équipe',key:'equipe'},
   ];
   const current = document.body.getAttribute('data-page') || 'accueil';
 
@@ -70,6 +71,7 @@
         </div>
         <div>
           <h4>Projet</h4>
+          <a href="/equipe.html">Équipe</a>
           <a href="/mentions-legales.html">Mentions & éthique</a>
           <a href="mailto:sacha.raoult@univ-amu.fr">Contact</a>
           <a href="https://github.com/" target="_blank" rel="noopener">Code source (à venir)</a>
