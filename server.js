@@ -124,9 +124,44 @@ async function initializeDatabase() {
       );
       console.log(`Seeded subscribers from newsletter.json (${seed.length} entries)`);
     }
+
+    await seedBlogPosts(client);
   } finally {
     client.release();
   }
+}
+
+// Billets livrés avec le code (data/blog_posts/*.json) : chacun est ajouté une seule fois au blog.
+// Les slugs déjà importés sont mémorisés (clé 'blog_seeded'), pour qu'un billet supprimé depuis l'admin ne réapparaisse pas.
+async function seedBlogPosts(client) {
+  const postsDir = path.join(__dirname, 'data', 'blog_posts');
+  if (!fs.existsSync(postsDir)) return;
+  const read = async (key, fallback) => {
+    const r = await client.query('SELECT data FROM content WHERE key = $1', [key]);
+    return r.rows.length ? r.rows[0].data : fallback;
+  };
+  const posts = await read('blog', []);
+  const seeded = await read('blog_seeded', []);
+  let added = 0;
+  for (const file of fs.readdirSync(postsDir).filter(f => f.endsWith('.json')).sort()) {
+    const p = JSON.parse(fs.readFileSync(path.join(postsDir, file), 'utf8'));
+    if (!p.slug || seeded.includes(p.slug)) continue;
+    if (!posts.some(x => x.slug === p.slug)) {
+      posts.push({
+        id: p.id || Date.now().toString(36), slug: p.slug, title: p.title || '', excerpt: p.excerpt || '',
+        content: p.content || '', date: p.date || new Date().toISOString().slice(0, 10), published: !!p.published
+      });
+      added++;
+    }
+    seeded.push(p.slug);
+  }
+  const upsert = `INSERT INTO content (key, data, updated_at) VALUES ($1, $2, CURRENT_TIMESTAMP)
+                  ON CONFLICT (key) DO UPDATE SET data = $2, updated_at = CURRENT_TIMESTAMP`;
+  if (added) {
+    await client.query(upsert, ['blog', JSON.stringify(posts)]);
+    console.log(`Seeded ${added} blog post(s) from data/blog_posts`);
+  }
+  await client.query(upsert, ['blog_seeded', JSON.stringify(seeded)]);
 }
 
 async function getData(key) {
