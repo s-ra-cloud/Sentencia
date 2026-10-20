@@ -37,7 +37,8 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 RATE_LIMIT = 10
 RATE_DATA_FILE = os.path.join(os.path.dirname(__file__), "rate_data.json")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "Trismegiste")
+# Admin endpoints are disabled unless ADMIN_PASSWORD is set in the environment.
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "")
 ALLOWED_IPS = os.environ.get("ALLOWED_IPS", "").split(",")
 
 def load_rate_data():
@@ -323,7 +324,7 @@ async def train(
 
 @app.get("/admin/rate-stats")
 def get_rate_stats(authorization: str = Header(None)):
-    if not authorization or authorization.replace("Bearer ", "") != ADMIN_PASSWORD:
+    if not ADMIN_PASSWORD or not authorization or authorization.replace("Bearer ", "") != ADMIN_PASSWORD:
         return JSONResponse(status_code=401, content={"error": "Unauthorized"})
     return {
         "counts": dict(rate_data["counts"]),
@@ -334,7 +335,7 @@ def get_rate_stats(authorization: str = Header(None)):
 
 @app.post("/admin/unblock-ip")
 def unblock_ip(request_data: dict, authorization: str = Header(None)):
-    if not authorization or authorization.replace("Bearer ", "") != ADMIN_PASSWORD:
+    if not ADMIN_PASSWORD or not authorization or authorization.replace("Bearer ", "") != ADMIN_PASSWORD:
         return JSONResponse(status_code=401, content={"error": "Unauthorized"})
     ip = request_data.get("ip")
     if ip in rate_data["blocked"]:
@@ -347,7 +348,7 @@ def unblock_ip(request_data: dict, authorization: str = Header(None)):
 
 @app.post("/admin/reset-ip")
 def reset_ip(request_data: dict, authorization: str = Header(None)):
-    if not authorization or authorization.replace("Bearer ", "") != ADMIN_PASSWORD:
+    if not ADMIN_PASSWORD or not authorization or authorization.replace("Bearer ", "") != ADMIN_PASSWORD:
         return JSONResponse(status_code=401, content={"error": "Unauthorized"})
     ip = request_data.get("ip")
     if ip in rate_data["counts"]:

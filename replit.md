@@ -59,7 +59,7 @@ Preferred communication style: Simple, everyday language.
 ### Admin Interface
 - **Admin page**: `/admin.html` - Password-protected content management interface
 - **Features**:
-  - Login with password (default: "Trismegiste")
+  - Login with the password set in the `ADMIN_PASSWORD` environment variable
   - Manage Outputs (organized by team: Law, Epistemic, Psychology, Mythology, Philosophy, Structure and Theory)
   - Manage Members (name, tagline, affiliation, LinkedIn, bio EN/FR)
   - Manage Partners (name, website, logo, scope/type EN/FR, description EN/FR)
@@ -117,7 +117,7 @@ Preferred communication style: Simple, everyday language.
 - **External dependency**: D3.js v7 (loaded from CDN), GeoJSON from gregoiredavid/france-geojson
 
 ### Environment Variables
-- `ADMIN_PASSWORD`: Admin authentication password (defaults to 'Trismegiste' if not set)
+- `ADMIN_PASSWORD`: Admin authentication password (required; admin access is disabled if it is not set)
 
 ### Static Assets Required
 - `hero.mp4`: Hero section background video

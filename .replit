@@ -42,7 +42,6 @@ packages = ["cairo", "ffmpeg-full", "freetype", "ghostscript", "glibcLocales", "
 [userenv]
 
 [userenv.shared]
-ADMIN_PASSWORD = "Trismegiste"
 
 [deployment]
 run = ["node", "server.js"]

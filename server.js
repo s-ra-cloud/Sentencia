@@ -56,7 +56,11 @@ const upload = multer({
   }
 });
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Trismegiste';
+// Admin access is disabled unless ADMIN_PASSWORD is set in the environment.
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
+if (!ADMIN_PASSWORD) {
+  console.warn('ADMIN_PASSWORD is not set: admin login and protected API routes are disabled.');
+}
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL
@@ -146,7 +150,7 @@ async function setData(key, data) {
 
 function checkAuth(req, res, next) {
   const auth = req.headers.authorization;
-  if (!auth || auth !== `Bearer ${ADMIN_PASSWORD}`) {
+  if (!ADMIN_PASSWORD || !auth || auth !== `Bearer ${ADMIN_PASSWORD}`) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
   next();
@@ -230,7 +234,7 @@ app.post('/api/newsletter', async (req, res) => {
 
 app.post('/api/login', (req, res) => {
   const { password } = req.body;
-  if (password === ADMIN_PASSWORD) {
+  if (ADMIN_PASSWORD && typeof password === 'string' && password === ADMIN_PASSWORD) {
     res.json({ success: true });
   } else {
     res.status(401).json({ error: 'Invalid password' });
