@@ -610,6 +610,8 @@
       "Chômage": { en: "Unemployment Rate", fr: "Chômage" },
       "Couleur politique": { en: "Political Leaning", fr: "Couleur politique" },
       "Population": { en: "Population (2023)", fr: "Population (2023)" },
+      "Densité carcérale": { en: "Prison Occupancy Rate, Remand Prisons (%)", fr: "Densit\u00e9 carc\u00e9rale des maisons d'arr\u00eat (%)" },
+      "Indice de Gini": { en: "Income Inequality (Gini Index)", fr: "In\u00e9galit\u00e9s de niveau de vie (indice de Gini)" },
       "Durée moy. emprisonnement ferme": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emprisonnement ferme (mois)" },
       "Taux poursuivis / 100k (VIF)": { en: "Defendants Tried / 100k pop.", fr: "Pr\u00e9venus jug\u00e9s / 100k hab." },
       "Durée moy. emp. ferme (VIF)": { en: "Avg. Prison Sentence Duration (months)", fr: "Durée moy. emp. ferme (mois)" },
@@ -740,6 +742,8 @@
         'Chômage': 'Unemployment rate in the department, expressed as a percentage of the active population.',
         'Couleur politique': 'Political leaning of the department based on recent election results.',
         'Population': 'Total population of the department (2023 census data).',
+        'Densité carcérale': 'Prison occupancy rate of the remand prisons (maisons d\u2019arr\u00eat) located in the department: number of detainees divided by the number of operational places, in %, averaged over the twelve monthly counts of 2024. A value above 100 % means overcrowding. Source: Ministry of Justice, prison administration (DAP), monthly statistics by establishment. Departments without a remand prison have no value.',
+        'Indice de Gini': 'Gini index of living standards (disposable income per consumption unit) in the department, in 2021. It ranges from 0 (everyone has the same income) to 1 (one household has all the income). Source: INSEE, Filosofi 2021.',
         'Durée moy. emprisonnement ferme': 'Average duration of immediate prison sentences handed down in this department, in months, across all crime categories. Calculated as the weighted mean of sentence durations across all tribunals in the department, weighted by the number of prison sentences at each tribunal.',
         'taux_poursuivis': 'Number of adult defendants tried by the criminal courts (tribunaux correctionnels) of the department for this crime category, per 100,000 inhabitants. Calculated by dividing the number of decisions rendered (NB_DEC, Ministry of Justice statistical service) by the department\u2019s population, then multiplying by 100,000. This indicator only covers cases that reached trial: cases dropped by the prosecutor or handled through alternatives to prosecution are not included.',
         'duree_emp': 'Average duration of immediate prison sentences for this specific crime category, in months. Calculated as the weighted mean across all tribunals in the department, where each tribunal\u2019s average duration is weighted by its number of prison sentences. This ensures tribunals handling more cases contribute more to the departmental average.',
@@ -754,6 +758,8 @@
         'Ch\u00f4mage': 'Taux de ch\u00f4mage dans le d\u00e9partement, exprim\u00e9 en pourcentage de la population active.',
         'Couleur politique': 'Tendance politique du d\u00e9partement bas\u00e9e sur les r\u00e9sultats des \u00e9lections r\u00e9centes.',
         'Population': 'Population totale du d\u00e9partement (donn\u00e9es du recensement 2023).',
+        'Densit\u00e9 carc\u00e9rale': 'Densit\u00e9 carc\u00e9rale des maisons d\u2019arr\u00eat situ\u00e9es dans le d\u00e9partement : nombre de personnes d\u00e9tenues rapport\u00e9 au nombre de places op\u00e9rationnelles, en %, en moyenne sur les douze situations mensuelles de 2024. Au-del\u00e0 de 100 %, l\u2019\u00e9tablissement est surpeupl\u00e9. Source : minist\u00e8re de la Justice, direction de l\u2019administration p\u00e9nitentiaire, statistique mensuelle par \u00e9tablissement. Les d\u00e9partements sans maison d\u2019arr\u00eat n\u2019ont pas de valeur.',
+        'Indice de Gini': 'Indice de Gini des niveaux de vie (revenu disponible par unit\u00e9 de consommation) dans le d\u00e9partement, en 2021. Il varie de 0 (tous les m\u00e9nages ont le m\u00eame revenu) \u00e0 1 (un seul m\u00e9nage d\u00e9tient tout le revenu). Source : INSEE, Filosofi 2021.',
         'Dur\u00e9e moy. emprisonnement ferme': 'Dur\u00e9e moyenne des peines d\u2019emprisonnement ferme prononc\u00e9es dans ce d\u00e9partement, en mois, toutes cat\u00e9gories d\u2019infractions confondues. Calcul\u00e9e comme la moyenne pond\u00e9r\u00e9e des dur\u00e9es de peine de l\u2019ensemble des tribunaux du d\u00e9partement, pond\u00e9r\u00e9e par le nombre de peines d\u2019emprisonnement ferme prononc\u00e9es dans chaque tribunal.',
         'taux_poursuivis': 'Nombre de pr\u00e9venus majeurs jug\u00e9s par les tribunaux correctionnels du d\u00e9partement pour cette cat\u00e9gorie d\u2019infraction, pour 100\u202f000 habitants. Calcul\u00e9 en divisant le nombre de d\u00e9cisions rendues (NB_DEC, Service statistique du minist\u00e8re de la Justice) par la population du d\u00e9partement, puis en multipliant par 100\u202f000. Cet indicateur ne porte que sur les affaires arriv\u00e9es jusqu\u2019au jugement : les affaires class\u00e9es sans suite ou trait\u00e9es par une alternative aux poursuites n\u2019y figurent pas.',
         'duree_emp': 'Dur\u00e9e moyenne des peines d\u2019emprisonnement ferme pour cette cat\u00e9gorie d\u2019infraction sp\u00e9cifique, en mois. Calcul\u00e9e comme la moyenne pond\u00e9r\u00e9e sur l\u2019ensemble des tribunaux du d\u00e9partement, o\u00f9 la dur\u00e9e moyenne de chaque tribunal est pond\u00e9r\u00e9e par son nombre de peines d\u2019emprisonnement ferme. Ainsi, les tribunaux traitant davantage d\u2019affaires contribuent proportionnellement plus \u00e0 la moyenne d\u00e9partementale.',
@@ -936,7 +942,7 @@
       return t ? t[lang] : colName;
     }
 
-    const GENERAL_COLUMNS = new Set(["Chômage", "Couleur politique", "Population", "Durée moy. emprisonnement ferme", "Taux emprisonnement ferme global", "Taux emp. résiduel récidive global", "Durée rés. récidive global", "Sévérité combinée globale"]);
+    const GENERAL_COLUMNS = new Set(["Chômage", "Couleur politique", "Population", "Densité carcérale", "Indice de Gini", "Durée moy. emprisonnement ferme", "Taux emprisonnement ferme global", "Taux emp. résiduel récidive global", "Durée rés. récidive global", "Sévérité combinée globale"]);
 
     const CATEGORY_COLUMN_MAP = {
       'general': col => GENERAL_COLUMNS.has(col),

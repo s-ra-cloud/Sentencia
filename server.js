@@ -131,8 +131,9 @@ async function initializeDatabase() {
   }
 }
 
-// Billets livrés avec le code (data/blog_posts/*.json) : chacun est ajouté une seule fois au blog.
-// Les slugs déjà importés sont mémorisés (clé 'blog_seeded'), pour qu'un billet supprimé depuis l'admin ne réapparaisse pas.
+// Billets livrés avec le code (data/blog_posts/*.json), avec un numéro de révision « rev » (1 par défaut).
+// Première importation : le billet est ajouté au blog. Révision plus récente : le billet existant est mis à jour.
+// Les révisions importées sont mémorisées (clé 'blog_seeded', { slug: rev }) : un billet supprimé depuis l'admin ne réapparaît pas.
 async function seedBlogPosts(client) {
   const postsDir = path.join(__dirname, 'data', 'blog_posts');
   if (!fs.existsSync(postsDir)) return;
@@ -141,25 +142,30 @@ async function seedBlogPosts(client) {
     return r.rows.length ? r.rows[0].data : fallback;
   };
   const posts = await read('blog', []);
-  const seeded = await read('blog_seeded', []);
-  let added = 0;
+  let seeded = await read('blog_seeded', {});
+  if (Array.isArray(seeded)) seeded = Object.fromEntries(seeded.map(slug => [slug, 1]));  // ancien format : liste de slugs
+  let added = 0, updated = 0;
   for (const file of fs.readdirSync(postsDir).filter(f => f.endsWith('.json')).sort()) {
     const p = JSON.parse(fs.readFileSync(path.join(postsDir, file), 'utf8'));
-    if (!p.slug || seeded.includes(p.slug)) continue;
-    if (!posts.some(x => x.slug === p.slug)) {
-      posts.push({
-        id: p.id || Date.now().toString(36), slug: p.slug, title: p.title || '', excerpt: p.excerpt || '',
-        content: p.content || '', date: p.date || new Date().toISOString().slice(0, 10), published: !!p.published
-      });
-      added++;
+    if (!p.slug) continue;
+    const rev = p.rev || 1;
+    const fields = { title: p.title || '', excerpt: p.excerpt || '', content: p.content || '',
+                     date: p.date || new Date().toISOString().slice(0, 10), published: !!p.published };
+    const idx = posts.findIndex(x => x.slug === p.slug);
+    if (seeded[p.slug] === undefined) {
+      if (idx === -1) { posts.push({ id: p.id || Date.now().toString(36), slug: p.slug, ...fields }); added++; }
+    } else if (rev > seeded[p.slug]) {
+      if (idx !== -1) { posts[idx] = { ...posts[idx], ...fields }; updated++; }
+    } else {
+      continue;
     }
-    seeded.push(p.slug);
+    seeded[p.slug] = rev;
   }
   const upsert = `INSERT INTO content (key, data, updated_at) VALUES ($1, $2, CURRENT_TIMESTAMP)
                   ON CONFLICT (key) DO UPDATE SET data = $2, updated_at = CURRENT_TIMESTAMP`;
-  if (added) {
+  if (added || updated) {
     await client.query(upsert, ['blog', JSON.stringify(posts)]);
-    console.log(`Seeded ${added} blog post(s) from data/blog_posts`);
+    console.log(`Blog posts from data/blog_posts: ${added} added, ${updated} updated`);
   }
   await client.query(upsert, ['blog_seeded', JSON.stringify(seeded)]);
 }
